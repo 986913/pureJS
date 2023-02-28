@@ -1,0 +1,12 @@
+.outter{
+  height: 10px;
+  width: 300px;
+  background-color: lightgray;
+  margin-top: .5em;
+}
+
+.inner {
+  background-color: green;
+  height: 100%;
+  width: 0;
+}
