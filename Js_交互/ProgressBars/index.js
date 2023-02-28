@@ -12,14 +12,14 @@
 
   const fillBar = (seconds, bar) => {
     const frequency = (seconds * 1000) / 100; //calculate frequency to update width
-    let atPercent = 0;
+    let value = 0;
 
     // set a interval timer here
     const interval = setInterval(() => {
-      bar.style.width = atPercent + '%';
-      atPercent++;
+      bar.style.width = `${value}%`;
+      value++;
 
-      if (atPercent > 100) clearInterval(interval); // stop interval if percent is > 100
+      if (value > 100) clearInterval(interval); // stop interval if percent is > 100
     }, frequency);
   };
 
