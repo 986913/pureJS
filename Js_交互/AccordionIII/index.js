@@ -1,5 +1,5 @@
 /**
- *    <--diff 意思是 AccordionII 和 AccordionI 的不同地方
+ *    <--diff 意思是 AccordionIII 和 AccordionII 的不同地方
  */
 
 const data = {
@@ -50,12 +50,12 @@ const data = {
           return;
         }
 
-        const isExpanded = target.getAttribute('aria-expanded') === 'true'; //<--diff
-        target.setAttribute('aria-expanded', !isExpanded); //<--diff
+        const isExpanded = target.getAttribute('aria-expanded') === 'true';
+        target.setAttribute('aria-expanded', !isExpanded);
 
         // Find the icon and toggle the direction.
         const $icon = target.querySelector('.accordion-icon');
-        $icon.classList.toggle('accordion-icon--rotated', !isExpanded); //<--diff
+        $icon.classList.toggle('accordion-icon--rotated', !isExpanded);
 
         //key point --->通过target.nextSibling找到内容，然后toggle内容的显示隐藏
         const $accordionContents = target.nextSibling;
@@ -67,8 +67,8 @@ const data = {
       const $accordionSections = document.createDocumentFragment();
 
       sections.forEach(({ value, title, contents }) => {
-        const headerId = getAccordionHeaderId(accordionId, value); //<--diff
-        const panelId = getAccordionPanelId(accordionId, value); //<--diff
+        const headerId = getAccordionHeaderId(accordionId, value);
+        const panelId = getAccordionPanelId(accordionId, value);
 
         const $accordionSection = document.createElement('div');
         $accordionSection.classList.add('accordion-item');
@@ -77,9 +77,9 @@ const data = {
         $accordionTitleBtn.classList.add('accordion-item-title');
         $accordionTitleBtn.type = 'button';
         $accordionTitleBtn.setAttribute('data-value', value);
-        $accordionTitleBtn.id = headerId; //<--diff
-        $accordionTitleBtn.setAttribute('aria-controls', panelId); //<--diff
-        $accordionTitleBtn.setAttribute('aria-expanded', false); //<--diff
+        $accordionTitleBtn.id = headerId;
+        $accordionTitleBtn.setAttribute('aria-controls', panelId);
+        $accordionTitleBtn.setAttribute('aria-expanded', false);
 
         const $accordionIcon = document.createElement('span');
         $accordionIcon.classList.add('accordion-icon');
@@ -91,9 +91,9 @@ const data = {
         $accordionSectionContents.classList.add('accordion-item-contents');
         $accordionSectionContents.hidden = true;
         $accordionSectionContents.textContent = contents;
-        $accordionSectionContents.role = 'region'; //<--diff
-        $accordionSectionContents.id = panelId; //<--diff
-        $accordionSectionContents.setAttribute('aria-labelledby', headerId); //<--diff
+        $accordionSectionContents.role = 'region';
+        $accordionSectionContents.id = panelId;
+        $accordionSectionContents.setAttribute('aria-labelledby', headerId);
 
         $accordionSection.append($accordionTitleBtn, $accordionSectionContents);
         $accordionSections.append($accordionSection);
