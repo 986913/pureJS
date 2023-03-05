@@ -1,0 +1,30 @@
+
+
+.button {
+  --defaultColor: #888;
+  --activeColor: #f00;
+
+  border-radius: 15px;
+  padding: .5em;
+  background-color: white;
+  border-color: var(--defaultColor);
+  color: var(--defaultColor);
+}
+
+.button:hover {
+  border-color: var(--activeColor);
+  color: var(--activeColor);
+  cursor: pointer;
+}
+
+.liked,
+.liked:hover {
+  background-color: var(--activeColor);
+  color: white;
+  border: none;
+}
+
+.error-message {
+  font-size: 12px;
+  margin-top: 8px;
+}
