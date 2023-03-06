@@ -89,4 +89,5 @@ const data = [
   };
 
   tabs(document.querySelector('#tabs'), data);
+  // tabs(document.querySelector('#tabs2'), data); //----> just more test case
 })();
