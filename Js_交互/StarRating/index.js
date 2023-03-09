@@ -16,15 +16,13 @@
       </svg>`;
     let currentValue = value;
 
-    function init() {
+    const init = () => {
       const html = Array.from({ length: max }, () => STAR_TEMPLATE).join('');
       // Using .innerHTML is safe here since it's non-user content.
       $rootElement.innerHTML = html;
 
       $rootElement.addEventListener('click', (event) => {
         const $starEl = event.target.closest(`.${STAR_ICON_CLASS}`);
-        console.log(event.target);
-        console.log($starEl);
         if ($starEl == null) return;
 
         const value = [...$rootElement.children].indexOf($starEl) + 1;
@@ -42,14 +40,14 @@
       $rootElement.addEventListener('mouseout', () => {
         changeValue(currentValue);
       });
-    }
+    };
 
-    function changeValue(newVal) {
+    const changeValue = (newVal) => {
       currentValue = newVal;
       highlightStars(currentValue);
-    }
+    };
 
-    function highlightStars(index) {
+    const highlightStars = (index) => {
       for (let i = 0; i < $rootElement.children.length; i++) {
         if (i < index) {
           $rootElement.children[i].classList.add(STAR_ICON_FILLED_CLASS);
@@ -57,7 +55,7 @@
           $rootElement.children[i].classList.remove(STAR_ICON_FILLED_CLASS);
         }
       }
-    }
+    };
 
     init(max);
     changeValue(currentValue);
@@ -78,3 +76,9 @@
     value: 5,
   });
 })();
+
+/**
+ * note:
+ * 1. event.target.closest() is a JS method that allows you to find the closest ancestor element that matches a given CSS selector.
+ * 2. Array.from({length: 5}, ()=>{}) 用法需回顾
+ */
