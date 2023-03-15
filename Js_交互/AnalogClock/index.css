@@ -1,0 +1,26 @@
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock {
+  display: block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
+  border: 2px solid #ccc;
+  transform: rotate(180deg);
+}
+
+.clock-hand {
+  background-color: black;
+  position: absolute;
+  width: 1px;
+  height: calc(var(--size) / 2);
+  left: calc(var(--size) / 2);
+  top: calc(var(--size) / 2);
+  transform-origin: top center;
+}
