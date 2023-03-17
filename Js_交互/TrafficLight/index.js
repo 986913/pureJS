@@ -14,7 +14,7 @@ const config = {
 };
 
 (() => {
-  const light = ({ color }) => {
+  const lightUI = ({ color }) => {
     const $lightEl = document.createElement('div');
     $lightEl.classList.add('light');
     $lightEl.setAttribute('aria-hidden', true);
@@ -42,13 +42,13 @@ const config = {
       }, duration);
     };
 
-    const render = () => {
+    const renderLightUI = () => {
       $containerEl.innerHTML = '';
       $containerEl.setAttribute('aria-label', `Current light: ${currentColor}`);
 
       Object.keys(config).map((color) => {
         $containerEl.append(
-          light({
+          lightUI({
             color: color === currentColor ? color : undefined,
           })
         );
@@ -56,7 +56,7 @@ const config = {
     };
 
     const renderLoop = () => {
-      render();
+      renderLightUI();
       setTransition();
     };
 
