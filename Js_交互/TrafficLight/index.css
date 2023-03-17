@@ -1,0 +1,22 @@
+.lights-wrapper {
+  height: 40px;
+  width: 120px;
+  background-color: black;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.light {
+  --size: 30px;
+
+  background-color: gray;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 100%;
+}
