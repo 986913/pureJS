@@ -14,13 +14,13 @@ const config = {
 };
 
 (() => {
-  const light = ({ backgroundColor }) => {
+  const light = ({ color }) => {
     const $lightEl = document.createElement('div');
     $lightEl.classList.add('light');
     $lightEl.setAttribute('aria-hidden', true);
 
-    if (backgroundColor != null) {
-      $lightEl.style.backgroundColor = backgroundColor;
+    if (color != null) {
+      $lightEl.style.backgroundColor = color;
     }
 
     return $lightEl;
@@ -49,7 +49,7 @@ const config = {
       Object.keys(config).map((color) => {
         $containerEl.append(
           light({
-            backgroundColor: color === currentColor ? currentColor : undefined,
+            color: color === currentColor ? color : undefined,
           })
         );
       });
