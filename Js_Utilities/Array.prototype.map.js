@@ -1,7 +1,20 @@
-/* --------------------- 用例测试 ----------------------- */
+/* --------------------- 用例测试1 ----------------------- */
 [1, 2, 3, 4].myMap((i) => i); // [1, 2, 3, 4]
 [1, 2, 3, 4].myMap((i) => i * i); // [1, 4, 9, 16]
 [1, 2, , 4].myMap((i) => i * 1); // [1, 4, undefined, 16]
+
+/* --------------------- 用例测试2 ----------------------- */
+const person = {
+  name: 'John',
+  age: 30,
+};
+const numbers = [1, 2, 3, 4];
+
+const mappedNumbers = numbers.myMap(function (number, index, array) {
+  console.log(this.name); // 输出 'John'
+  return number * 2;
+}, person);
+//console.log(mappedNumbers); // [2,4,6,8]
 
 /*
   👉🏻 考点：
