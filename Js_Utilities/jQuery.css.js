@@ -11,3 +11,28 @@ $('button')
   .css('fontSize', '16px');
 
 /* -------------------------- Code Solution: -------------------------------- */
+/**
+ * @param {string} selector
+ * @return {{css: Function}}
+ */
+
+export default function $(selector) {
+  const $ele = document.querySelector(selector);
+
+  return {
+    css: function (property, value) {
+      if (!value) {
+        if ($ele === null) return undefined;
+
+        const val = $ele.style[property];
+        return val === '' ? undefined : val;
+      }
+
+      if ($ele !== null) {
+        $ele.style[property] = value;
+      }
+
+      return this; //to allow for method chaining
+    },
+  };
+}
