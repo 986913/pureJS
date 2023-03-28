@@ -40,6 +40,7 @@ function curry(func) {
 
     //2. if not enough args, return a function that invoke curried function with new arguments!!(通过闭包)
     return (...args2) => {
+      // recursion here:
       return curried.apply(this, [...args, ...args2]);
     };
   };
