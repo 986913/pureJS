@@ -15,11 +15,12 @@ camelCaseKeys([{ baz_qux: true }, { foo: true, bar: [{ foo_bar: 'hello' }] }]);
  * @return {string}
  */
 function camelCase(str) {
-  if (!/[_]/.test(str)) return str;
+  if (!/[_]/.test(str)) return str; // 如果输入字符串中不含有下划线，则返回原字符串
 
+  // 如果字符串中含有下划线，先将字符串全部转换成小写字母，然后将下划线后面的第一个字母转换成大写字母
   return str
     .toLowerCase()
-    .replace(/([_])([a-z])/g, (_match, _p1, p2) => p2.toUpperCase());
+    .replace(/([_])([a-z])/g, (_match, _p1, p2) => p2.toUpperCase()); // 使用正则表达式将下划线后面的第一个字母转换成大写字母
 }
 
 /**
