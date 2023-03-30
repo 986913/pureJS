@@ -15,17 +15,15 @@ camelCaseKeys([{ baz_qux: true }, { foo: true, bar: [{ foo_bar: 'hello' }] }]);
  * @return {string}
  */
 function convertStrTocamelCase(str) {
+  // 如果输入字符串中不含有下划线，则返回原字符串
   if (!str.includes('_')) return str;
 
+  // 如果字符串中含有下划线，先将字符串全部转换成小写字母，然后将下划线后面的第一个字母转换成大写字母
   return str
     .toLowerCase()
     .split('_')
     .map((char, index) => {
-      if (index >= 1) {
-        const firstLetterUppercased_char =
-          char.charAt(0).toUpperCase() + char.slice(1);
-        return firstLetterUppercased_char;
-      }
+      if (index >= 1) return char.charAt(0).toUpperCase() + char.slice(1);
       return char;
     })
     .join('');
