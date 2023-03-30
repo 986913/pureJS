@@ -15,7 +15,7 @@ camelCaseKeys([{ baz_qux: true }, { foo: true, bar: [{ foo_bar: 'hello' }] }]);
  * @return {string}
  */
 
-function camelCase(str) {
+function convertStrTocamelCase(str) {
   // 如果输入字符串中不含有下划线，则返回原字符串
   if (!str.includes('_')) return str;
 
@@ -46,7 +46,7 @@ function camelCaseKeys(value) {
   // when value is object:
   const entries = Object.entries(value);
   const keyConverted_Cloned_Entries = entries.map(([key, value]) => [
-    camelCase(key),
+    convertStrTocamelCase(key),
     camelCaseKeys(value),
   ]);
   return Object.fromEntries(keyConverted_Cloned_Entries);
