@@ -11,6 +11,7 @@ camelCaseKeys([{ baz_qux: true }, { foo: true, bar: [{ foo_bar: 'hello' }] }]);
 
 /* -------------------------------- Code solution: 🟡 DeepClone变形题 ---------------------------------- */
 /**
+ * helper function:
  * @param {string} str
  * @return {string}
  */
