@@ -38,7 +38,7 @@ function deepClone(value) {
 
 /* ------------- Code solution 2 : using Object.fromEntries + recurrsion ---------------------------------- */
 function deepClone(value) {
-  //when value is primitive:
+  //when value is primitive(递归终止时)
   if (typeof value !== 'object' || value === null) return value;
 
   // when value is array: recurrsion

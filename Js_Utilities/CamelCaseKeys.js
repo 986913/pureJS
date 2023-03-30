@@ -9,7 +9,50 @@ camelCaseKeys({ foo_bar: true, bar_baz: { baz_qux: '1' } }); // { fooBar: true, 
 camelCaseKeys([{ baz_qux: true }, { foo: true, bar: [{ foo_bar: 'hello' }] }]);
 // [{ bazQux: true }, { foo: true, bar: [{ fooBar: 'hello' }] }]
 
-/* -------------------------------- Code solution: 🟡 DeepClone变形题 ---------------------------------- */
+/* ------------------ Code solution 1: 🟡 DeepClone变形题 (for...in + recurrsion) ------------------ */
+/**
+ * @param {string} str
+ * @return {string}
+ */
+function convertStrTocamelCase(str) {
+  if (!str.includes('_')) return str;
+
+  return str
+    .toLowerCase()
+    .split('_')
+    .map((char, index) => {
+      if (index >= 1) {
+        const firstLetterUppercased_char =
+          char.charAt(0).toUpperCase() + char.slice(1);
+        return firstLetterUppercased_char;
+      }
+      return char;
+    })
+    .join('');
+}
+
+/**
+ * @param {Object} value
+ * @return {Object}
+ */
+function camelCaseKeys(value) {
+  //递归终止时候：
+  if (typeof value !== 'object' || value === null) return value;
+
+  //单层递归逻辑：
+  const isArr = Array.isArray(value);
+  let result = isArr ? [] : {};
+  for (let key in value) {
+    // 保证key不是原型上的属性
+    if (value.hasOwnProperty(key)) {
+      result[convertStrTocamelCase(key)] = camelCaseKeys(value[key]);
+    }
+  }
+
+  return result;
+}
+
+/* --------------- Code solution 2: 🟡 DeepClone变形题(Object.fromEntries + recurrsion) ----------------- */
 /**
  * helper function:
  * @param {string} str
