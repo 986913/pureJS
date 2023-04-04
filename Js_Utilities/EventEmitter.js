@@ -30,6 +30,13 @@ class EventEmitter {
     // Creating objects via {} will include unwanted properties
     // on the prototype (such as `.toString`).
     this.events = Object.create(null);
+    /* this.events长这样：
+       就是装listern和event的容器而已： Function1,2,3是listener(倾听者)； foo,bar是event(听什么)
+       events = {
+         foo: [Function1, Function3],
+         bar: [Function2],
+       };
+    */
   }
 
   on(eventName, listener) {
