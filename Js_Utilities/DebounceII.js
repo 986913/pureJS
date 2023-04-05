@@ -43,34 +43,36 @@ debouncedFn2.flush(); // j = 0
  */
 
 function debounce(func, wait = 0) {
-  let timeoutId = null;
-  let context = undefined;
-  let argsToInvoke = undefined;
+  let timerId = null;
+  let context;
+  let args;
 
-  function clearTimer() {
-    clearTimeout(timeoutId);
-    timeoutId = null;
+  function cancel() {
+    clearTimeout(timerId);
+    timerId = null;
   }
 
   function invoke() {
-    // Don't invoke if there's no pending callback.
-    if (timeoutId == null) return;
-
-    clearTimer();
-    func.apply(context, argsToInvoke);
+    func.apply(context, args);
+    cancel();
   }
 
-  function fn(...args) {
-    clearTimer();
-    argsToInvoke = args;
+  function debounced(...newArgs) {
     context = this;
+    args = newArgs;
+    if (timerId) {
+      cancel();
+    }
 
-    timeoutId = setTimeout(() => {
-      invoke();
-    }, wait);
+    timerId = setTimeout(invoke, wait);
   }
-  fn.cancel = clearTimer;
-  fn.flush = invoke;
 
-  return fn;
+  debounced.cancel = cancel;
+  debounced.flush = () => {
+    if (timerId) {
+      invoke();
+    }
+  };
+
+  return debounced;
 }
