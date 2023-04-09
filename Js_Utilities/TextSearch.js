@@ -3,7 +3,13 @@
  * @param {string} query
  * @return {string}
  */
+/*------------------- 用例测试 -------------------- */
+console.log(textSearch('The Quick Brown Fox Jumps Over The Lazy Dog', 'fox')); // 'The Quick Brown <b>Fox</b> Jumps Over The Lazy Dog'
+console.log(textSearch('The hardworking Dog overtakes the lazy dog', 'dog')); // 'The hardworking <b>Dog</b> overtakes the lazy <b>dog</b>'
+console.log(textSearch('aaa', 'aa')); // '<b>aa</b>a'  This is because the second character cannot be used as a match
+console.log(textSearch('aaaa', 'aa')); // Correct: '<b>aaaa</b>'  // Wrong: '<b>aa</b><b>aa</b>'
 
+/* ------------------ Solution Code ---------------------------------------------------- */
 function textSearch(setence, query) {
   if (!setence || !query) return setence; // edge case
 
@@ -37,10 +43,3 @@ function textSearch(setence, query) {
 
   return result;
 }
-
-/**-- test above function-------------------------- */
-
-console.log(textSearch('The Quick Brown Fox Jumps Over The Lazy Dog', 'fox')); // 'The Quick Brown <b>Fox</b> Jumps Over The Lazy Dog'
-console.log(textSearch('The hardworking Dog overtakes the lazy dog', 'dog')); // 'The hardworking <b>Dog</b> overtakes the lazy <b>dog</b>'
-console.log(textSearch('aaa', 'aa')); // '<b>aa</b>a'  This is because the second character cannot be used as a match
-console.log(textSearch('aaaa', 'aa')); // Correct: '<b>aaaa</b>'  // Wrong: '<b>aa</b><b>aa</b>'
