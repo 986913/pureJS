@@ -13,7 +13,6 @@ console.log(textSearch('aaaa', 'aa')); // Correct: '<b>aaaa</b>'  // Wrong: '<b>
 function textSearch(setence, query) {
   if (!setence || !query) return setence; // edge case
 
-  let result = '';
   const boldChars = Array(setence.length).fill(false);
 
   // 1. identification of bold characters
@@ -30,6 +29,7 @@ function textSearch(setence, query) {
   // console.log(boldChars);
 
   // 2. rendering of the <b> tags
+  let result = '';
   for (let i = 0; i < setence.length; i++) {
     const shouldOpenTag = boldChars[i] && !boldChars[i - 1];
     const shouldCloseTag = boldChars[i] && !boldChars[i + 1];
