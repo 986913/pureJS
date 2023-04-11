@@ -33,6 +33,13 @@ const curriedJoin = curry(join);
 curriedJoin(1, 2, 3); // '1_2_3' or curry(join)(1)(2)(3)
 curriedJoin(1)(2, 3); // '1_2_3' or curry(join)(1)(2, 3)
 curriedJoin(1, 2)(3); // '1_2_3' or curry(join)(1, 2)(3)
+/*
+  用例测试共同点：
+  1. 被curry的函数，比如sum, multiplyThree, join等函数都是有确定的参数个数的
+  2. curry后的函数，比如curriedSum(3)(4)，curriedMultiplyThree(4, 5, 6)。 参数个数最多也是确定的（和被curry函数参数个数一致）
+      ie: 2.1 curriedSum(3)       ---> 会return function 因为sum有2个参数，curriedSum传了1个参数
+          2.2 curriedSum(3)(4)(5) ---> 会报错             因为sum有2个参数，curriedSum传了3个参数
+*/
 
 /* -------------------------------- Code solution ---------------------------------- */
 /**
