@@ -31,7 +31,7 @@ const clonedObj2 = deepClone(obj2); // Should not cause a stack overflow by recu
 clonedObj2.a.b = 'something new';
 obj2.a.b === obj2; // This should still be true
 
-/* -------------------------------- Code solution  -------------------------------------- */
+/* -------------------------------- Code solution 1  -------------------------------------- */
 
 const isPrimitiveOrFunction = (value) =>
   typeof value !== 'object' || value === null || typeof value === 'function';
@@ -126,3 +126,6 @@ function deepClone(value, cache = new Map()) {
         如果想要只获取常规属性，可以使用 Object.keys() 方法；
         如果只想获取 Symbol 属性，可以使用 Object.getOwnPropertySymbols() 方法
  */
+
+/* -------------------------------- Code solution 2 -------------------------------------- */
+const clonedObj = structuredClone(value);
