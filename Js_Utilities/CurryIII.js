@@ -63,3 +63,5 @@ function curry(func) {
   };
 }
 curry.placeholder = Symbol();
+
+// https://www.youtube.com/watch?v=zfu-WBlaWPQ&t=427s&ab_channel=JSer
