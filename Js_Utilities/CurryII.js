@@ -18,7 +18,7 @@ multiplyByFifteen(2); // 30
 /*
   用例测试共同点：
   1. 被curry的函数，比如multiply函数没有确定的参数个数
-  2. curry后的东西，比如multiplyByThree即是primitive type,又是function...
+  2. curry后的东西，比如multiplyByThree即是primitive type,又是function..🤔
 */
 
 /* -------------------------------- Code solution ---------------------------------- */
