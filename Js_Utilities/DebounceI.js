@@ -36,7 +36,7 @@ function debounce(func, wait) {
     }, wait);
   };
 }
-/* -------------- Code solution: v2 - normal function ------------------- */
+/* -------------- Code solution: v2 - arrow function ------------------- */
 function debounce(func, wait) {
   let timer = null;
 

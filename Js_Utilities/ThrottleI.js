@@ -34,7 +34,7 @@ function throttle(func, wait) {
     }, wait);
   };
 }
-/* -------------- Code solution: v2 - normal function ------------------- */
+/* -------------- Code solution: v2 - arrow function ------------------- */
 function throttle(func, wait) {
   let timer = null;
 
