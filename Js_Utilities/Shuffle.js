@@ -28,7 +28,7 @@ shuffle(arr);
 [4, 3, 2, 1]
 */
 
-/*-------- Code solution 1 -----------*/
+/*-------- Code solution 1: old Fisher-yates algo -----------*/
 function shuffle(arr) {
   let copied = arr.slice();
   while (copied.length) {
@@ -41,17 +41,13 @@ function shuffle(arr) {
   }
 }
 
-/*-------- Code solution 2 -----------*/
-/**
- * @param {any[]} arr
- * @returns {void}
- */
-const getRandom = (max, min = 0) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
-
+/*-------- Code solution 2: modern Fisher-yates algo -----------*/
 function shuffle(arr) {
-  for (let i = arr.length - 1; i >= 0; i--) {
-    const random = getRandom(i);
-    [arr[i], arr[random]] = [arr[random], arr[i]];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const randIdx = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[randIdx]] = [arr[randIdx], arr[i]];
   }
+  return arr;
 }
+
+// https://www.youtube.com/watch?v=4zx5bM2OcvA&t=57s&ab_channel=Insidecode
