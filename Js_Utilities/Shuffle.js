@@ -28,7 +28,20 @@ shuffle(arr);
 [4, 3, 2, 1]
 */
 
-/*-------- Code solution -----------*/
+/*-------- Code solution 1 -----------*/
+function shuffle(arr) {
+  let copied = arr.slice();
+  while (copied.length) {
+    let randomIdx = Math.floor(Math.random() * copied.length);
+    [arr[randomIdx], arr[copied.length - 1]] = [
+      arr[copied.length - 1],
+      arr[randomIdx],
+    ];
+    copied.pop();
+  }
+}
+
+/*-------- Code solution 2 -----------*/
 /**
  * @param {any[]} arr
  * @returns {void}
