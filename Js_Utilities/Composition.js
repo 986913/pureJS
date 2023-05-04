@@ -1,4 +1,10 @@
 /**
+ * Composition is about creating small functions and creating bigger and more complete functions with them.
+ * Think of a function as a brick, composition is how you would make those bricks work together to build a wall or a house.
+ * The output of the precedent function becomes the input of the next.
+ */
+
+/**
   Here you are asked to create a pipe() function,  which chains multiple functions together to create a new function.
   Suppose we have some simple functions like this:
     const times = (y) =>  (x) => x * y
