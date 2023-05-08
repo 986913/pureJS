@@ -1,28 +1,26 @@
 /**
- * In the observer pattern (also commonly known as the publish-subscribe model), 
+ * In the observer pattern (also commonly known as the publish-subscribe model),
  * we can observe/subscribe to events emitted by publishers and execute code whenever an event happens.
  * Implement an EventEmitter class similar to the one in Node.js that follows such an observer pattern.
+ **/
+/* --------------------- 用例测试: 实现EventEmitter class----------------------- */
+const emitter = new EventEmitter();
 
- * Example usage of the EventEmitter class:
+function addTwoNumbers(a, b) {
+  console.log(`The sum is ${a + b}`);
+}
+emitter.on('foo', addTwoNumbers); //注册foo event,并且attach addTwoNumbers callback to it
+emitter.emit('foo', 2, 5); // actuallty trigger foo event, all attached callbacks will be executed
+// > "The sum is 7"
 
-      const emitter = new EventEmitter();
+emitter.on('foo', (a, b) => console.log(`The product is ${a * b}`)); //注册foo event,并且attach new callback to it
+emitter.emit('foo', 4, 5); // actuallty trigger foo event, all attached callbacks will be executed
+// > "The sum is 9"
+// > "The product is 20"
 
-      function addTwoNumbers(a, b) {
-        console.log(`The sum is ${a + b}`);
-      }
-      emitter.on('foo', addTwoNumbers);
-      emitter.emit('foo', 2, 5);
-      // > "The sum is 7"
-
-      emitter.on('foo', (a, b) => console.log(`The product is ${a * b}`));
-      emitter.emit('foo', 4, 5);
-      // > "The sum is 9"
-      // > "The product is 20"
-
-      emitter.off('foo', addTwoNumbers);
-      emitter.emit('foo', -3, 9);
-      // > "The product is -27"
- */
+emitter.off('foo', addTwoNumbers); //注册foo event,un-attach addTwoNumbers callback to it
+emitter.emit('foo', -3, 9); // actuallty trigger foo event, all attached callbacks will be executed
+// > "The product is -27"
 
 /*------------------------ code solution 1: class based ------------------------------*/
 class EventEmitter {
@@ -31,7 +29,7 @@ class EventEmitter {
     // on the prototype (such as `.toString`).
     this.events = Object.create(null);
     /* this.events长这样：
-        就是装listern和event的容器而已： Function1,2,3是listener(倾听者)； foo,bar是event(听什么)
+        就是装listern和event的容器而已： Function1,2,3是listener(倾听者callback)； foo,bar是event(听什么)
         events = {
           foo: [Function1, Function3],
           bar: [Function2],
