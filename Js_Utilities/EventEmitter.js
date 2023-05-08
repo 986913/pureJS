@@ -43,6 +43,7 @@ class EventEmitter {
     }
 
     this.events[eventName].push(listener);
+
     return this;
   }
 
@@ -53,16 +54,13 @@ class EventEmitter {
     }
 
     const listeners = this.events[eventName];
-
     // Find only first instance of the listener.
     const index = listeners.findIndex(
       (listenerItem) => listenerItem === listener
     );
-    if (index < 0) {
-      return this;
-    }
-
+    if (index < 0) return this;
     this.events[eventName].splice(index, 1);
+
     return this;
   }
 
