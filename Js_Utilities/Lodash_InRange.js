@@ -4,13 +4,13 @@
  * If start is greater than end the parameters are swapped to support negative ranges.
  */
 
-/* --------------------- 用例测试: 实现这种函数 ----------------------- */
+/* --------------------- 用例测试: 实现这种函数 (similar to 🟡 Lodash_Clamp)----------------------- */
 inRange(3, 2, 4); // => true
-inRange(4, 8); // => true
-inRange(4, 2); // => false
-inRange(2, 2); // => false
-inRange(1.2, 2); // => true
-inRange(5.2, 4); // => false
+inRange(4, 2, 4); // => false
+inRange(4, 8); // => true       ie: inRange(4, 0, 8)
+inRange(4, 2); // => false      ie: inRange(4, 0, 2)
+inRange(2, 2); // => false      ie: inRange(2, 0, 2)
+inRange(5.2, 4); // => false    ie: inRange(5.2, 0, 4)
 inRange(-3, -2, -6); // => true
 
 /* --------------------- Code solution ---------------------------- */
@@ -21,5 +21,12 @@ inRange(-3, -2, -6); // => true
  * @returns {boolean} Returns `true` if `number` is in the range, else `false`.
  */
 function inRange(value, start, end) {
-  throw 'Not implemented';
+  if (!end) {
+    end = start;
+    start = 0;
+  }
+
+  const min = Math.min(start, end);
+  const max = Math.max(start, end);
+  return value >= min && value < max;
 }
