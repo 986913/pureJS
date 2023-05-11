@@ -87,6 +87,56 @@ update([1, 2, 3, 4], { 0: { $apply: (item) => item * 2 } }); // [2, 2, 3, 4]
  * @param {any} data
  * @param {Object} command
  */
+const isObject = (val) =>
+  Object.prototype.toString.call(val) === '[object Object]';
+
 function update(data, command) {
-  // your code here
+  /* for simple cases, which $command is in the first layer */
+  if ('$push' in command) {
+    if (!Array.isArray(data)) throw new Error('data is not an array');
+    return [...data, ...command['$push']];
+  }
+  if ('$merge' in command) {
+    if (!isObject(data)) throw new Error('data is not an object');
+    return {
+      ...data,
+      ...command['$merge'],
+    };
+  }
+  if ('$apply' in command) return command['$apply'](data);
+  if ('$set' in command) return command['$set'];
+
+  /* for cases with path:  recursion here */
+  const copiedData = Array.isArray(data) ? [...data] : { ...data };
+  // 注意； for...of循环数组时, 出来的直接就是数组中的每个项的值啦
+  for (const key of Object.keys(command)) {
+    copiedData[key] = update(copiedData[key], command[key]);
+  }
+
+  return copiedData;
 }
+
+//-------小知识点------------------------------------------------------
+/**
+  const obj = { a: { b: { c: { $set: 3 } } } };
+  for (const key of Object.keys(obj)) {
+    console.log(key);
+  }
+  出来结果只有"a".
+  如果你想打印深层次的b,c键. 那就得recursion了：
+    function printDeepKeys(obj, prefix = '') {
+      for (const key of Object.keys(obj)) {
+        const fullPath = prefix ? `${prefix}.${key}` : key;
+        console.log(fullPath);
+
+        if (typeof obj[key] === 'object') {
+          printDeepKeys(obj[key], fullPath);
+        }
+      }
+    }
+
+    printDeepKeys(obj);
+      //a
+      //a.b
+      //a.b.c
+ */
