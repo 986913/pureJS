@@ -33,6 +33,7 @@ function curry(func) {
       return curried.apply(this, [...args, ...args2]);
     }
     // Define using an arrow function to preserve `this`.
+    // 使用Symbol.toPrimitive定义fn的转换行为
     fn[Symbol.toPrimitive] = () => {
       return func.apply(this, args);
     };
