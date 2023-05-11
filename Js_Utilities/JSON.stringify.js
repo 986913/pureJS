@@ -21,7 +21,7 @@ jsonStringify(/foo/); // '{}'
 jsonStringify(new Map()); // '{}'
 jsonStringify(new Set()); //'{}'
 
-/* ------------------ Solution Code ---------------------------------------------------- */
+/* ------------------ Solution 1 Code: 全面的version ---------------------------------------------------- */
 const isCyclic = (input) => {
   const seen = new Set();
 
@@ -43,7 +43,6 @@ const isCyclic = (input) => {
  * @param {*} value
  * @return {string}
  */
-
 function jsonStringify(data) {
   const quotes = '"';
   const QUOTE_ESCAPE = /"/g;
@@ -111,4 +110,50 @@ function jsonStringify(data) {
 
   // Again, Object.prototype.toString will be invoked implicitly during string concatenation
   return '{' + entries + '}';
+}
+
+/* ------------------ Solution 2 Code : 简单的version ---------------------------------------------------- */
+function jsonStringify(data) {
+  if ([NaN, null, Infinity].includes(data)) return 'null';
+
+  const type = typeof data;
+  switch (type) {
+    case 'function':
+    case 'symbol':
+    case 'undefined':
+      return undefined;
+    case 'bigint':
+      throw Error('bigints are not supported');
+    case 'string':
+      return `"${data}"`;
+    case 'object': {
+      // when data is array:
+      if (Array.isArray(data)) {
+        return `[${data
+          .map((e) => (typeof e == 'symbol' ? 'null' : jsonStringify(e)))
+          .join()}]`;
+      }
+      // when data is date obj:
+      if (data instanceof Date) {
+        return `"${data.toISOString()}"`;
+      }
+      // when data is plain object:
+      const entries = Object.entries(data)
+        .map(([key, value]) => {
+          const shouldIgnoreEntry =
+            typeof key === 'symbol' ||
+            value === undefined ||
+            typeof value === 'function' ||
+            typeof value === 'symbol';
+
+          if (shouldIgnoreEntry) return;
+          return quotes + key + quotes + ':' + jsonStringify(value);
+        })
+        .filter((value) => value !== undefined);
+      // Again, Object.prototype.toString will be invoked implicitly during string concatenation
+      return '{' + entries + '}';
+    }
+    default:
+      return String(data);
+  }
 }
