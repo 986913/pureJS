@@ -7,16 +7,25 @@
 /* -------------------用例测试--------------------*/
 jsonStringify(); // undefined
 jsonStringify(undefined); // undefined
+jsonStringify(Symbol('foo')); // undefined
+jsonStringify(() => {}); // undefined
+
 jsonStringify(null); // 'null'
+jsonStringify(NaN); // 'null'
+jsonStringify(Infinity); // 'null'
+
 jsonStringify(true); // 'true'
 jsonStringify(false); // 'false'
 jsonStringify(1); // '1'
 jsonStringify('foo'); // '"foo"'
 jsonStringify('"foo"') === '"\\"foo\\""'; // Double quotes present in the original input are escaped using backslashes
-jsonStringify(Symbol('foo')); // undefined
-jsonStringify(() => {}); // undefined
 jsonStringify({ foo: 'bar' }); // '{"foo":"bar"}'
 jsonStringify(['foo', 'bar']); // '["foo","bar"]'
+
+const foo = {};
+foo.a = foo;
+JSON.stringify(foo); // Uncaught TypeError: Converting circular structure to JSON ---> this is expected err. because we pass in circular data
+
 jsonStringify(/foo/); // '{}'
 jsonStringify(new Map()); // '{}'
 jsonStringify(new Set()); //'{}'
@@ -113,7 +122,28 @@ function jsonStringify(data) {
 }
 
 /* ------------------ Solution 2 Code : 简单的version ---------------------------------------------------- */
+const isCyclic = (input) => {
+  const seen = new Set();
+
+  const dfsHelper = (obj) => {
+    if (typeof obj !== 'object' || obj === null) {
+      return false;
+    }
+
+    seen.add(obj);
+    return Object.values(obj).some(
+      (value) => seen.has(value) || dfsHelper(value)
+    );
+  };
+
+  return dfsHelper(input);
+};
+
 function jsonStringify(data) {
+  if (isCyclic(data)) {
+    throw new TypeError('Converting circular structure to JSON');
+  }
+
   if ([NaN, null, Infinity].includes(data)) return 'null';
 
   const type = typeof data;
@@ -145,13 +175,11 @@ function jsonStringify(data) {
             value === undefined ||
             typeof value === 'function' ||
             typeof value === 'symbol';
-
           if (shouldIgnoreEntry) return;
-          return quotes + key + quotes + ':' + jsonStringify(value);
+          return `"${key}":${stringify(value)}`;
         })
         .filter((value) => value !== undefined);
-      // Again, Object.prototype.toString will be invoked implicitly during string concatenation
-      return '{' + entries + '}';
+      return `{${entries}}`;
     }
     default:
       return String(data);
