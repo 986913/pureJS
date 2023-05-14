@@ -39,6 +39,21 @@
 
   When error occurs, only first error is passed down to the last. Later errors or data are ignored.
 **/
+/* --------------------- 用例测试 ----------------------- */
+const async1 = (callback) => {
+  setTimeout(() => callback(undefined, 1), 300);
+};
+const async2 = (callback) => {
+  setTimeout(() => callback(undefined, 2), 100);
+};
+const async3 = (callback) => {
+  setTimeout(() => callback(undefined, 3), 200);
+};
+
+const all = parallel([async1, async2, async3]);
+all((error, data) => {
+  console.log(data); // [1, 2, 3]  note: data is array. 你能每一项是对应的promise结果
+}, 1);
 
 /*---------------------------- Solution 1 : use Promise --------------------------------- */
 /*
