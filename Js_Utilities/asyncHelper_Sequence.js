@@ -118,6 +118,10 @@ function promisify(callback) {
   在这个 Promise 的执行函数中，我们调用原始的回调函数，并根据回调函数的结果来决定 Promise 的状态。
     如果回调函数的第一个参数 err 存在，表示有错误发生，我们将 Promise 的状态设置为 rejected，并将 err 作为错误的原因。
     如果没有错误，我们将 Promise 的状态设置为 resolved，并将 data 作为 Promise 的结果。
+  上述的promifify可以简化为下面这种写法：
+    const promisify = fn => input => new Promise((res, rej) => {
+      fn((err, output) => err ? rej(err) : res(output), input)
+    })
  */
 
 /* -------------------------- Solution 2: without use Promise and asyn/await --------------------------------- */
