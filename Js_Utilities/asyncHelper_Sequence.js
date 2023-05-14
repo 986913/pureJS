@@ -65,8 +65,6 @@ thunk2((error, data) => {
  * @return {(callback: Callback) => void}
  */
 function sequence(funcs) {
-  const promiseFuncs = funcs.map(promisify);
-
   return function (callback, data) {
     let promise = Promise.resolve(data); // 1. init promise
 
@@ -75,6 +73,7 @@ function sequence(funcs) {
       注意，这里使用了赋值表达式 (promise = promise.then(fn))，目的是将 promise 更新为当前添加了新函数的 Promise。
       这样，在下一次循环时，新的 Promise 就会成为前一个 Promise 的后续操作。最终 整个链式操作会在最后一个Promise完成后结束。
     */
+    const promiseFuncs = funcs.map((fn) => promisify(fn));
     promiseFuncs.forEach((fn) => (promise = promise.then(fn)));
 
     //3. handle resolved or rejected promise

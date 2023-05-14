@@ -72,8 +72,7 @@ function promisify(callback) {
 
 function parallel(funcs) {
   return (callback, input) => {
-    Promise.all(funcs.map((fn) => promisify(fn)(input)));
-    Promise.all(promiseFuncs)
+    Promise.all(funcs.map((fn) => promisify(fn)(input)))
       .then((outputs) => callback(undefined, outputs))
       .catch((err) => callback(err, undefined));
   };
@@ -117,3 +116,5 @@ Promise.all的介绍和使用：
   上面的代码中，fetchData1() 和 fetchData2() 分别返回两个 Promise 对象。使用 Promise.all() 可以等待这两个异步任务都完成后，获取它们的结果并进行下一步操作。
   请注意，Promise.all() 的返回值是一个新的 Promise 对象，因此可以通过链式调用 .then() 和 .catch() 方法来进行后续处理。
  */
+
+/*------------------------------------- Solution 2 --------------------------------------- */
