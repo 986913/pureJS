@@ -69,6 +69,14 @@ type AsyncFunc = (
  * @param {AsyncFunc[]} funcs
  * @return {(callback: Callback) => void}
  */
+function parallel(funcs) {
+  return (callback, input) => {
+    //使用了Promise.all，接受array为参数
+    Promise.all(funcs.map((fn) => promisify(fn)(input)))
+      .then((outputs) => callback(undefined, outputs))
+      .catch((err) => callback(err, undefined));
+  };
+}
 
 function promisify(callback) {
   //这里的input就是对应sequence里面的input， return function 就是为了能够传值，传input
@@ -82,14 +90,6 @@ function promisify(callback) {
         resolve(data);
       }, input);
     });
-  };
-}
-
-function parallel(funcs) {
-  return (callback, input) => {
-    Promise.all(funcs.map((fn) => promisify(fn)(input)))
-      .then((outputs) => callback(undefined, outputs))
-      .catch((err) => callback(err, undefined));
   };
 }
 

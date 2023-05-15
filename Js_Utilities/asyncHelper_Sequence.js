@@ -66,6 +66,7 @@ thunk2((error, data) => {
  */
 function sequence(funcs) {
   return function (callback, data) {
+    /*使用了基本的Promise: */
     let promise = Promise.resolve(data); // 1. init promise
 
     /* 2. construct promise with promiseFuncs: 

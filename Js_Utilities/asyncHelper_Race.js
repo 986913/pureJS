@@ -73,6 +73,7 @@ type AsyncFunc = (
  */
 function race(funcs) {
   return function (callback, data) {
+    //使用了Promise.race，接受array为参数
     Promise.race(funcs.map((fn) => promisify(fn)(data)))
       .then((output) => callback(undefined, output))
       .catch((err) => callback(err, undefined));
