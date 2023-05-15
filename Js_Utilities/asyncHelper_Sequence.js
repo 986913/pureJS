@@ -37,17 +37,17 @@ const asyncTimes2 = (callback, num) => {
 };
 const asyncTimes4 = sequence([asyncTimes2, asyncTimes2]);
 asyncTimes4((error, data) => {
-  console.log(data); // 4
+  console.log(data); // 4 按次序依次一个个执行promise,返回最后一个promise的结果
 }, 1);
 /* --------------------- 用例测试2 ----------------------- */
 const thunk = sequence([times2, times3, plus2]);
 thunk((error, data) => {
-  console.log(data); // 8
+  console.log(data); // 8 按次序依次一个个执行promise,返回最后一个promise的结果
 }, 1);
 /* --------------------- 用例测试2 ----------------------- */
 const thunk2 = sequence([times2, plus2, times3]);
 thunk2((error, data) => {
-  console.log(data); // 12
+  console.log(data); // 12 按次序依次一个个执行promise,返回最后一个promise的结果
 }, 1);
 
 /*---------------------------- Solution 1 : use Promise --------------------------------- */

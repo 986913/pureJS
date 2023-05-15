@@ -52,7 +52,7 @@ const async3 = (callback) => {
 
 const all = parallel([async1, async2, async3]);
 all((error, data) => {
-  console.log(data); // [1, 2, 3]  note: data is array. 你能每一项是对应的promise结果
+  console.log(data); // [1, 2, 3]  note: data is array. 数组每一项是对应的promise结果
 }, 1);
 
 /*---------------------------- Solution 1 : use Promise --------------------------------- */
