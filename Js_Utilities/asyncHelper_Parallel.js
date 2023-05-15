@@ -55,7 +55,7 @@ all((error, data) => {
   console.log(data); // [1, 2, 3]  note: data is array. 数组每一项是对应的promise结果
 }, 1);
 
-/*---------------------------- Solution 1 : use Promise --------------------------------- */
+/*---------------------------- Solution 1 : use Promise.all --------------------------------- */
 /*
 type Callback = (error: Error, data: any) => void
 
@@ -132,4 +132,4 @@ Promise.all的介绍和使用：
   请注意，Promise.all() 的返回值是一个新的 Promise 对象，因此可以通过链式调用 .then() 和 .catch() 方法来进行后续处理。
  */
 
-/*------------------------------------- Solution 2 --------------------------------------- */
+/*------------------------------------- Solution 2: without use Promise.all --------------------------------------- */
