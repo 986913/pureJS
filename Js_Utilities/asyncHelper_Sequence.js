@@ -112,10 +112,11 @@ function promisify(callback) {
   sequence函数的作用在于简化函数串联的操作，特别是当每个函数都是异步操作时，可以使用这个函数来更方便地控制函数的执行顺序和数据传递
 
   
-  在 promisify 函数中，我们希望将这样的回调函数转换为返回 Promise 的函数
-  因此，我们将回调函数作为参数传递给 promisify 函数，并在返回的函数中使用这个回调函数。
-  返回的函数会接受一个输入参数input，并在内部创建一个 Promise 对象。
-  在这个 Promise 的执行函数中，我们调用原始的回调函数，并根据回调函数的结果来决定 Promise 的状态。
+
+  在 promisify 函数中，作用是将一个使用回调函数的异步操作转换为使用Promise的异步操作。
+  它接受一个回调函数作为参数，并返回一个新的函数，该函数接受一个输入参数input,并返回一个Promise。
+
+  返回的函数会接受一个输入参数input，并在内部创建一个 Promise 对象， 并在异步操作完成时调用resolve或reject函数来决定Promise的状态。
     如果回调函数的第一个参数 err 存在，表示有错误发生，我们将 Promise 的状态设置为 rejected，并将 err 作为错误的原因。
     如果没有错误，我们将 Promise 的状态设置为 resolved，并将 data 作为 Promise 的结果。
   上述的promifify可以简化为下面这种写法：
