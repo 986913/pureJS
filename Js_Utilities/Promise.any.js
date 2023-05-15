@@ -60,11 +60,12 @@ function myPromiseAny(promises) {
     promises.forEach(async (p, index) => {
       try {
         const data = await p;
-        resolve(data);
+        resolve(data); // 有一个Promise对象被✅，那就返回第一个✅的Promise 对象的解决值
       } catch (err) {
         errResult[index] = err;
         pending--;
 
+        //所有Promise 对象都被❌了，那就返回一个被❌的Promise对象,并使用一个AggregateError对象来包装所有拒绝的原因)
         if (pending === 0) {
           reject(new AggregateError('none resolved', errResult));
         }
@@ -92,12 +93,12 @@ function myPromiseAny(promises) {
 
     promises.forEach((p, index) => {
       Promise.resolve(p).then(
-        (data) => resolve(data), // 有一个Promise对象被解决，那就返回第一个解决的Promise 对象的解决值
+        (data) => resolve(data), // 有一个Promise对象被✅，那就返回第一个✅的Promise 对象的解决值
         (err) => {
           errResult[index] = err; // 根据index对号入座， update errResult
           pending--;
 
-          //所有Promise 对象都被拒绝了，那就返回一个被拒绝的Promise对象,并使用一个AggregateError对象来包装所有拒绝的原因)
+          //所有Promise 对象都被❌了，那就返回一个被❌的Promise对象,并使用一个AggregateError对象来包装所有拒绝的原因)
           if (pending === 0) {
             reject(new AggregateError('none resolved', errResult));
           }

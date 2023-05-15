@@ -51,9 +51,9 @@ function myPromiseRace(promises) {
     promises.forEach(async (p) => {
       try {
         const data = await p;
-        resolve(data); // 有一个Promise对象被解决，那就返回第一个解决的Promise对象的解决值
+        resolve(data); // 有一个Promise对象被✅，那就返回第一个✅的Promise对象的解决值
       } catch (err) {
-        reject(err); // 有一个Promise对象被拒绝，那就返回第一个拒绝的Promise对象的解决值
+        reject(err); // 有一个Promise对象被❌，那就返回第一个❌的Promise对象的拒绝值
       }
     });
   });
@@ -71,10 +71,10 @@ function myPromiseRace(promises) {
     promises.forEach((p) => {
       Promise.resolve(p).then(
         (data) => {
-          resolve(data); // 有一个Promise对象被解决，那就返回第一个解决的Promise对象的解决值
+          resolve(data); // 有一个Promise对象被✅，那就返回第一个✅的Promise对象的解决值
         },
         (err) => {
-          reject(err); // 有一个Promise对象被拒绝，那就返回第一个拒绝的Promise对象的解决值
+          reject(err); // 有一个Promise对象被❌，那就返回第一个❌的Promise对象的拒绝值
         }
       );
     });

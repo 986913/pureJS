@@ -30,28 +30,30 @@ try {
  * @return {Promise<Array>}
  */
 
-function myPromiseAll(iterable) {
+function myPromiseAll(promises) {
   return new Promise((resolve, reject) => {
-    const results = new Array(iterable.length);
-    let unresolved = iterable.length;
+    const results = new Array(promises.length); //用来装被解决的promise们的解决值。
+    let unresolved = promises.length;
 
-    // edge case: when iterable input is [], then should return []
+    // edge case: when promises input is [], then should return []
     if (unresolved === 0) {
       resolve(results);
       return;
     }
 
     //main logic:
-    iterable.forEach(async (item, index) => {
+    promises.forEach(async (p, index) => {
       try {
-        const value = await item;
-        results[index] = value; // update results
+        const data = await p;
+        results[index] = data; //根据index对号入座, update results
         unresolved -= 1;
 
+        //所有Promise对象都被✅了, 那就返回all✅Promise的解决值们 (数组)
         if (unresolved === 0) {
           resolve(results);
         }
       } catch (err) {
+        //只要有一个Promise对象被❌了,那就返回被❌promise的拒绝值
         reject(err);
       }
     });
@@ -64,30 +66,31 @@ function myPromiseAll(iterable) {
  * @return {Promise<Array>}
  */
 
-function myPromiseAll(iterable) {
+function myPromiseAll(promises) {
   return new Promise((resolve, reject) => {
-    const results = new Array(iterable.length);
-    let unresolved = iterable.length;
+    const results = new Array(promises.length); //用来装被解决的promise们的解决值
+    let unresolved = promises.length;
 
-    // edge case: when iterable input is [], then should return []
+    // edge case: when promises input is [], then should return []
     if (unresolved === 0) {
       resolve(results);
       return;
     }
 
     //main logic:
-    iterable.forEach((item, index) => {
-      Promise.resolve(item).then(
-        (value) => {
-          results[index] = value; // update results
+    iterable.forEach((p, index) => {
+      Promise.resolve(p).then(
+        (data) => {
+          results[index] = data; //根据index对号入座, update results
           unresolved -= 1;
 
+          //所有Promise对象都被✅了, 那就返回all✅Promise的解决值们 (数组)
           if (unresolved === 0) {
             resolve(results);
           }
         },
         (err) => {
-          reject(err);
+          reject(err); //只要有一个Promise对象被❌了,那就返回被❌promise的拒绝值
         }
       );
     });
