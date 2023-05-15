@@ -45,13 +45,13 @@ try {
  * @return {Promise}
  */
 
-function myPromiseRace(iterable) {
+function myPromiseRace(promises) {
   return new Promise((resolve, reject) => {
-    if (iterable.length === 0) return; // edge case: when input is empty
-    iterable.forEach(async (item) => {
+    if (promises.length === 0) return; // edge case: when input is empty
+    promises.forEach(async (p) => {
       try {
-        const value = await item;
-        resolve(value);
+        const data = await p;
+        resolve(data);
       } catch (err) {
         reject(err);
       }
@@ -65,13 +65,13 @@ function myPromiseRace(iterable) {
  * @return {Promise}
  */
 
-function myPromiseRace(iterable) {
+function myPromiseRace(promises) {
   return new Promise((resolve, reject) => {
     if (iterable.length === 0) return; // edge case: when input is empty
-    iterable.forEach((item) => {
-      Promise.resolve(item).then(
-        (value) => {
-          resolve(value);
+    promises.forEach((p) => {
+      Promise.resolve(p).then(
+        (data) => {
+          resolve(data);
         },
         (err) => {
           reject(err);

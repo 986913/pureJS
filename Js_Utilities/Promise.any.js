@@ -47,26 +47,26 @@ try {
  * @return {Promise<Array>}
  */
 
-function myPromiseAny(iterable) {
+function myPromiseAny(promises) {
   return new Promise((resolve, reject) => {
-    if (iterable.length === 0) {
+    if (promises.length === 0) {
       // edge case: when input is empty
-      reject(new AggregateError([]));
+      reject(new AggregateError('No Promise passed'));
     }
 
-    let pending = iterable.length;
+    let pending = promises.length;
     const errResult = [];
 
-    iterable.forEach(async (item, index) => {
+    promises.forEach(async (p, index) => {
       try {
-        const value = await item;
-        resolve(value);
+        const data = await p;
+        resolve(data);
       } catch (err) {
         errResult[index] = err;
         pending--;
 
         if (pending === 0) {
-          reject(new AggregateError(errResult));
+          reject(new AggregateError('none resolved', errResult));
         }
       }
     });
@@ -79,25 +79,25 @@ function myPromiseAny(iterable) {
  * @return {Promise}
  */
 
-function myPromiseAny(iterable) {
+function myPromiseAny(promises) {
   return new Promise((resolve, reject) => {
-    if (iterable.length === 0) {
+    if (promises.length === 0) {
       // edge case: when input is empty
-      reject(new AggregateError([]));
+      reject(new AggregateError('No Promise passed'));
     }
 
     /* main logic */
-    let pending = iterable.length;
+    let pending = promises.length;
     const errResult = [];
 
-    iterable.forEach((item, index) => {
-      Promise.resolve(item).then(
-        (value) => resolve(value),
+    promises.forEach((p, index) => {
+      Promise.resolve(p).then(
+        (data) => resolve(data),
         (err) => {
           errResult[index] = err;
           pending--;
           if (pending === 0) {
-            reject(new AggregateError(errResult));
+            reject(new AggregateError('none resolved', errResult));
           }
         }
       );
