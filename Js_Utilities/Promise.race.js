@@ -1,3 +1,12 @@
+/**
+  This problem is similar to asyncHelper——Race, but with Promise.
+
+  The Promise.race() method returns a promise that fulfills or rejects as soon as one of the promises in an iterable fulfills or rejects, with the value or reason from that promise. source: MDN
+    - 如果在Promise数组中有一个Promise对象非常快地解决resolve✅或reject❌，"Promise.race"函数将立即返回该结果(无论是解决或者拒绝)，而不会等待其他Promise对象的状态
+
+  Can you create a `race()` which works the same as `Promise.race()`?
+ */
+
 /*-------用例测试1--------------------*/
 const p0 = new Promise((resolve) => {
   setTimeout(() => {

@@ -1,3 +1,18 @@
+/**
+  Promise.any() takes an iterable of Promise objects and, as soon as one of the promises in the iterable fulfills, returns a single promise that resolves with the value from that promise
+    - 如果Promise数组中至少有1个Promise 对象被✅，Promise.any()就会返回第1个解决的Promise 对象的解决值；
+    - 如果所有Promise对象都被❌，Promise.any()将返回一个被拒绝的 Promise 对象,并使用一个 AggregateError 对象来包装所有拒绝的原因
+
+  Can you implement a `any()` to work the same as `Promise.any()`?
+
+  note: `AggregateError` is not supported in Chrome yet, but you can still use it in your code since we will add the Class into your code. 
+  Do something like following:
+    new AggregateError(
+      'No Promise in Promise.any was resolved', 
+      errors
+    )
+ */
+
 /*-------------- 用例测试1 ------------------*/
 const p0 = Promise.resolve(42);
 const p1 = new Promise((resolve, reject) => {
