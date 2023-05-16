@@ -48,7 +48,7 @@ function myPromiseAllSettled(promises) {
       //不管每个promise是被✅还是❌,都要update result
       try {
         let data = await p;
-        results[index] = { status: 'fulfilled', data };
+        results[index] = { status: 'fulfilled', value: data };
       } catch (err) {
         results[index] = { status: 'rejected', reason: err };
       }
@@ -81,10 +81,11 @@ function myPromiseAllSettled(promises) {
 
     /* main logic */
     promises.forEach((p, index) => {
+      //不管每个promise是被✅还是❌,都要update result
       Promise.resolve(p)
         .then(
-          (value) => {
-            results[index] = { status: 'fulfilled', value };
+          (data) => {
+            results[index] = { status: 'fulfilled', value: data };
           },
           (err) => {
             results[index] = { status: 'rejected', reason: err };
@@ -92,6 +93,7 @@ function myPromiseAllSettled(promises) {
         )
         .finally(() => {
           pending--;
+          // 所有Promise对象都被处理了, 那就resolve all Promise的解决/拒绝值们 (数组)
           if (pending === 0) {
             resolve(results);
           }
