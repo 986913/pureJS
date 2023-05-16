@@ -50,7 +50,7 @@ try {
 
 /* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 /**
- * @param {Array} iterable
+ * @param {Array} promises
  * @return {Promise}
  */
 
@@ -60,9 +60,9 @@ function myPromiseRace(promises) {
     promises.forEach(async (p) => {
       try {
         const data = await p;
-        resolve(data); // 有一个Promise对象被✅，那就返回第一个✅的Promise对象的解决值
+        resolve(data); // 有一个Promise对象被✅，那就resolve第一个✅的Promise对象的解决值
       } catch (err) {
-        reject(err); // 有一个Promise对象被❌，那就返回第一个❌的Promise对象的拒绝值
+        reject(err); // 有一个Promise对象被❌，那就reject第一个❌的Promise对象的拒绝值
       }
     });
   });
@@ -70,20 +70,20 @@ function myPromiseRace(promises) {
 
 /* ------------------ Solution Code V2: use Promise.then() ----------------------------------------- */
 /**
- * @param {Array} iterable
+ * @param {Array} promises
  * @return {Promise}
  */
 
 function myPromiseRace(promises) {
   return new Promise((resolve, reject) => {
-    if (iterable.length === 0) return; // edge case: when input is empty
+    if (promises.length === 0) return; // edge case: when input is empty
     promises.forEach((p) => {
       Promise.resolve(p).then(
         (data) => {
-          resolve(data); // 有一个Promise对象被✅，那就返回第一个✅的Promise对象的解决值
+          resolve(data); // 有一个Promise对象被✅，那就reslove第一个✅的Promise对象的解决值
         },
         (err) => {
-          reject(err); // 有一个Promise对象被❌，那就返回第一个❌的Promise对象的拒绝值
+          reject(err); // 有一个Promise对象被❌，那就reject第一个❌的Promise对象的拒绝值
         }
       );
     });
