@@ -115,16 +115,19 @@ function objectAssign(target, ...sources) {
   if (target === null || target === undefined) {
     throw new Error('invalid target');
   }
-
+  /*调用target的构造函数来创建一个新的target。这里的 target 是作为参数传递给构造函数的
+    eg：const num = 3;
+        console.log( new num.__proto__.constructor(num) )  // Number {3}
+  */
   if (typeof target !== `object`) {
     target = new target.__proto__.constructor(target);
   }
 
   for (const source of sources) {
     if (source === null || source === undefined) continue;
-
+    //通过getOwnPropertyDescriptors实现属性的精准复制
     Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-
+    //如果source有symbol属性, 也要复制symbol属性给target
     for (const symbol of Object.getOwnPropertySymbols(source)) {
       target[symbol] = source[symbol];
     }
