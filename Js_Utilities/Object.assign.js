@@ -109,12 +109,67 @@ function objectAssign(target, ...sources) {
 
   return result;
 }
+
+/* ------------------------------ 👍 Code solution 2: ---------------------------- */
+function objectAssign(target, ...sources) {
+  if (target === null || target === undefined) {
+    throw new Error('invalid target');
+  }
+
+  if (typeof target !== `object`) {
+    target = new target.__proto__.constructor(target);
+  }
+
+  for (const source of sources) {
+    if (source === null || source === undefined) continue;
+
+    Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+
+    for (const symbol of Object.getOwnPropertySymbols(source)) {
+      target[symbol] = source[symbol];
+    }
+  }
+
+  return target;
+}
+
+/**
+  在 JavaScript 中，Symbol 是一种基本数据类型，用于创建唯一且不可变的标识符。
+  与字符串或数字等其他类型的属性不同，Symbol 属性在对象上具有唯一性，并且不会被遍历到。
+**/
+
 /**
 知识点：
+
   1. Object.assign() 方法本身不是递归实现的，所以这个题不需要用递归
-  2. Object.assign() 方法的行为是将源对象的可枚举属性浅复制到目标对象中。你可以使用循环来遍历源对象，并将每个属性复制到目标对象中，而不需要递归。递归通常在处理嵌套对象结构时使用，但在这个问题中，并没有需要处理嵌套对象的情况。
+  2. Object.assign() 方法的行为是将源对象的可枚举属性浅复制到目标对象中。
+    你可以使用循环来遍历源对象，并将每个属性复制到目标对象中，而不需要递归。
+    递归通常在处理嵌套对象结构时使用，但在这个问题中，并没有需要处理嵌套对象的情况。
+
   3. Object.keys(): 获取对象的所有可枚举字符串属性
-  4. Object.getOwnPropertySymbols()
+
+  4. Object.defineProperties():
+    - 作用：用于定义或修改一个对象的1个或多个属性及其对应的属性discriptor
+    - 返回：修改后的对象
+    - 用法：该方法接受两个参数：要定义属性的目标对象 和 一个包含属性名称及其对应属性描述符的对象。
+        const obj = {};
+        Object.defineProperties(obj, {
+          name: {
+            value: 'John',
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          age: {
+            value: 25,
+            writable: false,
+            enumerable: true,
+            configurable: false
+          }
+        });
+        console.log(obj); // { name: 'John', age: 25 }
+
+  5. Object.getOwnPropertySymbols()
       - 作用：用于获取对象自身的所有symboal属性。
       - 返回：它返回一个包含所有symboal属性的数组。symboal属性是使用 Symbol 类型作为键的属性，而不是常规的字符串键。Symbol 是一种特殊的数据类型，用于创建唯一的、不可变的标识符。
       - 用法：
@@ -125,7 +180,46 @@ function objectAssign(target, ...sources) {
         };
         const symbols = Object.getOwnPropertySymbols(obj);
         console.log(symbols); // [Symbol(key1), Symbol(key2)]
-  5. Object.getOwnPropertyDescriptor()
+        console.log(propertyNames); // ['mingkey']
+
+  6. Object.getOwnPropertyDescriptors()
+      - 作用：
+        1. 用于获取一个对象自身的所有属性的discriptor
+        2. 可以使用Object.getOwnPropertyDescriptors()获取源对象的所有属性描述符，并将它们应用到目标对象上，从而实现属性的精确复制:
+            const source = {
+              name: 'John',
+            };
+            const target = {};
+            const descriptors = Object.getOwnPropertyDescriptors(source);
+            Object.defineProperties(target, descriptors);
+            console.log(target); // { name: 'John' }
+      - 用法:
+        const obj = {
+          name: 'John',
+        };
+        Object.defineProperty(obj, 'age', {
+          value: 25,
+          writable: false,
+          enumerable: true,
+        });
+        const descriptors = Object.getOwnPropertyDescriptors(obj);
+        console.log(descriptors); // below data
+          {
+            name: {
+              value: 'John',
+              writable: true,
+              enumerable: true,
+              configurable: true
+            },
+            age: {
+              value: 25,
+              writable: false,
+              enumerable: true,
+              configurable: false
+            }
+          }
+
+  7. Object.getOwnPropertyDescriptor()
       - 作用：用于获取对象的属性描述符（property descriptor）。属性描述符是一个包含属性特性的对象，用于描述属性的可写性（writable）、可枚举性（enumerable）、可配置性（configurable）以及属性的值（value）。
       - 返回：Object.getOwnPropertyDescriptor()接受两个参数：对象和属性名，返回指定属性的属性描述符对象。
       - 用法：
@@ -135,7 +229,8 @@ function objectAssign(target, ...sources) {
         };
         const descriptor = Object.getOwnPropertyDescriptor(obj, 'name');
         console.log(descriptor); // { value: 'John', writable: true, enumerable: true, configurable: true }
-  6. Reflect.set()
+
+  8. Reflect.set()
       - 作用：用于设置对象的属性值。它提供了一种更简洁和统一的方式来设置对象属性，相比于传统的赋值操作符或 Object.defineProperty()，它提供了更灵活和强大的功能。
       - 用法：Reflect.set()接受3个参数：目标对象、属性名和要设置的值。它会在目标对象上设置指定属性的值，并返回一个布尔值，表示设置操作是否成功:
         const obj = {};
@@ -151,5 +246,3 @@ function objectAssign(target, ...sources) {
         Reflect.set(obj, '__proto__', proto);
         console.log(obj.name); // 'John'
  */
-
-/* ------------------------------ Code solution 2:---------------------------- */
