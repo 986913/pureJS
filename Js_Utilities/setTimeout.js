@@ -7,6 +7,7 @@
 
   By "accurate", it means suppose all functions cost no time, 
   we start our function at time `0`, then `setTimeout(func1, 100)` would schedule `func1` exactly at `100`. 
+  
   You need to replace `Date.now()` as well to provide the time.
 
   class FakeTimer {
@@ -50,7 +51,7 @@ class FakeTimer {
       clearTimeout: window.clearTimeout,
       dateNow: Date.now,
     };
-    this.timerId = 1;
+    this.timerId = 0;
     this.currentTime = 0;
     this.queue = [];
   }
@@ -73,9 +74,7 @@ class FakeTimer {
       this.queue = this.queue.filter(({ id }) => id !== removeId);
     };
 
-    Date.now = () => {
-      return this.currentTime;
-    };
+    Date.now = () => this.currentTime;
   }
 
   // restore the original implementation of window.setTimeout, window.clearTimeout, Date.now
