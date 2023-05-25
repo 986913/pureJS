@@ -54,6 +54,26 @@ class FakeTimer {
     this.timerId = 0;
     this.currentTime = 0;
     this.queue = [];
+    /* 根据上面用例测试，this.queue长这样：
+      [{
+        args: [],
+        cb: () => log('A'),
+        id: 0,
+        time: 100
+      }, 
+      {
+        args: [],
+        cb: () => log('B'),
+        id: 1,
+        time: 110
+      },
+      {
+        args: [],
+        cb: () => log('C'),
+        id: 2,
+        time: 200
+      }]
+     */
   }
 
   // replace window.setTimeout, window.clearTimeout, Date.now with your implementation

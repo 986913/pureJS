@@ -57,6 +57,23 @@ class FakeTimer {
     this.timerId = 0;
     this.currentTime = 0;
     this.queue = [];
+    console.log(this.queue);
+    /* 根据上面用例测试，this.queue长这样：
+      [{
+        args: [],
+        cb: () => {
+        if (count > 1) {
+          clearInterval(id);
+        } else {
+          log();
+        }
+        count += 1;
+      },
+        id: 0,
+        time: 100,
+        wait: 100
+      }]
+     */
   }
 
   // replace window.setInterval, window.clearInterval, Date.now with your implementation
