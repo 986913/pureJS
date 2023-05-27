@@ -49,7 +49,7 @@ function textSearch(setence, queries) {
 
   // 2. rendering of the <b> tags
   let result = '';
-  for (let i = 0; i < setence.length; i++) {.
+  for (let i = 0; i < setence.length; i++) {
     const shouldAddOpeningTag = boldChars[i] && !boldChars[i - 1];
     const shouldAddClosingTag = boldChars[i] && !boldChars[i + 1];
 
