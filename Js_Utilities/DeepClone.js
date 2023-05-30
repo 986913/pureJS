@@ -24,6 +24,7 @@ function deepClone(value) {
   //单层递归逻辑：
   const isArr = Array.isArray(value);
   let result = isArr ? [] : {};
+
   for (let key in value) {
     // 保证key不是原型上的属性
     if (value.hasOwnProperty(key)) {
@@ -48,7 +49,7 @@ function deepClone(value) {
   //when value is object, Converting the object into an array of a key-value tuple with Object.entries, and starting recursion
   const entries = Object.entries(value);
   const clonedEntries = entries.map(([key, value]) => [key, deepClone(value)]);
-  return Object.freomEntries(clonedEntries);
+  return Object.fromEntries(clonedEntries);
 }
 
 /***
