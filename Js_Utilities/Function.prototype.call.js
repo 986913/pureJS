@@ -1,8 +1,5 @@
 /* -------------------------用例测试-------------------- */
 function sayName(a, b, c) {
-  console.log(this.name);
-  console.log('params', a, b, c);
-
   return {
     name: this.name,
     a,
@@ -14,39 +11,35 @@ const person = {
   name: 'ming',
 };
 
-sayName.myCall(person, 'eat', 'sleep', 'work');
-/* 
-  "ming"
-  "params", "eat", "sleep", "work" 
-*/
 const bi = sayName.myCall(person, 'eat', 'sleep', 'work');
-console.log(bi);
-/* 
-  "ming"
-  "params", "eat", "sleep", "work" 
-  {
-    a: "eat",
-    b: "sleep",
-    c: "work",
-    name: "ming"
-  }
-*/
+console.log(bi); //{name: 'ming', a: 'eat', b: 'sleep', c: 'work'}
+
+/* -------------------------用例测试2-------------------- */
+function sayName2(title) {
+  return {
+    name: this.name,
+    breed: this.breed,
+    title,
+  };
+}
+const doggy = {
+  name: 'yoyi',
+  breed: 'GSD',
+};
+
+const dog = sayName2.myCall(doggy, 'officer');
+console.log(dog); //{name: 'yoyi', breed: 'GSD', title: 'officer'}
 
 /* ------------------ Solution Code ---------------------------------------------------- */
-Function.prototype.myCall = function (obj, boundArgs) {
-  // console.log(this) //🟡这个this指向的是调用myBind的sayName函数，不是指向person obj的
+Function.prototype.myCall = function (thisArg, ...args) {
+  const symbol = Symbol();
 
-  obj.originalFn = this; //相当于给obj添加了一个originalFn函数，并且函数就是myCall的调用者:sayName
+  const context = Object(thisArg == undefined ? window : thisArg); // transform primitive value
+  context[symbol] = this; //用symbol键存func. 🟡这个this指向的是调用myCall的sayName函数，不是指向person obj的
 
-  //newArgs存为：["boundArgs[0]", "boundArgs[1]", "boundArgs[2]"]  --> 为下面的eval使用
-  let newArgs = Array.from(boundArgs).map(
-    (arg, index) => `boundArgs[${index}]`
-  );
+  const result = context[symbol](...args);
 
-  // result = eval( obj.originalFn(boundArgs[0],boundArgs[1],boundArgs[2])"  )
-  let result = eval('obj.originalFn(' + newArgs + ')');
-
-  delete obj.originalFn; // 删掉刚加的originalFn属性
+  delete context[symbol];
 
   return result;
 };
