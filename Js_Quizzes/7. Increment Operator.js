@@ -4,7 +4,7 @@
 let a = 1;
 const b = ++a; // it will increment and return the value *after* incrementing
 // a's value will also get updated
-const c = a++; // it will increment as well, but it will return the value *before* incrementing
+const c = a++; // it will increment but return the value *before* incrementing
 // a's value will also get updated
 
 console.log(a); //3

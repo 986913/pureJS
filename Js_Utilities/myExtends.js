@@ -42,12 +42,12 @@ expect(ExtendedType.staticSuper).toBe('staticSuper');
 expect(ExtendedType.__proto__).toBe(SuperType);
 
 /*--------------------------Solution ------------------------- */
-const myExtends = (SuperType, SubType) => {
+const myExtends = (Parent, Child) => {
   // instance object properties and methods 的继承 in ES5 --> 子constructor's prototype point to 父constructor's instance object
-  SubType.prototype = new SuperType();
+  Child.prototype = new Parent();
 
   // static method 的继承 in ES5 --> Object.setPrototypeOf(子constructor, 父constructor);
-  Object.setPrototypeOf(SubType, SuperType);
+  Object.setPrototypeOf(Child, Parent);
 
-  return SubType;
+  return Child;
 };
