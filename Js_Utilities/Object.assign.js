@@ -110,7 +110,7 @@ function objectAssign(target, ...sources) {
   return result;
 }
 
-/* ------------------------------ 👍 Code solution 2: ---------------------------- */
+/* ------------------------------ 👍👍👍👍 Code solution 2: ---------------------------- */
 function objectAssign(target, ...sources) {
   if (target === null || target === undefined) {
     throw new Error('invalid target');
