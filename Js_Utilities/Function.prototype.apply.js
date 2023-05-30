@@ -41,26 +41,17 @@ console.log(bi);
   }
 */
 
-/* ------------------ Solution Code ---------------------------------------------------- */
+/* ------------------ Solution: same as call just the args is an array -------------------------------- */
+Function.prototype.myApply = function (thisArg, args) {
+  // you tie a function into an object(context) as if it belonged to the object
+  const symbol = Symbol(); // create unique key
 
-Function.prototype.myApply = function (obj, boundArgs) {
-  // console.log(this) //🟡这个this指向的是调用myBind的sayName函数，不是指向person obj的
+  context = Object(thisArg == undefined ? window : thisArg); // set context to windows if null and Create an object to handle primitive value
+  context[symbol] = this; // 'this' points to the calling function here 🟡this指向的是调用myBind的sayName函数，不是指向person obj的
 
-  obj.originalFn = this; //相当于给obj添加了一个originalFn函数，并且函数就是myCall的调用者:sayName
+  const result = context[symbol](...args); // call the function
 
-  if (!boundArgs) {
-    result = obj.originalFn();
-  } else {
-    //newArgs存为：["boundArgs[0]", "boundArgs[1]", "boundArgs[2]"]  --> 为下面的eval使用
-    let newArgs = Array.from(boundArgs).map(
-      (arg, index) => `boundArgs[${index}]`
-    );
+  delete context[symbol]; // delete the unique key
 
-    // result = eval( obj.originalFn(boundArgs[0],boundArgs[1],boundArgs[2])"  )
-    result = eval('obj.originalFn(' + newArgs + ')');
-  }
-
-  delete obj.originalFn; // 删掉刚加的originalFn属性
-
-  return result;
+  return result; // return result
 };
