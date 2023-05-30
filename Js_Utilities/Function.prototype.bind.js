@@ -53,6 +53,16 @@ Function.prototype.myBind = function (obj, ...boundArgs) {
   }
 
   return function (...args) {
+    //调用 originalFunc 函数，并将 obj 设置为函数执行时的上下文（即 this 值, 同时将 boundArgs 和 args 数组合并为一个参数数组，作为参数传递给 originalFunc。
     return Reflect.apply(originalFunc, obj, [...boundArgs, ...args]);
   };
 };
+
+/**
+Reflect.apply()是JS的内置函数，用于调用指定函数并传递给定的参数：
+
+  Reflect.apply(targetFunction, thisArgument, argumentsList)
+      targetFunction：要调用的函数。
+      thisArgument：指定函数执行时的上下文（即 this 值）。
+      argumentsList：一个类数组对象，包含要传递给函数的参数。
+ */
