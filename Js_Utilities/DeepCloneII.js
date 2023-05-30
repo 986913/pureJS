@@ -31,13 +31,34 @@ const clonedObj2 = deepClone(obj2); // Should not cause a stack overflow by recu
 clonedObj2.a.b = 'something new';
 obj2.a.b === obj2; // This should still be true
 
-/* -------------------------------- Code solution 1  -------------------------------------- */
+/* -------------------------------- 👍👍👍 Code solution 1: Recursion + for...of  -------------------------------------- */
+function cloneDeep(value, cache = new Map()) {
+  // when value is primitive or null (递归终止时)
+  if (value === null || typeof value !== 'object') return value;
 
+  // Check for circular reference
+  if (cache.has(value)) {
+    return cache.get(value);
+  }
+
+  //单层递归逻辑：
+  const result = Array.isArray(value) ? [] : {};
+  cache.set(value, result);
+  const keys = [...Object.getOwnPropertySymbols(value), ...Object.keys(value)];
+
+  //注意用的for...of
+  for (const key of keys) {
+    const val = value[key];
+    result[key] = cloneDeep(val, cache);
+  }
+
+  return result;
+}
+
+/* -------------------------------- Code solution 2: Recursion + 罗列date类型  -------------------------------------- */
 const isPrimitiveOrFunction = (value) =>
   typeof value !== 'object' || value === null || typeof value === 'function';
-
 const lowerCaseTheFirstLetter = (str) => str[0].toLowerCase() + str.slice(1);
-
 const getType = (value) => {
   const type = typeof value;
   if (type !== 'object') return type;
@@ -60,7 +81,6 @@ const getType = (value) => {
 
   return lowerCaseTheFirstLetter(formatted);
 };
-
 /**
  * @param {*} value
  * @return {*}
@@ -88,7 +108,21 @@ function deepClone(value, cache = new Map()) {
 
   if (type === 'function') return value;
 
-  if (type === 'array') return value.map((item) => deepClone(item));
+  if (type === 'array') {
+    {
+      if (cache.has(value)) return cache.get(value); // Check for circular reference
+
+      const cloned = [];
+      cache.set(value, cloned); // Store cloned array in cache
+
+      value.forEach((item) => {
+        cloned.push(deepClone(item, cache));
+      });
+      return cloned;
+    }
+  }
+
+  // if (type === 'array') return value.map((item) => deepClone(item));
 
   if (type === 'date') return new Date(value);
 
@@ -100,19 +134,21 @@ function deepClone(value, cache = new Map()) {
    * 如果没有，则创建一个新的对象 cloned，并将该对象存储到 cache 中。
    * 然后，遍历原始对象的所有属性，对每个属性进行深拷贝，并将拷贝后的属性值赋值给 cloned 对象相应的属性。
    */
-  if (cache.has(value)) return cache.get(value);
-  const cloned = Object.create(Object.getPrototypeOf(value));
-  cache.set(value, cloned); // 是将已经拷贝过的对象存储到缓存中，避免重复拷贝和循环引用的问题。
+  if (type === 'object') {
+    if (cache.has(value)) return cache.get(value); // Check for circular reference
 
-  for (const key of Reflect.ownKeys(value)) {
-    cloned[key] = isPrimitiveOrFunction(value[key])
-      ? value[key]
-      : deepClone(value[key], cache);
+    const cloned = Object.create(Object.getPrototypeOf(value));
+    cache.set(value, cloned); // 是将已经拷贝过的对象存储到缓存中，避免重复拷贝和循环引用的问题。
+
+    for (const key of Reflect.ownKeys(value)) {
+      cloned[key] = isPrimitiveOrFunction(value[key])
+        ? value[key]
+        : deepClone(value[key], cache);
+    }
+
+    return cloned;
   }
-
-  return cloned;
 }
-
 /**
  * 1. Object.getPrototypeOf() 用于获取指定对象的原型（也就是 __proto__ 属性）。
  * 2. Reflect.ownKeys() 是一个 JavaScript 内置方法，用于返回一个对象的所有自身属性（包括不可枚举属性）的属性键（数组形式）. example:
@@ -127,5 +163,5 @@ function deepClone(value, cache = new Map()) {
         如果只想获取 Symbol 属性，可以使用 Object.getOwnPropertySymbols() 方法
  */
 
-/* -------------------------------- Code solution 2 -------------------------------------- */
+/* -------------------------------- Code solution 3 -------------------------------------- */
 const clonedObj = structuredClone(value);

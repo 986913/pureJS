@@ -18,13 +18,12 @@ clonedObj2.foo[0].bar; // Should still be 'baz'.
 
 /* ------------- Code solution 1 : using for...in + recurrsion ---------------------------------- */
 function deepClone(value) {
-  //递归终止时候：
+  // when value is primitive or null (递归终止时)
   if (typeof value !== 'object' || value === null) return value;
 
   //单层递归逻辑：
-  const isArr = Array.isArray(value);
-  let result = isArr ? [] : {};
-
+  const result = Array.isArray(value) ? [] : {};
+  //注意用的for...in
   for (let key in value) {
     // 保证key不是原型上的属性
     if (value.hasOwnProperty(key)) {
@@ -38,7 +37,7 @@ function deepClone(value) {
 
 /* ------------- Code solution 2 : using Object.fromEntries + recurrsion ---------------------------------- */
 function deepClone(value) {
-  // when value is primitive(递归终止时)
+  // when value is primitive or null (递归终止时)
   if (typeof value !== 'object' || value === null) return value;
 
   // when value is array: recurrsion
