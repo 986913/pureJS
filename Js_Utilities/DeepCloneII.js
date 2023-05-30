@@ -19,6 +19,9 @@ const obj1 = {
   date: new Date(),
   reg: new RegExp('/bar/ig'),
   [Symbol('s')]: 'baz',
+  set: new Set().add('ming'),
+  map: new Map().set({ key: 'name', value: 'ming' }),
+  fn: () => console.log('fn'),
 };
 const clonedObj1 = deepClone(obj1);
 clonedObj1.arr.push(3);
@@ -32,13 +35,34 @@ clonedObj2.a.b = 'something new';
 obj2.a.b === obj2; // This should still be true
 
 /* -------------------------------- 👍👍👍 Code solution 1: Recursion + for...of  -------------------------------------- */
-function cloneDeep(value, cache = new Map()) {
-  // when value is primitive or null (递归终止时)
-  if (value === null || typeof value !== 'object') return value;
+function deepClone(value, cache = new Map()) {
+  // when value is primitive or null or function (递归终止时)
+  if (
+    value === null ||
+    typeof value !== 'object' ||
+    typeof value === 'function'
+  )
+    return value;
 
   // Check for circular reference
   if (cache.has(value)) {
     return cache.get(value);
+  }
+  // when value is set
+  if (value instanceof Set) {
+    const cloned = new Set();
+    value.forEach((item) => {
+      cloned.add(deepClone(item));
+    });
+    return cloned;
+  }
+  // when value is map
+  if (value instanceof Map) {
+    const cloned = new Map();
+    value.forEach((value, key) => {
+      cloned.set(key, deepClone(value));
+    });
+    return cloned;
   }
 
   //单层递归逻辑：
@@ -49,7 +73,7 @@ function cloneDeep(value, cache = new Map()) {
   //注意用的for...of
   for (const key of keys) {
     const val = value[key];
-    result[key] = cloneDeep(val, cache);
+    result[key] = deepClone(val, cache);
   }
 
   return result;
