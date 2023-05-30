@@ -39,8 +39,9 @@ function subtract(num1, num2) {
     j--;
   }
 
-  /* 对类似这种两数相等的case: 
-    比如num1=100, num2=100，得到的result为[0，0，0], 所以要while loop将其变成[0] 
+  /* 对类似这些的cases: 
+    1. 比如num1='100', num2='100'，得到的result为[0，0，0], 所以要while loop将其变成[0] 
+    2. 比如num1='30', num2='25', 得到的result为[0，5], 所以要while loop将其变成[5] 
   */
   while (result.length > 1 && parseInt(result[0]) === 0) {
     result.shift();
