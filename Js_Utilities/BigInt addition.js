@@ -33,13 +33,13 @@ var addStrings = function (num1, num2) {
 
     let curSum = parseInt(n1) + parseInt(n2) + carry; //计算sum
     let reminder = curSum % 10; //取个位数
-    result.push(reminder);
+    result.unshift(reminder);
 
     carry = curSum >= 10 ? 1 : 0;
 
-    j--;
     i--;
+    j--;
   }
 
-  return result.reverse().join('');
+  return result.join('');
 };
