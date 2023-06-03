@@ -69,7 +69,7 @@ objectAssign(undefined); // throw err
 /*-------------------- 用例测试8-------------------------*/
 objectAssign({}, { a: 3 }, null, undefined, NaN, 1, true); // {a: 3}  --> non-string primitives in source are ignored， 因为布尔值、数字和 NaN，它们不具有可枚举属性
 
-/* ------------------------------ Code solution 1:---------------------------- */
+/* ------------------------------ Code solution 1 : 🚫 ---------------------------- */
 /**
  * @param {any} target
  * @param {any[]} sources

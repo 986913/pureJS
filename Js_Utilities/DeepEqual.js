@@ -27,7 +27,7 @@ const getType = (val) => Object.prototype.toString.call(val);
 const shouldDeepCompare = (type) =>
   type === '[object Object]' || type === '[object Array]';
 
-export default function deepEqual(valueA, valueB) {
+function deepEqual(valueA, valueB) {
   const typeA = getType(valueA);
   const typeB = getType(valueB);
 
