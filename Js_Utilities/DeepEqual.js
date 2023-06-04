@@ -31,8 +31,8 @@ deepEqual(c, d); // true
 
 /* -------------------------------- Code solution  -------------------------------------- */
 /**
- * @param {*} valueA
- * @param {*} valueB
+ * @param {*} a
+ * @param {*} b
  * @return {boolean}
  */
 
