@@ -15,6 +15,7 @@ const v7 = [{ id: '1' }];
 const v8 = [{ id: '2' }];
 deepEqual(v7, v8); // false
 
+/* ------ 用例测试2 ---------- */
 const a = [1, 2];
 a[2] = a;
 const b = [1, 2];
@@ -43,7 +44,7 @@ function deepEqual(a, b, cache = new Map()) {
   const typeA = getType(a);
   const typeB = getType(b);
 
-  // Check for circular reference
+  // Check for circular reference, eg:用例测试2
   if (cache.has(a) || cache.has(b)) return true;
   cache.set(a, true);
   cache.set(b, true);
