@@ -1,6 +1,6 @@
 /**
-  The Promise.allSettled() method returns a promise that resolves after all of the given promises have either fulfilled or rejected, with an array of objects that each describes the outcome of each promise.
-    - 只有等Promise数组所有的Promise对象fulfilled了(不管是resolve✅还是reject❌), 然后"Promise.allSettled"函数才会返回一个装有所有resolved/rejected values的数组(无论是解决或者拒绝)
+  The Promise.allSettled() method takes promises array as input, returns a single Promise：
+    - 只有等Promise数组所有的Promise对象fulfilled了(不管是resolve✅还是reject❌), 然后"Promise.allSettled"函数会返回一个Promise, 装有所有resolved/rejected values的数组
 
   Different from `Promise.all()` which rejects right away once an error occurs, 
   `Promise.allSettled()` waits for all promises to settle.

@@ -1,7 +1,7 @@
 /**
-  The Promise.all() method takes an iterable of promises as an input, and returns a single Promise that resolves to an array of the results of the input promises 
-    - 如果在Promise数组中所有Promise被✅resolved后，"Promise.all"函数将返回一个装有all resolved values的数组
-    - 如果在Promise数组中任意一个Promise被❌reject后  "Promise.all"函数将立即返回该reject结果,不会等待剩下的Promise对象的状态
+  The Promise.all() method takes promises array as input, and returns a single Promise：
+    - 如果在Promise数组中所有Promise被✅resolved后，"Promise.all"函数将返回一个promise, 装有all resolved values的数组
+    - 如果在Promise数组中任意一个Promise被❌reject后  "Promise.all"函数将立即返回一个promise,装有reject结果,不会等待剩下的Promise对象的状态
 
   Could you write your own `all()` ? which should works the same as `Promise.all()`
  */

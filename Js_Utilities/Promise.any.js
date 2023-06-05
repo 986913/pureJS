@@ -1,7 +1,7 @@
 /**
-  Promise.any() takes an iterable of Promise objects and, as soon as one of the promises in the iterable fulfills, returns a single promise that resolves with the value from that promise
-    - 如果Promise数组中至少有1个Promise 对象被✅，Promise.any()就会返回第1个解决的Promise 对象的解决值；
-    - 如果所有Promise对象都被❌，Promise.any()将返回一个被拒绝的 Promise 对象,并使用一个 AggregateError 对象来包装所有拒绝的原因
+  The Promise.any() method takes promises array as input, returns a single Promise：
+    - 如果Promise数组中至少有1个Promise 对象被✅，Promise.any()就会返回一个Promise,装有第1个解决的Promise对象的解决值；
+    - 如果所有Promise对象都被❌，Promise.any()将返回一个被拒绝的Promise对象,并使用一个 AggregateError 对象来包装所有拒绝的原因
 
   Can you implement a `any()` to work the same as `Promise.any()`?
 
