@@ -18,11 +18,17 @@ function fib(n) {
 // Space: O(n)
 function fib(n) {
   const cache = {};
+
   function memo(n) {
     if (n < 2) return n;
-    cache[n] ??= memo(n - 1) + memo(n - 2);
+
+    if (!cache[n]) {
+      cache[n] = memo(n - 1) + memo(n - 2);
+    }
+
     return cache[n];
   }
+
   return memo(n);
 }
 
