@@ -47,7 +47,7 @@ get(obj, 'a.c', 'bfe'); // 'bfe'
  * @return {*}
  */
 
-function get(object, path, defaultValue) {
+function get(object, path, defaultValue = undefined) {
   const paths = Array.isArray(path)
     ? path
     : path.replaceAll('[', '.').replaceAll(']', '').split('.');
@@ -62,7 +62,6 @@ function get(object, path, defaultValue) {
     index++;
   }
 
-  const value = index && index === len ? obj : undefined;
-
-  return value !== undefined ? value : defaultValue;
+  const result = index && index === len ? obj : undefined;
+  return result ?? defaultValue;
 }
