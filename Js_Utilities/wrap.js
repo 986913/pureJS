@@ -60,47 +60,7 @@ originalArr[2] = 6;
 arr; // [2,3,6]
 originalArr; // [2,3,6]
 
-//https://www.youtube.com/watch?time_continue=506&v=KjoJNLQ-WDY&embeds_referring_euri=https%3A%2F%2Fbigfrontend.dev%2F&source_ve_path=MTM5MTE3LDEyNzI5OSwxMzkxMTcsMTM5MTE3LDEzOTExNywxMzkxMTcsMTM5MTE3LDI4NjY2&feature=emb_logo&ab_channel=JSer
-/*----------------------------- Code solution 1: use Proxy class ---------------------------------------*/
-/**
- * @param {any[]} arr
- * @returns {?} - sorry no type hint for this
- */
-
-function wrap(arr) {
-  return new Proxy(arr, {
-    get(target, prop) {
-      //if use as iterable:
-      if (prop === Symbol.iterator) {
-        return target[prop].bind(target);
-      }
-
-      let index = parseInt(prop, 10);
-      if (index < 0) {
-        index += arr.length;
-        return target[index];
-      }
-
-      return target[prop];
-    },
-    set(target, prop, val) {
-      let index = parseInt(prop, 10);
-      if (index < 0) {
-        index += arr.length;
-        target[index] = val;
-
-        if (index < 0) {
-          throw new Error('index is overflow');
-        }
-        return true;
-      }
-      target[prop] = val;
-      return true;
-    },
-  });
-}
-
-/*----------------------------- Code solution 2: use Proxy class + Reflect ---------------------------------------*/
+/*----------------------------- Code solution : use Proxy class + Reflect ---------------------------------------*/
 const isNumber = (prop) =>
   typeof prop === 'string' && !Number.isNaN(Number(prop));
 const normalize = (idx, arrLength) => (idx >= 0 ? idx : idx + arrLength);
