@@ -5,7 +5,7 @@ fib(10); // 55
 fib(28); // 317811
 fib(35); // 9227465
 
-/* --------------------------------- Code solution 1: Recursion ------------------------------- */
+/* --------------------------------- Code solution 1: 👍 Recursion ------------------------------- */
 // Time: O(2^n)
 // Space: O(n)
 function fib(n) {
@@ -13,7 +13,7 @@ function fib(n) {
   return fib(n - 1) + fib(n - 2);
 }
 
-/* --------------------------------- Code solution 2: Memoized Recursion ------------------------ */
+/* --------------------------------- Code solution 2: 👍👍👍Memoized Recursion ------------------------ */
 // Time: O(n)
 // Space: O(n)
 function fib(n) {
