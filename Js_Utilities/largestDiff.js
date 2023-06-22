@@ -40,3 +40,13 @@ function largestDiff(arr) {
   const result = Math.abs(arr[arr.length - 1] - arr[0]);
   return Number.isFinite(result) ? result : Infinity;
 }
+
+/* ------------------------- Code solution3 : Math.min + Math.max ------------------------------- */
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+function largestDiff(arr) {
+  if (arr.length <= 1) return 0;
+  return Math.abs(Math.max(...arr) - Math.min(...arr));
+}
