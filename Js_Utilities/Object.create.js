@@ -1,5 +1,8 @@
 /**
-  You can use [Object.create()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) to create a new object. 
+  You can use [Object.create()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) to create a new object.
+  
+  The Object.create() static method creates a new object, using an existing object as the prototype of the newly created object. 
+  
   Can you write your own `myObjectCreate()` to do the same(well for the basic usage) ?
   Note:
     1. you don't need to support `propertiesObject`2nd parameter of Object.create
