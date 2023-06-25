@@ -55,4 +55,9 @@ isValidIP('0A:0B:0C:0D:0E:0F:01'); //false
 isValidIP('0A'); //false
 isValidIP('0A:0B'); //false
 
-/* ------------------------ Code solution ----------------------------- */
+/* ------------------------ Code solution: regular expression ----------------------------- */
+function isValidIP(str) {
+  let IPv4Regex = new RegExp(/^((\d|[1-9]\d|1\d\d|2[0-5][0-5])\.){4}$/);
+  let IPv6Regex = new RegExp(/^([0-9a-fA-F]{1,4}:){8}$/);
+  return IPv4Regex.test(str + '.') || IPv6Regex.test(str + ':');
+}
