@@ -8,6 +8,20 @@
   Here is the [detailed spec](https://www.ecma-international.org/ecma-262/6.0/#sec-samevalue), can you implement your own `is()`?
  */
 
+/*-------------------- 用例测试-------------------------*/
+is(0, true); //false
+is(0, '0'); //false
+is('0', '0'); //true
+is('true', 'true'); //true
+is({}, {}); //false
+is(0, 0); //true
+is(0, -0); //false
+is(-0, 0); //false
+is(0, true); //false
+is(-0, -0); //true
+is(NaN, NaN); //true
+is(Infinity, Infinity); // true
+
 /* ---------------------------- Solution -------------------------------- */
 /**
  * @param {any} a
