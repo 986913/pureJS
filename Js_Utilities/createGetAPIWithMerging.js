@@ -40,3 +40,56 @@
   For test purpose, please provide a clear method to clear all cache. 
     getAPIWithMerging.clearCache()
  */
+
+/*---------------------------------- Code solution ------------------------------------------*/
+/* 
+  getAPI is bundled with your code, config will only be some plain objects.
+  const getAPI = <T>(path: string, config: SomeConfig): Promise<T> => { ... }
+ */
+
+const cache = new Map(); //Create a new Map to serve as the cache
+/**
+ * @param {string} path
+ * @param {object} config
+ * only plain objects/array made up serializable primitives
+ * @returns {Promise<any>}
+ */
+function getAPIWithMerging(path, config) {
+  // Generate a unique key for the cache based on the path and config
+  const key = getHashKey(path, config);
+  // Check if the result for the given key exists in the cache
+  const result = cache.get(key);
+
+  if (result) {
+    // If the result exists and has not expired, then return the cached promise
+    if (result.expiredAt > Date.now()) {
+      return Promise.resolve(result.promise);
+    }
+    // If the result exists and has expired, remove it from the cache
+    cache.delete(key);
+  }
+  // Call the original getAPI function to fetch the data
+  const promise = getAPI(path, config);
+  // Store the promise in the cache with an expiration time of 1000ms
+  cache.set(key, { promise, expiredAt: Date.now() + 1000 });
+  // Return the promise
+  return promise;
+}
+getAPIWithMerging.clearCache = () => cache.clear();
+
+/* Helper function to generate a unique key for the cache based on the path and config
+  通过这种方式生成的缓存键保证了每个 API 请求的唯一性，因为它由路径和配置的键值对组成，并且保证了排序的一致性，以便在不同的调用中生成相同的键:
+    eg1: getHashKey('/list', { keyword: 'bfe'})                    ----> '["/list",["keyword","bfe"]]'
+    eg2: getHashKey('/list', { keyword: 'bfe', akey: 'aa'})        ----> '["/list",["akey","aa"],["keyword","bfe"]]'
+    eg3: getHashKey('/list', { keyword: 'bfe', title: 'BFEtitle'}) ----> '["/list",["keyword","bfe"],["title","BFEtitle"]]'
+*/
+function getHashKey(path, config) {
+  const arr = [path];
+  const keys = Object.keys(config);
+  keys.sort(); // Sort the keys alphabetically to ensure consistent ordering
+  for (let key of keys) {
+    arr.push([key, config[key]]);
+  }
+  // Convert the array to a JSON string to generate the key
+  return JSON.stringify(arr);
+}
