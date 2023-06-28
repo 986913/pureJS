@@ -21,19 +21,19 @@ getNthNum(20); // '1113122113121113222123211211131211121311121321123113213221121
 /* -------------------- Code solution -------------------- */
 // helper function:
 const transform = (num) => {
-  let currentDigit = '';
-  let currentCount = 0;
+  let prevDigit = '';
+  let prevCount = 0;
   let result = '';
-  for (let i = 0; i <= num.length; i++) {
-    if (num[i] === currentDigit) {
-      currentCount += 1;
-    } else {
-      if (currentCount > 0) {
-        result += currentCount + currentDigit;
-      }
 
-      currentDigit = num[i];
-      currentCount = 1;
+  for (let i = 0; i <= num.length; i++) {
+    if (num[i] === prevDigit) {
+      prevCount += 1;
+    } else {
+      if (prevCount > 0) {
+        result += prevCount + prevDigit;
+      }
+      prevDigit = num[i];
+      prevCount = 1;
     }
   }
   return result;
@@ -42,7 +42,7 @@ const transform = (num) => {
 /**
  * @param {number} n - integer
  * @returns {string}
- * Main function:
+ * Main function: 使用一个循环来重复调用 transform(num)，每次将上一次生成的字符串作为输入。循环的次数由参数 n 决定。当 n 减到 1 时，循环结束，函数返回最终生成的字符串 num。
  */
 function getNthNum(n) {
   let num = '1';
