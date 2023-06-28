@@ -71,10 +71,7 @@ function classNames(...args) {
 
   return results.join(' ');
 }
-
-/**
- * 知识点：typeof [] gives 'object', so you need to handle arrays before objects.
- */
+/** 知识点：typeof [] gives 'object', so you need to handle arrays before objects.*/
 
 /* --------------------- Code solution 1: use数组的Reduce ---------------------------- */
 function classNames(...args) {
