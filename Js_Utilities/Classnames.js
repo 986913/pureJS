@@ -56,7 +56,7 @@ function classNames(...args) {
 
     // handle arrays: Invoke the classNames function recursively
     if (Array.isArray(arg)) {
-      results.push(classNames(...arg)); // recursion here;
+      results.push(classNames(...arg)); // 👈 recursion here
       return;
     }
 
