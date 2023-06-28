@@ -3,10 +3,10 @@ classNames('foo', 'bar'); // 'foo bar'
 classNames('button', isLiked && 'liked'); // 'button liked' (if isLiked is truty)
 classNames('foo', { bar: true }); // 'foo bar'
 classNames({ 'foo-bar': true }); // 'foo-bar'
-classNames({ 'foo-bar': false }); // ''
+classNames({ 'foo-bar': false }); // '' --> object's enumerable property keys are kept if values is string and truthy
 classNames({ foo: true }, { bar: true }); // 'foo bar'
 classNames({ foo: true, bar: true }); // 'foo bar'
-classNames({ foo: true, bar: false, qux: true }); // 'foo qux'
+classNames({ foo: true, bar: false, qux: true }); // 'foo qux' --> object's enumerable property keys are kept if values is string and truthy
 classNames('a', ['b', { c: true, d: false }]); // 'a b c'
 classNames(
   'foo',
@@ -17,7 +17,21 @@ classNames(
   'baz',
   { quux: true }
 ); // 'foo bar baz quux'
-classNames(null, false, 'bar', undefined, 0, 1, { baz: null }, ''); // 'bar 1'
+classNames(
+  null,
+  false,
+  'bar',
+  undefined,
+  0,
+  1,
+  100,
+  { baz: null },
+  '',
+  Symbol(),
+  1n
+); // 'bar 1 100' --> string and number are used directly. other primitives are ignored.
+classNames({ BFE: [], dev: true, is: 3 }, obj); // 'BFE dev is cool'
+classNames(['BFE', [{ dev: true }, ['is', [obj]]]]); // 'BFE dev is cool'
 
 /* --------------------- Code solution ---------------------------- */
 /**
