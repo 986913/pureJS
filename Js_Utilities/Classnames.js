@@ -33,7 +33,7 @@ classNames(
 classNames({ BFE: [], dev: true, is: 3 }, obj); // 'BFE dev is cool'
 classNames(['BFE', [{ dev: true }, ['is', [obj]]]]); // 'BFE dev is cool'
 
-/* --------------------- Code solution ---------------------------- */
+/* --------------------- Code solution 1:  Recursion ---------------------------- */
 /**
  * @param {...(string|Object|Array<string|Object>)} args
  * @return {string}
@@ -62,10 +62,8 @@ function classNames(...args) {
 
     // handle objects: Loop through the key/value pairs and add the keys with truthy values into the results collection
     if (argType === 'object') {
-      for (const key in arg) {
-        if (arg[key] && arg.hasOwnProperty(key)) {
-          results.push(key);
-        }
+      for (let [key, value] of Object.entries(arg)) {
+        if (!!value) results.push(key);
       }
       return;
     }
@@ -77,3 +75,26 @@ function classNames(...args) {
 /**
  * 知识点：typeof [] gives 'object', so you need to handle arrays before objects.
  */
+
+/* --------------------- Code solution 1: use数组的Reduce ---------------------------- */
+function classNames(...args) {
+  return args
+    .flat(Infinity)
+    .reduce((acc, cur) => {
+      if (cur === null) return acc;
+
+      switch (typeof cur) {
+        case 'number':
+        case 'string':
+          acc.push(cur);
+          break;
+        case 'object':
+          for (let [key, val] of Object.entries(cur)) {
+            if (!!val) acc.push(key);
+          }
+          break;
+      }
+      return acc;
+    }, [])
+    .join(' ');
+}
