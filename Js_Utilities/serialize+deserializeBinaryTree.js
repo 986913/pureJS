@@ -30,6 +30,7 @@ expect(isIdentical(tree1, tree2)).toBe(true);
 /**
  * @param {Node} root
  * @return {string}
+ *  BFS
  */
 function serialize(root) {
   let visited = [];
@@ -52,7 +53,7 @@ function serialize(root) {
 /**
  * @param {string} str
  * @return {Node}
- * leetcode🟡108 变形题
+ * leetcode🟡108 变形题: DFS
  */
 function deserialize(str) {
   const arr = str.split(',');
