@@ -10,9 +10,34 @@
  */
 
 /*-------------------- 用例测试1 -------------------------*/
-const func = (...args) => args
-const memoed = memoizeOne(func)；
-expect(typeof memoed).toBe('function')
+function add(a, b) {
+  return a + b;
+}
+const memoizedAdd = memoizeOne(add);
+
+memoizedAdd(1, 2);
+// add function: is called
+// [new value returned: 3]
+
+memoizedAdd(1, 2);
+// add function: not called
+// [cached result is returned: 3]
+
+memoizedAdd(2, 3);
+// add function: is called
+// [new value returned: 5]
+
+memoizedAdd(2, 3);
+// add function: not called
+// [cached result is returned: 5]
+
+memoizedAdd(1, 2);
+// add function: is called
+// [new value returned: 3]
+// 👇
+// While the result of `add(1, 2)` was previously cached
+// `(1, 2)` was not the *latest* arguments (the last call was `(2, 3)`)
+// so the previous cached result of `(1, 3)` was lost
 /*-------------------- 用例测试2 -------------------------*/
 const func = (...args) => args
 const memoed = memoizeOne(func)；
@@ -106,8 +131,7 @@ const func = (a, b, c) => {
   callCount += 1
   return a + b + c
 }
-const memoed = memoizeOne(func, (args1, args2) => Math.max(...args1) === Math.max(...args2)
-                    )
+const memoed = memoizeOne(func, (args1, args2) => Math.max(...args1) === Math.max(...args2))
 expect(memoed(1,2,3)).toBe(6)
 expect(callCount).toBe(1)
 expect(memoed(1,1,3)).toBe(6)
@@ -119,3 +143,7 @@ expect(callCount).toBe(2)
 
 
 /* --------------------------------- Code solution ------------------------------------- */
+
+
+
+

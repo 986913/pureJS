@@ -26,6 +26,32 @@ memoed2(1, 2); // 3, add is called, 3 is cached with key 'samekey'
 memoed2(1, 2); // 3, since key is the same, 3 is returned without calling add
 memoed2(1, 3); // 3, since key is the same, 3 is returned without calling add
 
+/*-------------------------- 用例测试3 ------------------------------*/
+function add(a, b) {
+  return a + b;
+}
+const memoizedAdd = memo(add);
+
+memoizedAdd(1, 2);
+// add function: is called
+// [new value returned: 3]
+
+memoizedAdd(1, 2);
+// add function: not called
+// [cached result is returned: 3]
+
+memoizedAdd(2, 3);
+// add function: is called
+// [new value returned: 5]
+
+memoizedAdd(2, 3);
+// add function: not called
+// [cached result is returned: 5]
+
+memoizedAdd(1, 2);
+// add function: not called
+// [new value returned: 3]
+
 /* ------------------------- Code solution ------------------------------- */
 /**
  * @param {Function} func
