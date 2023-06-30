@@ -14,23 +14,18 @@ function add(a, b) {
   return a + b;
 }
 const memoizedAdd = memoizeOne(add);
-
 memoizedAdd(1, 2);
 // add function: is called
 // [new value returned: 3]
-
 memoizedAdd(1, 2);
 // add function: not called
 // [cached result is returned: 3]
-
 memoizedAdd(2, 3);
 // add function: is called
 // [new value returned: 5]
-
 memoizedAdd(2, 3);
 // add function: not called
 // [cached result is returned: 5]
-
 memoizedAdd(1, 2);
 // add function: is called
 // [new value returned: 3]
@@ -40,7 +35,7 @@ memoizedAdd(1, 2);
 // so the previous cached result of `(1, 3)` was lost
 /*-------------------- 用例测试2 -------------------------*/
 const func = (...args) => args
-const memoed = memoizeOne(func)；
+const memoed = memoizeOne(func);
 memoed(1) //[1]
 memoed(1, 2) //[1,2]
 memoed(1, 2, 3) //[1,2,3]
@@ -143,7 +138,30 @@ expect(callCount).toBe(2)
 
 
 /* --------------------------------- Code solution ------------------------------------- */
+/**
+ * @param {Function} func
+ * @param {(args: any[], newArgs: any[]) => boolean} [isEqual]
+ * @returns {any}
+ */
+function memoizeOne(func, isEqual=defaultIsEqual) {
+  let prevArgs = [] //存储前一次func调用时的参数
+  let prevThis; // 存储前一次func调用时的this值（即函数被调用时的上下文）。
+  let prevResult; // 存储前一次func调用的结果
+  
+  return function (...newArgs) {
+    //如果this值或者参数发生了变化,那需要实际执行函数去更新 prevResult, prevArgs,  prevThis
+    if ( prevThis !== this || !isEqual(prevArgs, newArgs)) {
+      prevResult = func.call(this, ...newArgs)
+      prevArgs = newArgs
+      prevThis = this
+    }
+    
+    return prevResult // 最后无论是否执行了函数的实际调用，都返回存储在prevResult中的结果
+  }
+}
 
-
-
-
+// helper function:
+const defaultIsEqual = (a,b) => {
+  if(a.length !== b.length) return false;
+  return a.every((item, index)=>item === b[index])
+}
