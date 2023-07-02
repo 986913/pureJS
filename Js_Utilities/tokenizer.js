@@ -57,7 +57,7 @@ function* tokenize(str) {
  * @param {string} str
  * @return {Generator}
  */
-function* tokenize(str) {
+function* tokenizer(str) {
   let buffer = '';
 
   for (let i = 0; i < str.length; i++) {
