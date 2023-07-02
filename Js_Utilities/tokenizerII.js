@@ -22,15 +22,6 @@ calculate('1/0 + (99 - 1000)/(3-3)'); // NaN
 calculate(' (3 *      3 - 8 - 1) / (2 *(1 + 1)  - 4) '); // NaN
 
 /* ------------------------- Soltion -------------------------------- */
-// helper function:
-function* tokenizer(str) {
-  let s = str.replaceAll(' ', '');
-  const tokens = s.match(/(\d+|[()+\-*/])/g);
-  for (let i = 0; i < tokens.length; i++) {
-    yield tokens[i];
-  }
-}
-
 // precedenece数字越大 代表优先级越高
 const signs = {
   '(': { precedence: 0 },
@@ -40,6 +31,22 @@ const signs = {
   '*': { method: (a, b) => a * b, precedence: 2 },
   '/': { method: (a, b) => a / b, precedence: 2 },
 };
+// helper function:
+function* tokenizer(str) {
+  let s = str.replaceAll(' ', '');
+  const tokens = s.match(/(\d+|[()+\-*/])/g);
+  for (let i = 0; i < tokens.length; i++) {
+    yield tokens[i];
+  }
+}
+// helper function:
+function simpleCalc(operatorStack, valueStack) {
+  const operation = operatorStack.pop();
+  const val_1 = valueStack.pop();
+  const val_2 = valueStack.pop();
+  const result = signs[operation].method(val_2, val_1);
+  valueStack.push(result);
+}
 
 /**
  * @param {string} str
@@ -63,26 +70,17 @@ function calculate(str) {
     } else if (ele === ')') {
       // if the token is ),  Keep popping operator_stack until we see "("
       while (operator_stack[operator_stack.length - 1] !== '(') {
-        const operation = operator_stack.pop();
-        const val_1 = value_stack.pop();
-        const val_2 = value_stack.pop();
-        const result = signs[operation].method(val_2, val_1);
-        value_stack.push(result);
+        simpleCalc(operator_stack, value_stack);
       }
       operator_stack.pop();
     } else if (signs[ele] !== -1) {
       // if the token is one of operators: + - * /
-      // console.log(operator_stack);
       while (
         operator_stack.length > 0 &&
         signs[operator_stack[operator_stack.length - 1]].precedence >=
           signs[ele].precedence
       ) {
-        const operation = operator_stack.pop();
-        const val_1 = value_stack.pop();
-        const val_2 = value_stack.pop();
-        const result = signs[operation].method(val_2, val_1);
-        value_stack.push(result);
+        simpleCalc(operator_stack, value_stack);
       }
       operator_stack.push(ele);
     }
@@ -90,11 +88,7 @@ function calculate(str) {
 
   /********************** step 2 **************************/
   while (operator_stack.length) {
-    const operation = operator_stack.pop();
-    const val_1 = value_stack.pop();
-    const val_2 = value_stack.pop();
-    const result = signs[operation].method(val_2, val_1);
-    value_stack.push(result);
+    simpleCalc(operator_stack, value_stack);
   }
 
   /********************** step 3 **************************/
@@ -102,34 +96,24 @@ function calculate(str) {
   return value_stack.pop();
 }
 
-/*
-  Pseudocode source: https://www.geeksforgeeks.org/expression-evaluation/
-  1. While there are still tokens to be read in,
-    1.1 Get the next token.
-    1.2 If the token is:
-        1.2.1 A number: push it onto the value stack.
-        1.2.2 A variable: get its value, and push onto the value stack.
-        1.2.3 A left parenthesis: push it onto the operator stack.
-        1.2.4 A right parenthesis:
-          1 While the thing on top of the operator stack is not a left parenthesis,
-              1 Pop the operator from the operator stack.
-              2 Pop the value stack twice, getting two operands.
-              3 Apply the operator to the operands, in the correct order.
-              4 Push the result onto the value stack.
-          2 Pop the left parenthesis from the operator stack, and discard it.
-        1.2.5 An operator (call it thisOp):
-          1 While the operator stack is not empty, and the top thing on the operator stack has the same or greater precedence as thisOp,
-            1 Pop the operator from the operator stack.
-            2 Pop the value stack twice, getting two operands.
-            3 Apply the operator to the operands, in the correct order.
-            4 Push the result onto the value stack.
-          2 Push thisOp onto the operator stack.
-
-  2. While the operator stack is not empty,
-      1 Pop the operator from the operator stack.
-      2 Pop the value stack twice, getting two operands.
-      3 Apply the operator to the operands, in the correct order.
-      4 Push the result onto the value stack.
-
-  3. At this point the operator stack should be empty, and the value stack should have only one value in it, which is the final result.
-*/
+/**
+  以 calculate(" 2*(20-300x2 "))为例， tokenizer之后的tokens为 ['2', '*', '(', '20', '-', '300', 'x', '2', ')'] 
+  使用两个栈 value_stack 和 operator_stack 进行计算：
+    遍历标记序列：
+      将数字 2 推入 value_stack：     value_stack = [2]
+      将乘号 * 推入 operator_stack：  operator_stack = ['*']
+      将左括号 ( 推入 operator_stack：operator_stack = ['*', '(']
+      将数字 20 推入 value_stack：    value_stack = [2, 20]
+      将减号 - 推入 operator_stack：  operator_stack = ['*', '(', '-']
+      将数字 300 推入 value_stack：   value_stack = [2, 20, 300]
+      将字母 x 推入 operator_stack：  operator_stack = ['*', '(', '-', 'x']
+      将数字 2 推入 value_stack：     value_stack = [2, 20, 300, 2]
+      将右括号 ) 遇到时，从 operator_stack 中依次弹出运算符，直到遇到左括号 (。 对每个弹出的运算符，从 value_stack 中弹出两个数字进行运算，并将结果推回 value_stack。
+        弹出 x，弹出 2，弹出 300，计算 300 乘以 2 的结果 600，并将 600 推入 value_stack：value_stack = [2, 20, 600]
+        弹出 -，弹出 20，弹出 600，计算 20 减去 600 的结果 -580，并将 -580 推入 value_stack：value_stack = [2, -580]
+      弹出左括号 (：                  operator_stack = ['*']
+    
+    标记序列遍历完毕后，将 operator_stack 中剩余的运算符依次弹出，并对每个运算符进行相应的运算，将结果推回 value_stack。
+      弹出 *，弹出 -580，弹出 2，计算 -580 乘以 2 的结果 -1160，并将 -1160 推入 value_stack：value_stack = [-1160]
+    最终，value_stack 中的唯一元素
+ */
