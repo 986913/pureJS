@@ -55,10 +55,10 @@ const smallestUniqueSubstr = (s) => {
       stack[stack.length - 1] > char &&
       s.indexOf(stack[stack.length - 1], i) > i // string.indexOf(searchValue, fromIndex): 用于查找一个字符串中指定子字符串的位置。它返回子字符串第一次出现的索引，如果找不到该子字符串，则返回-1。
     ) {
+      //如果char比栈元素小 同时，栈顶元素在以后还会出现的话， 那么stack弹出栈顶
       stack.pop();
     }
-
-    stack.push(char); //如果stack中没有char， 就push char
+    stack.push(char);
   }
 
   return stack.join('');
