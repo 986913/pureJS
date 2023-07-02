@@ -60,29 +60,29 @@ function calculate(str) {
   const operator_stack = [];
 
   /********************** step 1 **************************/
-  for (let ele of tokenized) {
-    if (!isNaN(parseInt(ele))) {
+  for (let cur of tokenized) {
+    if (!isNaN(parseInt(cur))) {
       // if the token is number
-      value_stack.push(parseInt(ele));
-    } else if (ele === '(') {
+      value_stack.push(parseInt(cur));
+    } else if (cur === '(') {
       // if the token is (
-      operator_stack.push(ele);
-    } else if (ele === ')') {
+      operator_stack.push(cur);
+    } else if (cur === ')') {
       // if the token is ),  Keep popping operator_stack until we see "("
       while (operator_stack[operator_stack.length - 1] !== '(') {
         simpleCalc(operator_stack, value_stack);
       }
       operator_stack.pop();
-    } else if (signs[ele] !== -1) {
+    } else if (signs[cur] !== -1) {
       // if the token is one of operators: + - * /
       while (
         operator_stack.length > 0 &&
         signs[operator_stack[operator_stack.length - 1]].precedence >=
-          signs[ele].precedence
+          signs[cur].precedence
       ) {
         simpleCalc(operator_stack, value_stack);
       }
-      operator_stack.push(ele);
+      operator_stack.push(cur);
     }
   }
 
@@ -98,7 +98,7 @@ function calculate(str) {
 
 /**
   以 calculate(" 2*(20-300x2 "))为例， tokenizer之后的tokens为 ['2', '*', '(', '20', '-', '300', 'x', '2', ')'] 
-  使用两个栈 value_stack 和 operator_stack 进行计算：
+  使用两个栈 value_stack 和 operator_stack 进行计算。分为三大类处理：数字，（），加减乘除符号：
     遍历标记序列：
       将数字 2 推入 value_stack：     value_stack = [2]
       将乘号 * 推入 operator_stack：  operator_stack = ['*']
