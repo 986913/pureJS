@@ -31,7 +31,7 @@
  * @param {string} str
  * @return {Generator}
  */
-function* tokenize(str) {
+function* tokenizer(str) {
   let s = str.replaceAll(' ', '');
   const tokens = s.match(/(\d+|[()+\-*/])/g);
   //  \d+ 表示匹配一个或多个数字
