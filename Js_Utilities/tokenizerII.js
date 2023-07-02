@@ -31,98 +31,105 @@ function* tokenizer(str) {
   }
 }
 
-const operations = {
+// precedenece数字越大 代表优先级越高
+const signs = {
+  '(': { precedence: 0 },
+  ')': { precedence: 0 },
   '+': { method: (a, b) => a + b, precedence: 1 },
   '-': { method: (a, b) => a - b, precedence: 1 },
   '*': { method: (a, b) => a * b, precedence: 2 },
   '/': { method: (a, b) => a / b, precedence: 2 },
-  '(': { precedence: 0 },
-  ')': { precedence: 0 },
 };
+
 /**
  * @param {string} str
  * @returns {Number}
  */
 function calculate(str) {
-  // your code here
   const tokenized = tokenizer(str);
+
+  // 用2个stack：
   const value_stack = [];
   const operator_stack = [];
 
-  for (let elem of tokenized) {
-    if (!isNaN(parseInt(elem))) {
-      value_stack.push(parseInt(elem));
-    } else if (elem === '(') {
-      operator_stack.push(elem);
-    } else if (elem === ')') {
-      // Keep popping until we see "("
+  /********************** step 1 **************************/
+  for (let ele of tokenized) {
+    if (!isNaN(parseInt(ele))) {
+      // if the token is number
+      value_stack.push(parseInt(ele));
+    } else if (ele === '(') {
+      // if the token is (
+      operator_stack.push(ele);
+    } else if (ele === ')') {
+      // if the token is ),  Keep popping operator_stack until we see "("
       while (operator_stack[operator_stack.length - 1] !== '(') {
         const operation = operator_stack.pop();
         const val_1 = value_stack.pop();
         const val_2 = value_stack.pop();
-        const result = operations[operation].method(val_2, val_1);
+        const result = signs[operation].method(val_2, val_1);
         value_stack.push(result);
       }
       operator_stack.pop();
-    } else if (operations[elem] !== -1) {
-      // It is an operator
-      console.log(operator_stack);
+    } else if (signs[ele] !== -1) {
+      // if the token is one of operators: + - * /
+      // console.log(operator_stack);
       while (
         operator_stack.length > 0 &&
-        operations[operator_stack[operator_stack.length - 1]].precedence >=
-          operations[elem].precedence
+        signs[operator_stack[operator_stack.length - 1]].precedence >=
+          signs[ele].precedence
       ) {
         const operation = operator_stack.pop();
         const val_1 = value_stack.pop();
         const val_2 = value_stack.pop();
-        const result = operations[operation].method(val_2, val_1);
+        const result = signs[operation].method(val_2, val_1);
         value_stack.push(result);
       }
-      operator_stack.push(elem);
+      operator_stack.push(ele);
     }
   }
 
+  /********************** step 2 **************************/
   while (operator_stack.length) {
     const operation = operator_stack.pop();
     const val_1 = value_stack.pop();
     const val_2 = value_stack.pop();
-    const result = operations[operation].method(val_2, val_1);
+    const result = signs[operation].method(val_2, val_1);
     value_stack.push(result);
   }
+
+  /********************** step 3 **************************/
+  // console.log(operator_stack, value_stack); // operator_stack should empty. value_stack should only have one value
   return value_stack.pop();
 }
 
 /*
-Pseudocode source: https://www.geeksforgeeks.org/expression-evaluation/
+  Pseudocode source: https://www.geeksforgeeks.org/expression-evaluation/
+  1. While there are still tokens to be read in,
+    1.1 Get the next token.
+    1.2 If the token is:
+        1.2.1 A number: push it onto the value stack.
+        1.2.2 A variable: get its value, and push onto the value stack.
+        1.2.3 A left parenthesis: push it onto the operator stack.
+        1.2.4 A right parenthesis:
+          1 While the thing on top of the operator stack is not a left parenthesis,
+              1 Pop the operator from the operator stack.
+              2 Pop the value stack twice, getting two operands.
+              3 Apply the operator to the operands, in the correct order.
+              4 Push the result onto the value stack.
+          2 Pop the left parenthesis from the operator stack, and discard it.
+        1.2.5 An operator (call it thisOp):
+          1 While the operator stack is not empty, and the top thing on the operator stack has the same or greater precedence as thisOp,
+            1 Pop the operator from the operator stack.
+            2 Pop the value stack twice, getting two operands.
+            3 Apply the operator to the operands, in the correct order.
+            4 Push the result onto the value stack.
+          2 Push thisOp onto the operator stack.
 
-1. While there are still tokens to be read in,
-   1.1 Get the next token.
-   1.2 If the token is:
-       1.2.1 A number: push it onto the value stack.
-       1.2.2 A variable: get its value, and push onto the value stack.
-       1.2.3 A left parenthesis: push it onto the operator stack.
-       1.2.4 A right parenthesis:
-         1 While the thing on top of the operator stack is not a 
-           left parenthesis,
-             1 Pop the operator from the operator stack.
-             2 Pop the value stack twice, getting two operands.
-             3 Apply the operator to the operands, in the correct order.
-             4 Push the result onto the value stack.
-         2 Pop the left parenthesis from the operator stack, and discard it.
-       1.2.5 An operator (call it thisOp):
-         1 While the operator stack is not empty, and the top thing on the
-           operator stack has the same or greater precedence as thisOp,
-           1 Pop the operator from the operator stack.
-           2 Pop the value stack twice, getting two operands.
-           3 Apply the operator to the operands, in the correct order.
-           4 Push the result onto the value stack.
-         2 Push thisOp onto the operator stack.
-2. While the operator stack is not empty,
-    1 Pop the operator from the operator stack.
-    2 Pop the value stack twice, getting two operands.
-    3 Apply the operator to the operands, in the correct order.
-    4 Push the result onto the value stack.
-3. At this point the operator stack should be empty, and the value
-   stack should have only one value in it, which is the final result.
+  2. While the operator stack is not empty,
+      1 Pop the operator from the operator stack.
+      2 Pop the value stack twice, getting two operands.
+      3 Apply the operator to the operands, in the correct order.
+      4 Push the result onto the value stack.
 
+  3. At this point the operator stack should be empty, and the value stack should have only one value in it, which is the final result.
 */
