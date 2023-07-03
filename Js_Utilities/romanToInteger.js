@@ -10,13 +10,13 @@
     1.symbols are listed from highest to lowest, from left to right
     2.from left to right, if the next symbol value is bigger than current one, it means subtracting, otherwise adding.
   
-  Please implement romanToInteger(). The input are all valid strings
+  Please implement romanToInt(). The input are all valid strings
  */
 
 /* --------------------- 用例测试 ------------------------ */
-romanToInteger('CXXIII'); // 123
-romanToInteger('MCMXCIX'); // 1999
-romanToInteger('MMMCDXX'); // 3420
+romanToInt('CXXIII'); // 123
+romanToInt('MCMXCIX'); // 1999
+romanToInt('MMMCDXX'); // 3420
 
 /* ----------------------------- Solution Code --------------------------------- */
 const map = {
