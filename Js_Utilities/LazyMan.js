@@ -34,11 +34,13 @@
  */
 
 /* -------------------------- Code Solution -------------------------------- */
-// interface Laziness {
-//   sleep: (time: number) => Laziness
-//   sleepFirst: (time: number) => Laziness
-//   eat: (food: string) => Laziness
-// }
+/*
+  interface Laziness {
+    sleep: (time: number) => Laziness
+    sleepFirst: (time: number) => Laziness
+    eat: (food: string) => Laziness
+  }
+*/
 
 // helper function:
 async function sleepHelper(time) {
@@ -77,15 +79,21 @@ function LazyMan(name, logFn) {
   return {
     sleep(ms) {
       commands.push(['sleep', ms]);
-      return this;
+      return this; // 链式调用
     },
     sleepFirst(ms) {
       commands.unshift(['sleep', ms]);
-      return this;
+      return this; // 链式调用
     },
     eat(food) {
       commands.push(['eat', food]);
-      return this;
+      return this; // 链式调用
     },
   };
 }
+/**
+  比如，当我调用 LazyMan('ming', console.log).eat('wahaha').sleepFirst(5)
+  首先LazyMan先setup好commands为[ ['sleep', 5],['greet', 'ming'],['eat', 'wahaha'] ]
+  然后异步且按照顺序去执行每一个command
+  最后返回装有sleep, sleepFirst, eat函数的object
+ */
