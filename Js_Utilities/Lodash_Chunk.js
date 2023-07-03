@@ -10,6 +10,9 @@
 chunk(['a', 'b', 'c', 'd']); // => [['a'], ['b'], ['c'], ['d']]
 chunk([1, 2, 3, 4], 2); // => [[1, 2], [3, 4]]
 chunk([1, 2, 3, 4], 3); // => [[1, 2, 3], [4]]
+chunk([1, 2, 3, 4, 5], 5); // => [[1, 2, 3, 4, 5]]
+chunk([1, 2, 3, 4, 5], 10); // => [[1, 2, 3, 4, 5]]
+chunk([1, 2, 3, 4, 5], 0); // => []
 
 /* -------------------------- Code Solution: -------------------------------- */
 /**
@@ -22,7 +25,7 @@ function chunk(array, size = 1) {
   let result = [];
   let len = array.length;
 
-  if (len === 0 || !array) return result;
+  if (len === 0 || !array || !size) return result;
 
   let index = 0;
   while (index < len) {
