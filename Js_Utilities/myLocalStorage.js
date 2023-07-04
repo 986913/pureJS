@@ -17,18 +17,30 @@
 /* -------------------------- Code Solution ------------------------------- */
 window.myLocalStorage = {
   getItem(key) {
-    // your code here
+    return window.localStorage.getItem(key);
   },
 
   setItem(key, value, maxAge) {
-    // your code here
+    window.localStorage.setItem(key, value);
+
+    if (maxAge === 0) {
+      window.localStorage.removeItem(key);
+    } else if (maxAge > 0) {
+      setTimeout(() => {
+        window.localStorage.removeItem(key);
+      }, maxAge);
+    }
   },
 
   removeItem(key) {
-    // your code here
+    window.localStorage.removeItem(key);
   },
 
   clear() {
-    // your code here
+    window.localStorage.clear();
   },
 };
+
+/**
+  window.localStorage和window.sessionStorage， 这些全局对象的属性在浏览器中被定义为只读，这意味着无法通过Object.defineProperty()直接重写这些属性。
+ */

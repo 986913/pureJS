@@ -32,6 +32,7 @@ function install() {
           } 
     > */
 
+  // 因为要编辑getter and setter，所以要用到  Object.defineProperty
   Object.defineProperty(document, 'myCookie', {
     get() {
       const result = [];
