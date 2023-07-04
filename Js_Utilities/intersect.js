@@ -6,13 +6,30 @@
  */
 
 /* -------------------用例测试--------------------*/
+intersect([1, 2, 2, 3, 4, 4], [2, 2, 4, 5, 5, 6, 2000]); // [2,2,4]
 
-/* -------------------------- Code Solution ------------------------------- */
+/* -------------------------- Code Solution: 2 pointers ------------------------------- */
 /**
  * @param {number[]} arr1 - integers
  * @param {number[]} arr2 - integers
  * @returns {number[]}
  */
 function intersect(arr1, arr2) {
-  // your code here
+  let result = [];
+  let p1 = 0;
+  let p2 = 0;
+
+  while (p1 < arr1.length && p2 < arr2.length) {
+    if (arr1[p1] < arr2[p2]) {
+      p1++;
+    } else if (arr1[p1] > arr2[p2]) {
+      p2++;
+    } else {
+      result.push(arr1[p1]);
+      p1++;
+      p2++;
+    }
+  }
+
+  return result;
 }
