@@ -12,7 +12,6 @@
   FYI:
   localStorage is replaced with our own implementation to avoid security error. But the interface is the same, actually you don't need to care :)
  */
-/* -------------------用例测试--------------------*/
 
 /* -------------------------- Code Solution ------------------------------- */
 window.myLocalStorage = {
@@ -42,5 +41,12 @@ window.myLocalStorage = {
 };
 
 /**
-  window.localStorage和window.sessionStorage， 这些全局对象的属性在浏览器中被定义为只读，这意味着无法通过Object.defineProperty()直接重写这些属性。
+  window.localStorage API的基本使用：
+    1. window.localStorage.getItem('key'); 从本地存储中获取数据:
+    2. window.localStorage.setItem('key', 'value'); 存储数据到本地存储:
+    3. window.localStorage.removeItem('key');
+    4. window.localStorage.clear();
+
+  需要注意的是，localStorage 只能存储字符串类型的数据。
+  如果要存储其他类型的数据，可以使用 JSON.stringify() 方法将其转换为字符串，再使用 JSON.parse() 方法将其转换回原始类型。
  */
