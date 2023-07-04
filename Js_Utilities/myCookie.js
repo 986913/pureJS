@@ -22,10 +22,58 @@
 /* -------------------------- Code Solution ------------------------------- */
 // enable myCookie
 function install() {
-  // your code here
+  const map = new Map();
+  /* Map < 
+          key: string, 
+          entry:{ 
+              value: string, 
+              maxAge?: number, 
+              createdAt: number
+          } 
+    > */
+
+  Object.defineProperty(document, 'myCookie', {
+    get() {
+      const result = [];
+      for (let [key, entry] of map.entries()) {
+        // handle expire
+        if (entry.maxAge !== undefined) {
+          if (Date.now() - entry.createdAt >= entry.maxAge) {
+            map.delete(key);
+            continue;
+          }
+        }
+        result.push(`${key}=${entry.value}`);
+      }
+      return result.join('; ');
+    },
+    set(valStr) {
+      const [keyValuePair, ...options] = valStr.replaceAll(' ', '').split(';');
+      const [key, val] = keyValuePair.split('=');
+      if (!key || !val) return;
+
+      const entry = {
+        value: val,
+        createdAt: Date.now(),
+        // maxAge property should be set inside below forEach
+      };
+      options.forEach((option) => {
+        const [k, v] = option.split('=');
+        if (!k || !v) return;
+
+        if (k === 'max-age') {
+          const maxAge = parseInt(v, 10);
+          if (Number.isNaN(maxAge)) return;
+          entry.maxAge = maxAge * 1000;
+        }
+      });
+      map.set(key, entry);
+    },
+    configurable: true,
+  });
 }
 
 // disable myCookie
 function uninstall() {
-  // your code here
+  delete document.myCookie;
 }
