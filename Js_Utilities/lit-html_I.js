@@ -27,12 +27,16 @@ const render = (result, container) => {
   当我们使用string template调用html函数时，模板字面量的内容将被分解成两个参数传递给html函数:
     第一个参数是一个数组，包含了所有静态字符串片段（即没有表达式的部分)
     第二个参数是一个不定数量的参数，包含了模板字面量中的表达式的值
-  举个例子：
+
+  举个例子1：
     const template = (name, title) => html`i am ${name}, my job is ${title}`
     template('ming', 'SDE')
       那么html函数中:
         segements是数组：["i am", ", my job is ", ""]
         values是数组：   ["ming", "SDE"]
+  举个例子2: 结果和例子1一样，只不过call html时候直接给变量赋值了(没被function包住而已）
+    const name2='ming'; const title2='SDE';
+    html`i am ${name2}, my job is ${title2}`
 */
 
 /**
