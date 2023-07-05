@@ -41,7 +41,7 @@ console.log(bi);
   }
 */
 
-/* ------------------ Solution: same as call just the args is an array -------------------------------- */
+/* ------------------ Solution: same as call just the args传入格式is array -------------------------------- */
 Function.prototype.myApply = function (thisArg, args) {
   // you tie a function into an object(context) as if it belonged to the object
   const symbol = Symbol(); // create unique key
