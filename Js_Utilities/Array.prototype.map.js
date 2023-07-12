@@ -1,7 +1,7 @@
 /* --------------------- 用例测试1 ----------------------- */
 [1, 2, 3, 4].myMap((i) => i); // [1, 2, 3, 4]
 [1, 2, 3, 4].myMap((i) => i * i); // [1, 4, 9, 16]
-[1, 2, , 4].myMap((i) => i * 1); // [1, 4, undefined, 16]
+[1, 2, , 4].myMap((i) => i * i); // [1, 4, undefined, 16]
 
 /* --------------------- 用例测试2 ----------------------- */
 const person = {
@@ -30,10 +30,11 @@ const mappedNumbers = numbers.myMap(function (number, index, array) {
  */
 
 Array.prototype.myMap = function (callbackFn, thisArg) {
-  let result = new Array(this.length); // this is [1，2，3，4] array in this case
+  let len = this.length; // this is [1，2，3，4] array in this case
+  let result = new Array(len);
 
-  for (let i = 0; i < this.length; i++) {
-    // Ignore index if value is not defined for index
+  for (let i = 0; i < this.len; i++) {
+    // Ignore index if value is not defined for index, or you can write as:  if (i in this)
     if (Object.hasOwn(this, i)) {
       result[i] = callbackFn.apply(thisArg, [this[i], i, this]);
     }
