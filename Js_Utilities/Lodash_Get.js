@@ -57,10 +57,10 @@ function get(object, path, defaultValue = undefined) {
   let len = paths.length;
   let obj = object;
 
-  while (obj != null && index < len) {
-    obj = obj[String(paths[index])];
+  paths.forEach((key) => {
+    obj = obj[key];
     index++;
-  }
+  });
 
   const result = index && index === len ? obj : undefined;
   return result ?? defaultValue;
