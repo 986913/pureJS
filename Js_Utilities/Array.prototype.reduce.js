@@ -19,19 +19,20 @@
  */
 
 Array.prototype.myReduce = function (callbackFn, initialValue) {
-  const noInitialValue = initialValue === undefined;
   const len = this.length;
+  const argsLength = arguments.length;
 
-  if (noInitialValue && len === 0) {
+  //下面的argsLength===1 就是代表 没有initialValue
+  if (argsLength === 1 && len === 0) {
     throw new TypeError('Reduce of empty array with no initial value');
   }
 
-  let acc = noInitialValue ? this[0] : initialValue;
-  let startIndex = noInitialValue ? 1 : 0;
+  let acc = argsLength === 1 ? this[0] : initialValue;
+  let startIndex = argsLength === 1 ? 1 : 0;
 
   for (let i = startIndex; i < this.length; i++) {
     if (Object.hasOwn(this, i)) {
-      acc = callbackFn(acc, this[i], i, this); // acc, element, index, selfarray
+      acc = callbackFn(acc, this[i], i, this); // acc, element, index, self-Array
     }
   }
 
