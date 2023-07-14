@@ -16,4 +16,30 @@ input.dispatchEvent(new Event('change'));
 console.log(state.value); // 'BFE.dev'
 
 /* ---------------------------- Solution -------------------------------- */
-function model(state, element) {}
+/**
+ * @param {{value: string}} state
+ * @param {HTMLInputElement} element
+ */
+function model(state, element) {
+  // 1. initialized the element value with state value
+  element.value = state.value;
+
+  // 2. Two conditions:
+  // (1) Update the state value, then it will also update element value with new state value
+  // (2) Update input element value, then it will also update state value with element value
+
+  Object.defineProperty(state, 'value', {
+    get() {
+      return element.value;
+    },
+    set(new_value) {
+      element.value = new_value;
+      return;
+    },
+  });
+
+  element.addEventListener('change', (event) => {
+    // this will update state value then `state's` setter method will update input value
+    state.value = event.target.value;
+  });
+}
