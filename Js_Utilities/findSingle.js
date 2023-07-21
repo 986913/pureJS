@@ -11,7 +11,7 @@ findSingle([
   [67, 65, 64, 63, 62, 61, 60, -60, 59, 67, 65, 64, 63, 62, 61, 60, -60],
 ]); // 59
 
-/* -------------------------- Code Solution: -------------------------------- */
+/* -------------------------- Code Solution 1: Map -------------------------------- */
 /**
  * @param {number[]} arr
  * @returns number
@@ -24,3 +24,23 @@ function findSingle(arr) {
     if (value === 1) return key;
   }
 }
+
+/* -------------------------- Code Solution 2: XOR -------------------------------- */
+/**
+ * @param {number[]} arr
+ * @returns number
+ */
+
+function findSingle(arr) {
+  let res = 0;
+  arr.forEach((num) => (res ^= num));
+  return res;
+}
+/**
+  The basic idea :
+    0 ^ 0 = 0;
+    1 ^ 1 = 0;
+    1 ^ 0 = 1;
+    0 ^ 1 = 1;
+  so only the single element will go through our 'bit sieve'
+ */
