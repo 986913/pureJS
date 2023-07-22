@@ -19,7 +19,7 @@
   3. though there might be delays, messages are guaranteed to be delivered through `SomeChannel`, but it is worthy for you to think about the case in which messages might be dropped.
  */
 
-/* ------------------ Code solution ------------------ */
+/* ------------------ Code solution: use Proxy class + Reflect  ------------------ */
 /*
   interface SomePort {
     postMessage: (message: string) => void
