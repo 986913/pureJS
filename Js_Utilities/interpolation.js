@@ -18,6 +18,29 @@
         t('BFE.dev is {{evaluation}}'); // "BFE.dev is "
  */
 
+/* --------------------- 用例测试 ------------------------ */
+t('BFE.dev is cool', { evaluation: 'fantastic' }); // BFE.dev is cool
+t('BFE.dev is  {{evaluation}}', { evaluation: 'cool' }); // BFE.dev is cool
+t('{{website}} is {{evaluation}}', { website: 'BFE.dev', evaluation: 'cool' }); // BFE.dev is cool
+t('{{website}} is {{evaluation}}', {
+  website: 'BFE.dev',
+  evaluation: 'fantastic',
+}); // BFE.dev is fantastic
+t('{{website}} {{verb}} {{evaluation}} {{period}}', {
+  website: 'BFE.dev',
+  evaluation: '面白い',
+}); // BFE.dev  面白い
+t('BFE.dev is {{}}{{}}{{}}{{evaluation', { evaluation: 'fantastic' }); // BFE.dev is {{evaluation
+t('BFE.dev is {{evaluation', { evaluation: 'cool' }); // BFE.dev is {{evaluation
+t('BFE.dev is {{{{{{evaluation', { evaluation: 'cool' }); // BFE.dev is {{{{{{evaluation
+t('BFE.dev is {evaluation}', { evaluation: 'cool' }); // BFE.dev is {evaluation}
+t('BFE.dev is {{{evaluation}}', { evaluation: 'cool' }); // 'BFE.dev is '
+t('BFE.dev is {{evaluation}}}', { evaluation: 'cool' }); // BFE.dev is cool}
+t('BFE.dev is {{evaluation}}}{{', { evaluation: 'cool' }); // BFE.dev is cool}{{
+t('BFE.dev is {{{evaluation}}', { '{evaluation': 'cool' }); // BFE.dev is cool
+t('BFE.dev is {{so{ cool }}}', { 'so{ cool ': 'cool' }); // BFE.dev is cool
+t('BFE.dev is {{evaluation{{aa}}}.', { 'evaluation{{aa': 'cool' }); // BFE.dev is cool}.
+
 /* -------------------------- Code Solution: -------------------------------- */
 /**
  * @param {string} translation
