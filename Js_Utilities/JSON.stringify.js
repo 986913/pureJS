@@ -123,14 +123,16 @@ function jsonStringify(data) {
 
 /* ------------------ Solution 2 Code : 简单的version ---------------------------------------------------- */
 const isCyclic = (input) => {
-  const seen = new Set();
+  const seen = new Set(); // 来记录已经访问过的对象，以便检测是否存在循环引用。
 
   const dfsHelper = (obj) => {
+    // if obj is primitive:
     if (typeof obj !== 'object' || obj === null) {
       return false;
     }
 
     seen.add(obj);
+    // if obj is object or array:
     return Object.values(obj).some(
       (value) => seen.has(value) || dfsHelper(value)
     );
