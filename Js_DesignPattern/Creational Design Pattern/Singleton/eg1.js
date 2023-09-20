@@ -1,5 +1,3 @@
-let instance = null;
-
 class Printer {
   constructor(pages) {
     this.display = function () {
@@ -9,12 +7,14 @@ class Printer {
     };
   }
 
-  static getInstance(numOfpages) {
-    if (!instance) {
-      instance = new Printer(numOfpages);
-    }
-    return instance;
-  }
+  static getInstance = (function (numOfpages) {
+    let instance;
+
+    return function (numOfpages) {
+      if (!instance) instance = new Printer(numOfpages);
+      return instance;
+    };
+  })();
 }
 
 /** --------------------------- 用例测试 ------------------------------- **/
