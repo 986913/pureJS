@@ -48,7 +48,7 @@ function Order() {
 }
 
 /** --------------------------- 用例测试 ------------------------------- **/
-var meal = new Meal();
-var mealBuilder = new MealBuilder('chicken', 'curly fries', 'coke');
+var meal = new Meal(); // Meal class is for define steps
+var mealBuilder = new MealBuilder('chicken', 'curly fries', 'coke'); // MealBuilder class is for define each step
 var chickenBurgerMeal = meal.make(mealBuilder);
 chickenBurgerMeal.display();

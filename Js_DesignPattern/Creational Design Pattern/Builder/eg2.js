@@ -56,8 +56,8 @@ class Task {
 
 /** --------------------------- 用例测试 ------------------------------- **/
 try {
-  var assignment = new Assignment();
-  var assignmentBuilder = new AssignmentBuilder(
+  var assignment = new Assignment(); // Assignment class is for define steps
+  var assignmentBuilder = new AssignmentBuilder( // AssignmentBuilder class is for define each step
     'Math',
     'Hard',
     '12th June, 2020'
