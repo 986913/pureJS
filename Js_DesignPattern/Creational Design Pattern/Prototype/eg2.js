@@ -1,4 +1,3 @@
-//Define the Ninja class and write rest of the code here
 const Ninja = function (name) {
   this.name = name;
   this.points = 100;
