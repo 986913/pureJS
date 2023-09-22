@@ -15,8 +15,8 @@ const car1 = Object.create(car);
 car1.drive(); // Started Driving
 car1.brake(); // Stopping the car
 console.log(car1.numofWheels); // 4
+console.log(car1.__proto__ == car); // true
 
-const car2 = Object.create(car);
-car2.drive(); // Started Driving
-car2.brake(); // Stopping the car
-console.log(car2.numofWheels); //4
+//defining the extra property color with value red
+const car2 = Object.create(car, { color: { value: 'red' } });
+console.log(car2.color); // red
