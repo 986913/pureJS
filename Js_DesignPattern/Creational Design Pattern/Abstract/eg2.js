@@ -1,3 +1,4 @@
+// Its purpose is to instantiate an instance of a specific loan constructor, depending on the parameters given.
 class Loans {
   constructor() {
     this.loans = null;
