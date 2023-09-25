@@ -14,6 +14,6 @@ class Target {
   }
 }
 
-//测试：
+/** --------------------------- 用例测试 ------------------------------- **/
 let target = new Target();
 console.log(target.request());
