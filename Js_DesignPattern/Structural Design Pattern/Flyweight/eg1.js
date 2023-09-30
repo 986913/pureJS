@@ -83,11 +83,13 @@ class FormatterFactory {
 /** --------------------------- 用例测试 ------------------------------- **/
 const codefile1 = new CodeFile('helloworld.py');
 let formatter = new FormatterFactory();
+// pythonFormatter is flyweight object.
 const pythonFormatter = formatter.createFormatter('Python'); // Python Formatter instance created
 pythonFormatter.format(codefile1.codefileName); // Formatting the Python helloworld.py file you uploaded.
 
-//uploading new codefile Python file
+/* uploading new codefile Python file */
 const codefile2 = new CodeFile('test.py');
+// anotherPythonFormatter is flyweight object.
 const anotherPythonFormatter = formatter.createFormatter('Python');
 anotherPythonFormatter.format(codefile2.codefileName); // Formatting the Python test.py file you uploaded.
 console.log(
@@ -95,7 +97,8 @@ console.log(
     (anotherPythonFormatter === pythonFormatter)
 ); // Both Python Formatter instances are the same? true
 
-//uploading a Java file
+/* uploading a Java file */
 const codefile3 = new CodeFile('myfile.java');
+// javaFormatter is flyweight object.
 const javaFormatter = formatter.createFormatter('Java'); // Java Formatter instance created
 javaFormatter.format(codefile3.codefileName); // Formatting the Java myfile.java file you uploaded.
