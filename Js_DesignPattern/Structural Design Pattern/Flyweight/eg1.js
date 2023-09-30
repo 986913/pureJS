@@ -61,6 +61,7 @@ class JavaFormatter extends Formatter {
   }
 }
 
+//Flyweight: Whenever an instance of a language formatter is requested, it checks if the instance already exists or not. If it does, it returns the same one. Else, it creates a new instance.
 class FormatterFactory {
   constructor() {
     this.myFormatterMap = new Map();
