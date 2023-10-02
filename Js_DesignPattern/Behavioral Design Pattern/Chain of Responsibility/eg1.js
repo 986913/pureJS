@@ -73,8 +73,8 @@ class MultipleofFiveHandler extends HandlerChain {
 var c1 = new MultipleofTwoHandler();
 var c2 = new MultipleofThreeHandler();
 var c3 = new MultipleofFiveHandler();
-c1.setNextObj(c2);
-c2.setNextObj(c3);
+c1.setNextObj(c2); // set chain
+c2.setNextObj(c3); // set chain
 
 //the chain handling different cases
 c1.processMultiple(new Multiple(95)); // Multiple of 5: 95
