@@ -2,9 +2,10 @@ class User {
   constructor(name, userId) {
     this.name = name;
     this.userId = userId;
-    this.chatbox = null;
+    this.chatbox = null; // the chatbox instance the user is sending/receiving messages from
   }
   sendMessage(message, sendTo) {
+    // The chatbox acts as the mediator, invokes its send function to send the message from the user (this) to the recipient specified (sendTo).
     this.chatbox.send(message, this, sendTo);
   }
   receiveMessage(message, receiveFrom) {
@@ -12,6 +13,7 @@ class User {
   }
 }
 
+// Mediator  class
 class ChatBox {
   constructor() {
     this.users = [];
