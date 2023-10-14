@@ -34,7 +34,13 @@ class Book {
   getID() {
     return this.id;
   }
-  // accept visitor
+  /* accept visitor,  
+    the bookshop introduces a discount on the books that cost more than 50 dollars.
+    Hence, we want to perform an additional operation of visiting the books and implementing the discount on them. 
+    Here, we use the visitor pattern. We introduce a visitor that will visit the books and update their prices. 
+    However, the book objects should have a function that allows the visitor to visit them and perform the operation. 
+    For this purpose, we have defined the accept method in our Book class
+  */
   accept(visitor) {
     return visitor.visit(this);
   }
