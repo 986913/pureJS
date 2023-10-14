@@ -24,7 +24,7 @@ class Subject {
   notify() {
     if (this.newArticlePosted)
       this.observerList.forEach((observer) => observer.update());
-    // each observer has thier own "update" implemention
+    // key point:each observer has thier own "update" implemention
     else return;
   }
   // returns the name of the new article posted
@@ -41,7 +41,7 @@ class Observer {
   setSubject(subject) {
     this.subject = subject;
   }
-
+  // key point:
   update() {
     if (subject.getUpdate() == null) console.log('No new article');
     else console.log(`The new article ${subject.getUpdate()} is posted`);
