@@ -17,7 +17,7 @@ class EmployeeModel {
 
 class EmployeeView {
   constructor() {
-    this.controller = null;
+    this.controller = null; // the controller acts as the mediator between the model and the view.
   }
   registerWith(controller) {
     this.controller = controller;
@@ -52,8 +52,8 @@ class EmployeeController {
   }
   setEmployeeName(id, name) {
     if (this.empList[id]) {
-      this.empList[id].name = name;
-      this.updateView();
+      this.empList[id].name = name; // update model list
+      this.updateView(); // update view
     } else console.log('Incorrect id');
   }
 
@@ -68,9 +68,11 @@ class EmployeeController {
     console.log('\n');
   }
   hire(name, designation) {
+    // update model list
     this.empList.push(
       new EmployeeModel(name, designation, this.empList.length)
     );
+    // update view
     this.updateView();
   }
 }
