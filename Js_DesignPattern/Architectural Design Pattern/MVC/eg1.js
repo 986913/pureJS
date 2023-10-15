@@ -50,13 +50,21 @@ class EmployeeController {
   addModel(model) {
     this.model = model;
   }
+
+  hire(name, designation) {
+    // update model list
+    this.empList.push(
+      new EmployeeModel(name, designation, this.empList.length)
+    );
+    // update view
+    this.updateView();
+  }
   setEmployeeName(id, name) {
     if (this.empList[id]) {
       this.empList[id].name = name; // update model list
       this.updateView(); // update view
     } else console.log('Incorrect id');
   }
-
   updateView() {
     console.log('List of employees:');
     for (let i in this.empList)
@@ -66,14 +74,6 @@ class EmployeeController {
         this.empList[i].getID()
       );
     console.log('\n');
-  }
-  hire(name, designation) {
-    // update model list
-    this.empList.push(
-      new EmployeeModel(name, designation, this.empList.length)
-    );
-    // update view
-    this.updateView();
   }
 }
 
