@@ -18,14 +18,16 @@ class View {
     this.presenter = presenter;
   }
 
+  // the View is responsible for passing any user actions to the presenter
+  changeText(text) {
+    this.presenter.changeText(text);
+  }
+  // the View also displays the updated data returned to it by the presenter (displayError, displayMessage)
   displayError() {
     console.log('Text is not in upper case');
   }
   displayMessage(text) {
     console.log('The text is: ' + text);
-  }
-  changeText(text) {
-    this.presenter.changeText(text);
   }
 }
 
@@ -59,5 +61,6 @@ const presenter = new Presenter(view);
 presenter.setModel(model);
 view.registerWith(presenter);
 
+// the View is responsible for passing any user actions to the presenter
 presenter.getView().changeText('unagi'); // Text is not in upper case
 presenter.getView().changeText('UNAGI'); // The text is: UNAGI
