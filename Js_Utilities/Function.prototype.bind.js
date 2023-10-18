@@ -37,24 +37,24 @@ console.log(sayName.myBind(person2)('like', 'Favorite', 'homer'));
 */
 
 /* ------------------ Solution Code ---------------------------------------------------- */
-Function.prototype.myBind = function (obj, ...boundArgs) {
+Function.prototype.myBind = function (thisArg, ...args) {
   const originalFunction = this; //🟡这个this指向的是调用myBind的sayName函数，不是指向person obj的
 
-  return function (...args) {
-    return originalFunction.apply(obj, [...boundArgs, ...args]);
+  return function (...newargs) {
+    return originalFunction.apply(thisArg, [...args, ...newargs]);
   };
 };
 
 /* ------------------ 加强版 Solution Code ------------------------------------------------ */
-Function.prototype.myBind = function (obj, ...boundArgs) {
+Function.prototype.myBind = function (thisArg, ...args) {
   const originalFunc = this;
   if (typeof originalFunc !== 'function') {
     throw new TypeError('Bind must be called on a function');
   }
 
-  return function (...args) {
-    //调用 originalFunc 函数，并将 obj 设置为函数执行时的上下文（即 this 值, 同时将 boundArgs 和 args 数组合并为一个参数数组，作为参数传递给 originalFunc。
-    return Reflect.apply(originalFunc, obj, [...boundArgs, ...args]);
+  return function (...newargs) {
+    //调用 originalFunc 函数，并将 thisArg 设置为函数执行时的上下文（即 this 值, 同时将args数组和newargs数组合并为一个参数数组，作为参数传递给 originalFunc。
+    return Reflect.apply(originalFunc, thisArg, [...args, ...newargs]);
   };
 };
 
