@@ -35,12 +35,14 @@ findIndex([5, 12, 8, 130, 44], (num) => num > 3, -2); // 3
  */
 function findIndex(array, predicate, fromIndex = 0) {
   const length = array.length;
+  // 注意startIndex handle：
   const startIndex =
     fromIndex >= 0 ? fromIndex : Math.max(length + fromIndex, 0);
 
+  //从前往后循环
   for (let i = startIndex; i < length; i++) {
     if (predicate(array[i], i, array)) return i;
   }
 
-  return -1;
+  return -1; // case for can not find
 }
