@@ -24,8 +24,9 @@ isPlainObject:
 
 There are two types of plain objects:
 
-Objects without prototypes, created using Object.create(null)s.
+  Objects without prototypes, created using Object.create(null).
+  Object defined using literals (e.g. let a = {}).
 
-Object defined using literals (e.g. let a = {}).
-To check for the first case, Object.getPrototypeOf(value) will be exactly null. To check for the second case, we can use the constructor of its prototype,
+To check for the first case, Object.getPrototypeOf(value) will be exactly null. 
+To check for the second case, we can use the constructor of its prototype,
  */
