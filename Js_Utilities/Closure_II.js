@@ -28,7 +28,7 @@ counter3.decrement(); // 4
 counter3.decrement(); // 3
 counter3.get(); // 3
 counter3.reset(); // 5
-counter3s.increment(); // 6
+counter3.increment(); // 6
 
 /* ---------------------  Code solution ----------------------- */
 /**
