@@ -24,8 +24,8 @@ counter(); // 2
  * @param {number} initialValue
  * @return {Function}
  */
-function makeCounter(initialValue) {
-  let result = !initialValue ? 0 : initialValue;
+function makeCounter(initialValue = 0) {
+  let result = initialValue;
   let isFirstTimeCall = true;
 
   return function () {
