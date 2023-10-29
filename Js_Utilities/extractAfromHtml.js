@@ -48,3 +48,38 @@ function extract(str) {
 
   return res; // Return the array of extracted strings
 }
+
+/* -------------------- Code solution3: two pointers -------------------- */
+/**
+ * @param {string} str
+ * @return {string[]}
+ */
+/**NOte
+ * - Get indexOf start (<a) and end (a>)
+ * - Get a slice of the string between these start and end
+ */
+function extract(str) {
+  let i = 0;
+  let result = [];
+  while (i < str.length) {
+    // find the first index of string
+    let start = str.indexOf('<a', i); // Start from i
+
+    // anchor tag not found
+    if (start === -1) return result;
+    // Not sure why +2 ??
+    // If not empty string or closing tag '>' increment i + 2
+    if (str[start + 2] !== ' ' && str[start + 2] !== '>') {
+      i += 2;
+    } else {
+      let end = str.indexOf('a>', start + 2);
+      // Anchor tag not found!
+      if (end === -1) return result;
+      // Push the string between anchor opening and closing tag
+      result.push(str.slice(start, end + 2));
+      i = end + 2;
+    }
+  }
+
+  return result;
+}
