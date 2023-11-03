@@ -48,31 +48,26 @@ promisified2('file.txt')
 
 /*--------------------------Solution : return an function that take para and wrap promise ------------------------- */
 /*
-  type Callback = (error: Error, data: any) => void
+  type func = (error: Error, data: any) => void
 */
 
-function promisify(callback) {
+function promisify(func) {
   /* 这里的input就是对应上面例子的'file.txt'和true
      return function 就是为了能够传值 --> 传input */
   return function (input) {
     return new Promise((resolve, reject) => {
-      callback((err, data) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(data);
+      func((err, data) => {
+        err ? reject(err) : resolve(data);
       }, input);
     });
   };
 }
 
 /* 上述的promifify可以简化为下面这种写法：
-
-const promisify = (fn) => (input) =>
-  new Promise((res, rej) => {
-    fn((err, output) => (err ? rej(err) : res(output)), input);
-  });
+    const promisify = (fn) => (input) =>
+      new Promise((res, rej) => {
+        fn((err, output) => (err ? rej(err) : res(output)), input);
+      });
 */
 
 /**
