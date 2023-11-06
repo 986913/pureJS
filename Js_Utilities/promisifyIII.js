@@ -72,3 +72,27 @@ function promisify(func) {
     });
   };
 }
+
+/**
+  Symbol.for()用法：
+  接受一个字符串作为参数，搜索有没有以该参数作为名称的 Symbol 值 ---> 
+    （1）有：就返回这个 Symbol 值. 
+    （2）没有：新建一个以 该名称为参数的 Symbol 值，并将其注册到全局
+
+  example: //以下s1 和 s2 实际上为同一个值
+    let s1 = Symbol.for('foo');
+    let s2 = Symbol.for('foo');
+    s1 === s2 // true
+*/
+
+/**
+  Symbol.keyFor()用法：
+  返回一个已登记的 Symbol 类型值的key 注意：Symbol()写法没有登记机制
+
+  example:
+    let s1 = Symbol.for("foo");
+    Symbol.keyFor(s1) // "foo"
+    let s2 = Symbol("foo");
+    Symbol.keyFor(s2) // undefined
+    解析：上面代码中，变量s2属于未登记的 Symbol 值，所以返回undefined
+*/
