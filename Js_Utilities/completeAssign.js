@@ -132,3 +132,27 @@ function objectAssign(target, ...sources) {
 
   return target;
 }
+
+/**
+  Reflect.ownKeys() 是一个 JavaScript 内置方法，用于返回一个对象的所有自身属性（包括不可枚举属性）的属性键（数组形式）. example:
+      const myObj = {
+        foo: 'bar',
+        [Symbol('mySymbol')]: 123
+      };
+      const keys = Reflect.ownKeys(myObj);
+      console.log(keys); // 输出：[ 'foo', Symbol(mySymbol) ]
+  需要注意的是，Reflect.ownKeys() 方法返回的属性键数组是一个包含🟡所有自身属性键的数组:包括常规属性、Symbol 属性以及不可枚举属性。
+  如果想要只获取常规属性，可以使用 Object.keys() 方法；
+  如果只想获取 Symbol 属性，可以使用 Object.getOwnPropertySymbols() 方法
+      - 作用：用于获取对象自身的所有symboal属性。
+      - 返回：它返回一个包含所有symboal属性的数组。symboal属性是使用 Symbol 类型作为键的属性，而不是常规的字符串键。Symbol 是一种特殊的数据类型，用于创建唯一的、不可变的标识符。
+      - 用法：
+        const obj = {
+          [Symbol('key1')]: 'value1',
+          [Symbol('key2')]: 'value2',
+          'mingkey':  'value3'
+        };
+        const symbols = Object.getOwnPropertySymbols(obj);
+        console.log(symbols); // [Symbol(key1), Symbol(key2)]
+        console.log(propertyNames); // ['mingkey']
+ */
