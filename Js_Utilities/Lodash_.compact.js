@@ -1,4 +1,4 @@
-// Lodash _.get documentation:  https://lodash.com/docs/4.17.15#compact
+// Lodash _.compact documentation:  https://lodash.com/docs/4.17.15#compact
 
 /**
   Implement a function compact(array) that creates an array with all falsey values removed. 
