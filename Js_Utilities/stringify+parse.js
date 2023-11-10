@@ -1,5 +1,4 @@
 /**
-
   Obviously, JSON.parse() and JSON.stringify() are unable to handle data types that are not supported in JSON.
     JSON.stringify({a:1n}) // Error
   Also `undefined` is ignored in object properties or changed to `null`.
