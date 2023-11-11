@@ -6,8 +6,8 @@
 /*
   👉🏻 考点：
   1. 通过this来获取数组
-  2. 没有initialValue时，acc是arr[0]元素， acc是arr[1]元素,   startIndex是1
-      有initialValue时，acc是initialValue，acc是arr[0]元素， startIndex是0
+  2. 没有initialValue时，acc是arr[0]元素， cur是arr[1]元素,   startIndex是1
+      有initialValue时，acc是initialValue，cur是arr[0]元素， startIndex是0
   3. throw error when array is empty and no initial value.
 */
 
