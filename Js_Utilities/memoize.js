@@ -38,12 +38,11 @@ function memoize(func) {
   const cache = new Map();
 
   return function (arg) {
-    const cacheKey = arg;
-    if (cache.has(cacheKey)) {
-      return cache.get(cacheKey);
+    if (cache.has(arg)) {
+      return cache.get(arg);
     }
 
-    const result = func.call(this, arg);
+    const result = func.call(this, arsg);
     cache.set(arg, result);
     return result;
   };
