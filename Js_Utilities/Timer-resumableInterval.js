@@ -50,14 +50,17 @@ function createResumableInterval(callback, delay, ...args) {
   };
 
   const start = () => {
+    // stopped表示stoped的状态， timerId!==null表示目前有定时器, 不在pause的状态(确保了在pause后，再调用start时不会重复创建定时器)
     if (stopped || timerId !== null) return;
+
+    //非stop时 和 在pause状态中：重新设置定时器
     callback(...args);
     timerId = setInterval(callback, delay, ...args);
   };
 
   const pause = () => {
     if (stopped) return;
-    clearTimer();
+    clearTimer(); // 调用clearTimer来清除当前定时器，以达到暂停的效果。
   };
 
   const stop = () => {
