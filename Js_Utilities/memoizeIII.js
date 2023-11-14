@@ -62,7 +62,7 @@ function memo(func, resolver) {
   const cache = new Map();
 
   return function (...args) {
-    const cacheKey = resolver ? resolver(...args) : args.join('_');
+    const cacheKey = resolver ? resolver(...args) : JSON.stringify(args);
 
     // if cacheKey can find inside cache, return value directly
     if (cache.has(cacheKey)) {
