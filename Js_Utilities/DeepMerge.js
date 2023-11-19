@@ -22,7 +22,7 @@ deepMerge({ foo: 2, bar: 3 }, { bar: 4 }); //{ foo: 2, bar: 4 }
  * @param {Object|Array} valB
  * @returns Object|Array
  */
-export default function deepMerge(valA, valB) {
+function deepMerge(valA, valB) {
   // both values are arrays
   if (Array.isArray(valA) && Array.isArray(valB)) return [...valA, ...valB];
 
