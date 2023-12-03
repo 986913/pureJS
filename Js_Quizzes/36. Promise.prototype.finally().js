@@ -1,0 +1,27 @@
+Promise.resolve(1)
+  .finally((data) => {
+    console.log(data); // undefined because .finally() does not receive any argument
+    return Promise.reject('error');
+  })
+  .catch((error) => {
+    console.log(error); // "error" from the rejected promise in previous .finally()
+    throw 'error2';
+  })
+  .finally((data) => {
+    console.log(data); // undefined because .finally() does not receive any argument
+    return Promise.resolve(2).then(console.log); // 2
+  })
+  .then(console.log) // ignored
+  .catch(console.log); // "error2" from previous .catch()
+
+/**
+  Here, Promise resolves with the value 1 and control goes to the first finally block. 
+  A finally callback will not receive any argument hence it logs undefined and it returns a rejected promise.
+
+  Next control goes to the first catch block and "error" parameter is passed to it. 
+  It throws another error "error2" and control goes to the chained finally. Again, no argument is passed to finally so it logs undefined
+
+  This finally returns a resolved promise that logs 2.
+
+  Lastly, the previously thrown error2 is catched and logs error2
+ */
