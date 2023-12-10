@@ -1,0 +1,39 @@
+// This is a JavaScript Quiz from BFE.dev
+
+console.log(1);
+
+setTimeout(() => {
+  console.log(2);
+}, 100);
+
+requestAnimationFrame(() => {
+  console.log(3);
+});
+
+requestAnimationFrame(() => {
+  console.log(4);
+  setTimeout(() => {
+    console.log(5);
+  }, 10);
+});
+
+const end = Date.now() + 200;
+while (Date.now() < end) {}
+
+console.log(6);
+
+/**
+setTimeout() method sets a timer which executes a function or specified piece of code once the timer expires. These tasks are queued to the Macrotask Queue
+
+requestAnimationFrame() method tells the browser that you wish to call a specified function to update an animation before the next repaint. These tasks are queued to the Animation Queue
+
+Since, JS is single-threaded, the main thread can only execute one statement at a time. The order in which this execution happens is—
+
+First all synchronous tasks are queued
+The micro task queue (promises) will execute immediately when the JS run stack is empty
+The animation queue is executed
+The priority of macro task queue is lower than that of micro task queue and animation queue
+So here, first the synchronous statement 1 gets logged. Then setTimeout of 2 is added to macrotask queue. Then, RAF 3 is queued in the animation queue. Next, RAF 4 is queued to the animation queue and 5 is queued to the macrotask queue. Lastly, 6 is a synchronous statement so it gets printed second.
+
+Now, since the main call stack is empty, animation queue tasks are executed (as they have higher priority over macrotask queue). Hence, order in which they get printed is 1 -> 6 -> 3 -> 4 -> 2 -> 5
+ */
