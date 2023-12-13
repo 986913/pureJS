@@ -35,16 +35,34 @@ p1.then((res) => {
   console.log(`.then res para is -- ${res}`);
   output(res);
 })
-  .then(() => p2) // chain promise here, return new promise
+  .then((res) => {
+    console.log(`.then res para is -- ${res}`); // the reson here res is undefined, it's because last then didn't return anything
+    return p2; // chain promise here, return new promise
+  })
   .then((res) => {
     console.log(`.then res para is -- ${res}`);
     output(res);
   })
-  .then(() => p3) // chain promise here, return new promise
+  .then((res) => {
+    console.log(`.then res para is -- ${res}`); // the reson here res is undefined, it's because last then didn't return anything
+    return p3; // chain promise here, return new promise
+  })
   .then((res) => {
     console.log(`.then res para is -- ${res}`);
     output(res);
   })
-  .then(() => {
+  .then((res) => {
+    console.log(`.then res para is -- ${res}`); // the reson here res is undefined, it's because last then didn't return anything
     output('Complete!');
   });
+
+/*
+  p1.then(output)
+    .then(() => p2) // chain promise here, return new promise
+    .then(output)
+    .then(() => p3) // chain promise here, return new promise
+    .then(output)
+    .then(() => {
+      output('Complete!');
+    });
+*/
