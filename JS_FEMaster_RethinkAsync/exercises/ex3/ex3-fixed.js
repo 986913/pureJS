@@ -34,9 +34,14 @@ var p3 = getFile('file3');
 p1.then((res) => {
   console.log(`.then res para is -- ${res}`);
   output(res);
+  // return 'ming';
 })
   .then((res) => {
-    console.log(`.then res para is -- ${res}`); // the reson here res is undefined, it's because last then didn't return anything
+    /*
+      the reson here res is undefined, it's because last then didn't return anything
+      if you comment out above return 'ming', then this res will become 'ming'
+     */
+    console.log(`.then res para is -- ${res}`);
     return p2; // chain promise here, return new promise
   })
   .then((res) => {
