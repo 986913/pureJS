@@ -43,6 +43,20 @@ promiseArr
   .then(() => output('Complete'));
 
 /*
+  这就是上面.reduce干的事儿：
+    Promise.resolve()
+    .then(() => p1)
+    .then((res) => output(res))
+    .then(() => p2)
+    .then((res) => output(res))
+    .then(() => p3)
+    .then((res) => output(res));
+    .then(() => output('Complete'));
+ */
+
+/*
+一样的，就是简化版：
+
   ["file1","file2","file3"]
   .map(getFile)
   .reduce(
