@@ -29,7 +29,7 @@ function getFile(file) {
 // Render as each one finishes, but only once previous rendering is done.
 
 const promiseArr = ['file1', 'file2', 'file3'].map((file) => getFile(file));
-/************** Using 🟩.reduce to make Promise Chain, and 🟩Promise.resolve() as initial value **************/
+/************** Using 🟩.reduce to make Promise Sequence Chain! and 🟩Promise.resolve() as initial value **************/
 promiseArr
   .reduce((acc, cur) => {
     return acc
