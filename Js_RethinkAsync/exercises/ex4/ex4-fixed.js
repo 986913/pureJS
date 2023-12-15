@@ -30,6 +30,7 @@ function getFile(file) {
 
 const promiseArr = ['file1', 'file2', 'file3'].map((file) => getFile(file));
 /************** Using 🟩.reduce to make Promise Sequence Chain! and 🟩Promise.resolve() as initial value **************/
+/* sequence = autocatically chained promised */
 promiseArr
   .reduce((acc, cur) => {
     return acc
