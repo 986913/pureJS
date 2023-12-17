@@ -29,15 +29,21 @@ is(Infinity, Infinity); // true
  * @return {boolean}
  */
 function is(a, b) {
-  /* for this case: is(NaN, NaN), because  NaN !== NaN is true  */
-  if (a !== a) {
-    return b !== b; // returns true if the second parameter is NaN too
-  }
-  /* for this case: is(0, 0), is(0,-0), is(-0, 0), is(-0,0), because  -0 === 0 is true...  */
-  if (a === 0 && b === 0) {
-    return 1 / a === 1 / b; // 1 / -0 is -Infinity, and -Infinity === -Infinity
-  }
+  let aNegZero = isItNegZero(a);
+  let bNegZero = isItNegZero(b);
 
-  // All other cases with regular === comparison
-  return a === b;
+  /* for this case: is(NaN, NaN)*/
+  if (isItNaN(a) && isItNaN(b)) {
+    return true;
+  } else if (aNegZero || bNegZero) {
+    /* for this case: is(0, 0), is(0,-0), is(-0, 0), is(-0,0),  because -0 === 0 is true...  */
+    return aNegZero && bNegZero;
+  } else {
+    // All other cases with regular === comparison
+    return a === b;
+  }
 }
+
+// helper functions :
+const isItNegZero = (val) => val == 0 && 1 / val === -Infinity;
+const isItNaN = (val) => val !== val;
