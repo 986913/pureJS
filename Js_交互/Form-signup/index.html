@@ -58,7 +58,17 @@
   </body>
 </html>
 
-<!-- 知识点： -->
-<!-- 1. input的pattern可用正则 -->
-<!-- 2. form的submit事件 和 button(type="submit")是很好的combo,   form的submit事件记得 e.preventDefault -->
-<!-- 3. const formdata = new FormData($form)的使用, formdata有一系列的方法可使用，常见的是formdata.get("name"), name refer to input name attr -->
+
+<!-- 
+  知识点：
+  
+  1. input的pattern可用正则
+
+  2. 🟢需JS配合的组合: 
+      🟢form的submit事件 和 button(type="submit")是很好的combo,🟢 
+      form的submit事件记得要e.preventDefault(), 因为默认情况下，表单提交后页面会刷新(通过action指定提交地址),所以我们一般提交表单时都是e.preventDefault()后自行实现提交逻辑；
+
+  3.  const formdata = new FormData($form)的使用：
+      formdata有一系列的方法可使用，常见的是formdata.get("name"), name refer to input name attr
+      详情看：https://zh.javascript.info/formdata
+-->
