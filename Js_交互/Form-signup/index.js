@@ -1,3 +1,8 @@
+// <!-- 知识点： -->
+// <!-- 1. input的pattern可用正则 -->
+// <!-- 2. form的submit事件 和 button(type="submit")是很好的combo,   form的submit事件记得 e.preventDefault -->
+// <!-- 3. const formdata = new FormData($form)的使用, formdata有一系列的方法可使用，常见的是formdata.get("name"), name refer to input name attr -->
+
 /**
  * @param {string} username
  * @param {string} email
