@@ -46,6 +46,17 @@ function deepOmit(val, keys) {
 
 const isPlainObject = (obj) => {
   if (obj === null || obj === undefined) return false;
+
   const prototype = Object.getPrototypeOf(obj);
-  return prototype === null || prototype.constructor === Object;
+  /*
+    prototype === null             ---> for object without prototype: 
+                                        const obj1 = Object.create(null);           // obj1 is {}
+                                        const   p1 = Object.getPrototypeOf(obj1);   // p1 is null
+
+    prototype.constructor === Object ---> for object with prototype: 
+                                          const obj2 = {}                           // obj2 is {}
+                                          const   p2 = Object.getPrototypeOf(obj2); // p2.constructor is Object
+   */
+  return prototype === null || prototype === Object.prototype;
+  //OR   return prototype === null || prototype.constructor === Object;
 };
