@@ -43,42 +43,43 @@ const target = A.querySelector('#node1');
 /* 这个函数的作用是在两个DOM树中找到与给定目标节点target对应的节点。它接受两个参数 rootA 和 rootB，分别表示两个 DOM 树的根节点 */
 findCorrespondingNode(A, B, target); //  B.querySelector('#node1')
 
-/*----------------------- Solution1: Recursion --------------------------- */
+/*********************************** Solution1: DFS Recursion *************************************/
 const findCorrespondingNode = (rootA, rootB, target) => {
-  if (rootA === target) return rootB;
-
-  for (let i = 0; i < rootA.childNodes.length; i++) {
-    const childA = rootA.childNodes[i];
-    const foundNode = findCorrespondingNode(
-      childA,
-      rootB.childNodes[i],
-      target
-    );
-    if (foundNode) return foundNode;
-  }
-};
-
-/*----------------------- Solution2: BFS Iterative (lc BFS变形题，不同处用了俩queue) --------------------------- */
-const findCorrespondingNode = (rootA, rootB, target) => {
-  if (rootA === target) return rootB;
-
-  const queueA = [rootA];
-  const queueB = [rootB];
-
-  while (queueA.length) {
-    const nodeA = queueA.shift();
-    const nodeB = queueB.shift();
-
+  const helper = (nodeA, nodeB) => {
     if (nodeA === target) return nodeB;
 
-    for (let childA of nodeA.childNodes) {
-      if (childA) queueA.push(childA);
+    for (let i = 0; i < nodeA.children.length; i++) {
+      let childA = nodeA.children[i];
+      let childB = nodeB.children[i];
+
+      const found = helper(childA, childB);
+      if (found) return found;
     }
-    for (let childB of nodeB.childNodes) {
-      if (childB) queueB.push(childB);
+  };
+
+  return helper(rootA, rootB);
+};
+
+/*********************************** Solution2: BFS Iterative (BFS变形题，不同处用了俩queue) *************************************/
+const findCorrespondingNode = (rootA, rootB, target) => {
+  let queueA = [rootA];
+  let queueB = [rootB];
+
+  while (queueA.length) {
+    let nodeA = queueA.shift();
+    let nodeB = queueB.shift();
+
+    if (nodeA === target) return nodeB; // found it
+
+    for (let child of nodeA.children) {
+      queueA.push(child);
+    }
+    for (let child of nodeB.children) {
+      queueB.push(child);
     }
   }
-  return null;
+
+  return null; // can not find
 };
 /**
  * BFS模版（结果是1D array时）：
@@ -100,23 +101,21 @@ const findCorrespondingNode = (rootA, rootB, target) => {
     };
  */
 
-/*----------------------- Solution3: Using Tree Walker API --------------------------- */
+/*********************************** Solution3: Using Tree Walker API *************************************/
 const findCorrespondingNode = (rootA, rootB, target) => {
   // 首先使用 document.createTreeWalker 方法创建了两个树遍历器 rootAWalker 和 rootBWalker，用于遍历两个DOM树, 这些遍历器被配置为仅显示元素节点（NodeFilter.SHOW_ELEMENT）
-  const rootAWalker = document.createTreeWalker(rootA, NodeFilter.SHOW_ELEMENT);
-  const rootBWalker = document.createTreeWalker(rootB, NodeFilter.SHOW_ELEMENT);
+  const walkerA = document.createTreeWalker(rootA, NodeFilter.SHOW_ELEMENT);
+  const walkerB = document.createTreeWalker(rootB, NodeFilter.SHOW_ELEMENT);
 
-  //然后，函数初始化一个包含当前节点的数组 currentNodes，数组的第一个元素是 rootAWalker 的当前节点，第二个元素是 rootBWalker 的当前节点。
-  let currentNodes = [rootAWalker.currentNode, rootBWalker.currentNode];
+  //然后，函数初始化一个包含当前节点的数组curNodes，数组的第一个元素是walkerA的当前节点，第二个元素是walkerB的当前节点。
+  let curNodes = [walkerA.currentNode, walkerB.currentNode];
 
-  //函数进入一个循环，直到找到目标节点或者遍历完 rootA 的所有节点 (一旦找到目标节点，循环停止)
-  while (currentNodes[0] !== target) {
-    //调用 rootAWalker.nextNode() 和 rootBWalker.nextNode() 分别获取 rootAWalker 和 rootBWalker 的下一个节点，并将它们更新到 currentNodes 数组中
-    currentNodes = [rootAWalker.nextNode(), rootBWalker.nextNode()];
+  //函数进入一个循环，直到找到目标节点或者遍历完rootA的所有节点 (一旦找到目标节点，循环停止)
+  while (curNodes[0] !== target) {
+    curNodes = [walkerA.nextNode(), walkerB.nextNode()]; //调用walkerA.nextNode() 和walkerB.nextNode() 分别获取walkerA和walkerB的下一个节点，并将它们更新到curNodes数组中
   }
 
-  // 返回 currentNodes 数组的第二个元素，即 rootBWalker 的当前节点，它就是在 rootB 中对应于目标节点 target 的节点。
-  return currentNodes[1];
+  return curNodes[1]; // 返回curNodes数组的第二个元素，即walkerB的当前节点，它就是在rootB中对应于目标节点target的节点。
 };
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/Document/createTreeWalker
