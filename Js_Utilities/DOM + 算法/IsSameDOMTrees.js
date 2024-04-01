@@ -17,20 +17,17 @@
       <div id="foo">Hello World</div>
  */
 
-/* -------------------------- Code Solution - lc 100(is same tree变形题)-👍 DFS post_order recursion-------------------------------- */
+/* ------------------ Code Solution: LC100(isSameTree变形题) 👍 DFS postOrder recursion---------------- */
 /*
-// 1. recurison params: 2 tree node:p and q, return boolean
 var isSameTree = function (p, q) {
-  //2. make sure when recursion ends:
   if (!p && q) return false;
-  else if (p && !q) return false;
-  else if (!p && !q) return true;
-  else if (p.val !== q.val) return false;
+  if (p && !q) return false;
+  if (!p && !q) return true;
+  if (p.val !== q.val) return false;
 
-  //3. recursion single layer logic (when p.val===q.val)
   let isLeftSideSame = isSameTree(p.left, q.left);
   let isRightSideSame = isSameTree(p.right, q.right);
-  return isLeftSideSame && isRightSideSame;
+  return isLeftSideSame && isRightSideSame; // 后序位置
 };
 */
 
@@ -40,26 +37,39 @@ var isSameTree = function (p, q) {
  * @return {boolean}
  */
 
+/********************* Solution1: 👍👍👍 DFS PostOrder - Recursion 分解思想 *********************/
+
 //step 1.  recursion params: two treenode,  return boolean
-function isSameTree(nodeA, nodeB) {
+function identicalDOMTrees(nodeA, nodeB) {
   /* step2: make sure when recurrsion ends, below are cases: */
+  if (!nodeA && !nodeB) return true;
+  if (!nodeA && nodeB) return false;
+  if (nodeA && !nodeB) return false;
   if (nodeA.nodeType !== nodeB.nodeType) return false;
+  if (nodeA.tagName !== nodeB.tagName) return false;
   if (nodeA.nodeType === Node.TEXT_NODE) {
     return nodeA.textContent === nodeB.textContent;
   }
-  if (nodeA.childNodes.length !== nodeB.childNodes.length) return false;
   if (nodeA.attributes.length !== nodeB.attributes.length) return false;
-  const hasSameAttributes = nodeA
-    .getAttributeNames()
-    .every(
-      (attrName) =>
-        nodeA.getAttribute(attrName) === nodeB.getAttribute(attrName)
-    );
-  if (!hasSameAttributes) return false;
+  for (let i = 0; i < nodeA.getAttributeNames().length; i++) {
+    const attrNameA = nodeA.getAttributeNames()[i];
+    const attrNameB = nodeB.getAttributeNames()[i];
+    if (attrNameA !== attrNameB) return false;
+    if (nodeA.getAttribute(attrNameA) !== nodeB.getAttribute(attrNameB))
+      return false;
+  }
+  if (nodeA.childNodes.length !== nodeB.childNodes.length) return false;
 
   /* step3: start recursion single layer logic:
-    because we don't know how may of the current node's children amount.  so we can iterate childrens instead of node.left,node right(leetcode100), and pass in childA and nodeB.childNodes[index] to recurrsion 👒*/
-  return Array.from(nodeA.childNodes).every((childA, index) => {
-    return isSameTree(childA, nodeB.childNodes[index]);
-  });
+    because we don't know how may of the current node's children amount.  
+    so we can iterate childrens instead of node.left,node right(LC100), 
+    and pass in childA and childB to recurrsion */
+  for (let i = 0; i < nodeA.childNodes.length; i++) {
+    const childA = nodeA.childNodes[i];
+    const childB = nodeB.childNodes[i];
+    const isSubTreeSame = identicalDOMTrees(childA, childB);
+    if (!isSubTreeSame) return false;
+  }
+
+  return true; // they are same tree
 }
