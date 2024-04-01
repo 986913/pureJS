@@ -21,7 +21,7 @@ onClick(
   }
 );
 
-/* -------------------------- Code Solution 1: BFS -------------------------------- */
+/*********************************** Code Solution 1: BFS *************************************/
 /**
  * @param {HTMLElement} root
  * @param {(el: HTMLElement) => boolean} predicate
@@ -41,7 +41,7 @@ function onClick(root, predicate, handler) {
   }
 }
 
-/* -------------------------- Code Solution 2: DFS -------------------------------- */
+/*********************************** Solution2: DFS Recursion - 遍历思路 *************************************/
 function onClick(root, predicate, handler) {
   const traversal = (node) => {
     if (!node) return;
@@ -58,7 +58,7 @@ function onClick(root, predicate, handler) {
   traversal(root);
 }
 
-/* -------------------------- Code Solution 3: DOM traversal - TreeWalker -------------------------------- */
+/*********************************** Code Solution 3: DOM traversal - TreeWalker *************************************/
 function onClick(root, predicate, handler) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
   let currNode = walker.currentNode;

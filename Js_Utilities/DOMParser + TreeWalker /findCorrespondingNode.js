@@ -43,7 +43,7 @@ const target = A.querySelector('#node1');
 /* 这个函数的作用是在两个DOM树中找到与给定目标节点target对应的节点。它接受两个参数 rootA 和 rootB，分别表示两个 DOM 树的根节点 */
 findCorrespondingNode(A, B, target); //  B.querySelector('#node1')
 
-/*********************************** Solution1: DFS Recursion *************************************/
+/*********************************** Solution1: DFS Recursion - 分解思路 *************************************/
 const findCorrespondingNode = (rootA, rootB, target) => {
   const helper = (nodeA, nodeB) => {
     if (nodeA === target) return nodeB;

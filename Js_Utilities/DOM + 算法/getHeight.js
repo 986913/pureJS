@@ -29,11 +29,7 @@ const tree = (
 );
 getHeight(tree); // 4
 
-/* -------------------------- Code Solution 1: DFS Post-order recursive ------------------------------ */
-/**
- * @param {HTMLElement | null} tree
- * @return {number}
- */
+/*********************************** Solution1: DFS Post-order Recursive : 分解思想 *************************************/
 function getHeight(tree) {
   const helper = (node) => {
     if (!node) return 0;
@@ -42,22 +38,36 @@ function getHeight(tree) {
     for (let child of node.children) {
       depth = Math.max(depth, helper(child));
     }
-    /* same as:
-      for(let i=0; i<node.children.length; i++){
-        depth=Math.max(depth, helper(node.children[i]))
-      }
-    */
+    //后序位置
     return depth + 1;
   };
 
   return helper(tree);
 }
 
-/* -------------------------- Code Solution 2: BFS-iterative  ------------------------------- */
-/**
- * @param {HTMLElement | null} tree
- * @return {number}
- */
+/*********************************** Solution2: DFS Post-order Recursive : 遍历思想 + 回溯 *************************************/
+function getHeight(tree) {
+  let height = 0;
+
+  const traversal = (node, curDepth) => {
+    if (!node) return 0;
+
+    //前序位置
+    curDepth += 1;
+    height = Math.max(height, curDepth);
+
+    for (let child of node.children) {
+      traversal(child, curDepth);
+    }
+    //后序位置： backtracking
+    curDepth -= 1;
+  };
+
+  traversal(tree, 0);
+  return height;
+}
+
+/*********************************** Solution2: BFS *************************************/
 function getHeight(tree) {
   if (!tree) return 0;
 
