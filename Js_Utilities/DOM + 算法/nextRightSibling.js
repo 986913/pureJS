@@ -24,19 +24,12 @@ function nextRightSibling(root, target) {
   if (!root) return null;
 
   let queue = [root];
-
   while (queue.length) {
-    let len = queue.length;
+    let node = queue.shift();
+    if (node === target) return queue[0] || null; // <--- diff is here,如果找到和target一样的node, 那么返回它的下一个节点：queue[0]
 
-    for (let i = 0; i < len; i++) {
-      let node = queue.shift();
-      //如果找到和target一样的node, 那么返回它的下一个节点：queue.shift()
-      if (node === target) {
-        return queue.shift() || null;
-      }
-      for (let child of node.children) {
-        queue.push(child);
-      }
+    for (let child of node.children) {
+      queue.push(child);
     }
   }
 }

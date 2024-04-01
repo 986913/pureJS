@@ -14,7 +14,7 @@
   What is time & space cost of your solution ?
  */
 
-/* ---------------------------- Solution1: BFS ------------------------------- */
+/* ---------------------------- Solution: BFS ------------------------------- */
 /**
  * @param {Element} root
  * @param {Element} target
@@ -24,22 +24,23 @@ function previousLeftSibling(root, target) {
   if (!root) return null;
 
   let queue = [root];
+  let prev = null; //<--- diff is here: define prev node as null first
 
   while (queue.length) {
     let len = queue.length;
-    let prev = null; // define prev node as null first
 
     for (let i = 0; i < len; i++) {
       let node = queue.shift();
 
-      //如果找到和target一样的node, 那么直接返回prev node
+      //如果找到了target, 且位置是当前层的第一个节点，那么没有prev node. 返回null;
+      if (node === target && i === 0) return null;
+      //如果找到了target, 且有prev node. 返回prev noe
       if (node === target) return prev;
 
       for (let child of node.children) {
         queue.push(child);
       }
-
-      prev = node; // update prev here
+      prev = node; //<--- diff is here: update prev here
     }
   }
 }
