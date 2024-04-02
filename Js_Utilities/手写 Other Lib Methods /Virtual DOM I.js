@@ -160,18 +160,19 @@ const json = {
 const html = render(json);
 expect(virtualize(html)).toEqual(json);
 
-/* ------------------------------- Code solution ------------------------------------- */
+/************************  Code solution: serialize + deserialize Binary 变形题 ***************************/
+
 /**
  * @param {HTMLElement}
  * @return {object} object literal presentation
  */
+/*********************** Virtualize  **************************/
 function virtualize(element) {
   // virtualize top level element
   const result = {
     type: element.tagName.toLowerCase(),
     props: { children: [] },
   };
-
   // update result.props with attribute etc, but without children
   for (let attr of element.attributes) {
     const name = attr.name === 'class' ? 'className' : attr.name;
@@ -179,11 +180,11 @@ function virtualize(element) {
   }
   // update result.props with children
   for (let child of element.childNodes) {
-    //if child is text node
-    if (child.nodeType === 3) {
+    //if child is text element
+    if (child.nodeType === Node.TEXT_NODE) {
       result.props.children.push(child.textContent);
     } else {
-      //if child is html element, need
+      //if child is html element, need recursion
       result.props.children.push(virtualize(child)); // 👈 recursion here
     }
   }
@@ -193,6 +194,7 @@ function virtualize(element) {
     result.props.children.length === 1
       ? result.props.children[0]
       : result.props.children;
+
   return result;
 }
 
@@ -200,8 +202,9 @@ function virtualize(element) {
  * @param {object} valid object literal presentation
  * @return {HTMLElement}
  */
+/*********************** Render  **************************/
 function render(obj) {
-  // if obj is text node, then return create text node
+  // if obj is text element, then return create text element
   if (typeof obj === 'string') return document.createTextNode(obj);
 
   // if obj is element, then need construct element and return it
