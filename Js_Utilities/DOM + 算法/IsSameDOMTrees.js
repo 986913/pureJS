@@ -64,6 +64,7 @@ function identicalDOMTrees(nodeA, nodeB) {
     because we don't know how may of the current node's children amount.  
     so we can iterate childrens instead of node.left,node right(LC100), 
     and pass in childA and childB to recurrsion */
+  //注意是 childNodes, 不是node.children
   for (let i = 0; i < nodeA.childNodes.length; i++) {
     const childA = nodeA.childNodes[i];
     const childB = nodeB.childNodes[i];
