@@ -204,7 +204,7 @@ function virtualize(element) {
  * @param {object} valid object literal presentation
  * @return {HTMLElement}
  */
-/*********************** Render  **************************/
+/*********************** Render --- renderHTML变形题  **************************/
 function render(obj) {
   // if obj is text element, then return create text element
   if (typeof obj === 'string') return document.createTextNode(obj);

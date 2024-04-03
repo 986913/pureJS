@@ -168,7 +168,8 @@ expect(virtualize(html)).toEqual(json);
  */
 /*********************** Virtualize  **************************/
 function virtualize(element) {
-  // virtualize top level element
+  // 前序位置：
+  //virtualize top level element
   const result = {
     type: element.tagName.toLowerCase(),
     props: { children: [] },
@@ -178,6 +179,7 @@ function virtualize(element) {
     const name = attr.name === 'class' ? 'className' : attr.name;
     result.props[name] = attr.value;
   }
+
   // update result.props with children
   for (let child of element.childNodes) {
     //if child is text element
@@ -202,7 +204,7 @@ function virtualize(element) {
  * @param {object} valid object literal presentation
  * @return {HTMLElement}
  */
-/*********************** Render  **************************/
+/*********************** Render --- renderHTML变形题  **************************/
 function render(obj) {
   // if obj is text element, then return create text element
   if (typeof obj === 'string') return document.createTextNode(obj);
@@ -216,6 +218,7 @@ function render(obj) {
   for (let [attrname, value] of Object.entries(attrs)) {
     element[attrname] = value;
   }
+
   const childrenArr = Array.isArray(children) ? children : [children];
   for (let child of childrenArr) {
     element.append(render(child)); // 👈 recursion here to build childrens

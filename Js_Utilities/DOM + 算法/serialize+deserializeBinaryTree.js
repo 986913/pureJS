@@ -55,7 +55,7 @@ function serialize(root) {
  * @param {string} str
  * @return {Node}
  */
-/*********** 反序列化 - DFS Recursion 分解思想 (LC108 变形题）***********/
+/*********** 反序列化(造树)- DFS Recursion 分解思想 (LC108 变形题）***********/
 function deserialize(str) {
   return buildTree(str.split(','));
 }
