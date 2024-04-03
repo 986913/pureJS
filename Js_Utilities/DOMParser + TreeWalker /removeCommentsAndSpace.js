@@ -8,22 +8,24 @@ const removeCommentsAndSpace = (htmlStr) => {
   var doc = domParser.parseFromString(htmlStr, 'text/html');
 
   // 使用原生的TreeWalker进行遍历
-  var treeWalker = document.createTreeWalker(doc);
-  var arrNodeRemove = [];
+  var walker = document.createTreeWalker(doc);
+  var nodesToRemove = [];
+
   // 遍历注释节点和换行文本节点
-  while (treeWalker.nextNode()) {
-    var node = treeWalker.currentNode;
+  while (walker.nextNode()) {
+    var node = walker.currentNode;
     if (
       node.nodeType == Node.COMMENT_NODE ||
       (node.nodeType == Node.TEXT_NODE && node.nodeValue.trim() == '')
     ) {
-      arrNodeRemove.push(node);
+      nodesToRemove.push(node);
     }
   }
   // 节点移除
-  arrNodeRemove.forEach(function (node) {
+  nodesToRemove.forEach(function (node) {
     node.parentNode.removeChild(node);
   });
+
   // 字符串还原
   return doc.body.innerHTML;
 };
