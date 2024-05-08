@@ -48,7 +48,14 @@ class BrowserHistory {
    * @param { string } url
    */
   visit(url) {
-    this.history.length = this.pointer + 1; //重点： truncated here, 确保history lenth与指针位置一致,维护正确的历史记录状态。
+    /* 重点: 截断数组。这样做可以确保只保留当前页面及之前的历史记录 
+      eg:  [ A, B, C, D, E]  ---visit F--> [ A, B, F ]  
+                ↑                                  ↑
+    */
+    if (this.currIdx !== this.history.length - 1) {
+      this.history = this.history.slice(0, this.currIdx + 1); // 因为slice(start, end) 截出来的不包括end
+    }
+
     this.history.push(url);
     this.pointer++;
   }
@@ -62,11 +69,11 @@ class BrowserHistory {
 
   // go to previous entry
   goBack() {
-    this.pointer = Math.max(0, --this.pointer); //  it will increment and return the value *after* 减法
+    this.pointer = Math.max(0, this.pointer - 1); //  it will increment and return the value *after* 减法
   }
 
   // go to next visited url
   forward() {
-    this.pointer = Math.min(this.history.length - 1, ++this.pointer); //  it will increment and return the value *after* incrementing
+    this.pointer = Math.min(this.history.length - 1, this.pointer + 1); //  it will increment and return the value *after* incrementing
   }
 }
