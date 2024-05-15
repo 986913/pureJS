@@ -2,9 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
 
@@ -22,28 +20,8 @@
           <textarea id='message-input' name="message" type='text' placeholder="leave your message here.."></textarea>
       </div>
 
-      <input type="submit" value="Click to submit"/>
+      <button type="submit"> Send </button>
     </form>
 
-    <script src="src/index.js"></script>
   </body>
 </html>
-
-<!-- 
-  知识点：
-  
-  1. form的action属性: 
-      点击浏览选择提交位置，可以把数据提交到另一个页面，还可以提交到后台。
-
-  2. form的method属性:
-      method是方法，有get和post两种，各有所长。就是内容填好后提交需要一个方法，是获取你的内容还是传递你的内容。
-        get:明文提交，快速，但不安全，不能提交大数据
-        post:密文，安全，可以提交大数据
-
-  3. 🟢无需JS配合的组合: 
-      form action, method + input (type为submit)
-      但是! 🟢 一定要给每一个input加上name属性🟢,要不然提交不成功
-
-  4. 当一个form表单内包含submit按钮时，在某个input输入框内回车会触发表单提交，这非常方便，不需要我们针对每个输入框处理keydown事件了；
-      (可以试着把上面的<input type="submit" value="Click to submit"/>去除掉，然后填满每一个input field,然后回车，发现就不会触发表单提交了)
--->
