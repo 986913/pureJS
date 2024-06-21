@@ -38,7 +38,7 @@ function myAtob(encoded) {
     }
     const index = indexMap.get(char);
     if (index == null) throw new Error('disallowed character');
-    const binary = index.toString(2).padStart(6, '0');
+    const binary = index.toString(2).padStart(6, '0'); // padStart(targetLength, padString)
     buffer += binary;
   }
 

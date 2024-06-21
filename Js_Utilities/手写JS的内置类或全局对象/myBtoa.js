@@ -30,7 +30,7 @@ function myBtoa(str) {
     str = str.slice(3);
     let bits = '';
     for (let char of first3) {
-      bits += char.charCodeAt(0).toString(2).padStart(8, '0');
+      bits += char.charCodeAt(0).toString(2).padStart(8, '0'); // padStart(targetLength, padString)
     }
     // keep slicing 6 bits
     while (bits.length > 0) {
