@@ -27,8 +27,29 @@ cancel();
  * @returns {Function}
  */
 function setCancellableTimeout(callback, delay, ...args) {
+  // setup a timeout to invoke callback after delay
   const timerId = setTimeout(callback, delay, ...args);
+
+  // Return a function that cancels the timeout
   return () => {
     clearTimeout(timerId);
   };
 }
+
+/* ------------------------------- LC 2715 - Solution -------------------------------------
+ * @param {Function} fn
+ * @param {Array} args
+ * @param {number} t
+ * @return {Function}
+
+var cancellable = function(fn, args, t) {
+    // setup a timeout to invoke fn after t
+    const timer = setTimeout(() => fn(...args),t) // 等价于const timer = setTimeout(fn,t,...args)
+
+    // Return a function that cancels the timeout
+    return () => {
+        clearTimeout(timer)
+    }
+};
+
+*/

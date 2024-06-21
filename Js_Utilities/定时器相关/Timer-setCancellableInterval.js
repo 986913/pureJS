@@ -27,8 +27,31 @@ cancel(); // Called at t = 25
  * @returns {Function}
  */
 function setCancellableInterval(callback, delay, ...args) {
+  /* setInterval does not initially call the function before t milliseconds, 
+    which is why we call fn(...args) once before setting the interval */
+  callback(...args);
+
   const timerId = setInterval(callback, delay, ...args);
   return () => {
     clearInterval(timerId);
   };
 }
+
+/* ------------------------------- LC 2725 - Solution -------------------------------------
+ * @param {Function} fn
+ * @param {Array} args
+ * @param {number} t
+ * @return {Function}
+
+  var cancellable = function(fn, args, t) {
+    fn(...args) // <-- diff is here
+
+    // setup a interval to invoke fn at each t
+    let timer = setInterval(fn, t, ...args);
+
+    // return a function that cancels the interval
+    return () => {
+      clearInterval(timer)
+    }
+  };
+*/
