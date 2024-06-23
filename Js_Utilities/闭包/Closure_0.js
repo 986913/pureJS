@@ -27,16 +27,14 @@ function createCounter() {
 
 /* ---------------------  Code solution 2: ----------------------- */
 function createCounter() {
-  let count = 0;
+  let c = 0;
   const obj = {
     count: 0,
   };
 
   //使用Object.defineProperties修改object属性：
   Object.defineProperty(obj, 'count', {
-    get: function () {
-      return count++;
-    },
+    get: () => c++,
   });
 
   return obj;

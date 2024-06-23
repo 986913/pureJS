@@ -32,7 +32,9 @@ function makeCounter(initialValue = 0) {
     if (isFirstTimeCall) {
       isFirstTimeCall = false;
       return result;
+    } else {
+      result += 1;
+      return result;
     }
-    return (result += 1);
   };
 }
