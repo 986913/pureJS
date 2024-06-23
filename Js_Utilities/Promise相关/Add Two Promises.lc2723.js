@@ -44,16 +44,16 @@ var addTwoPromises = async function (promise1, promise2) {
 /*********************************Solution 4: Count promises ******************************************************/
 var addTwoPromises = async function (promise1, promise2) {
   return new Promise((resolve, reject) => {
-    let count = 2;
+    let count = 0;
     let result = 0;
 
     [promise1, promise2].forEach(async (promise) => {
       try {
         const val = await promise;
         result += val;
-        count--;
+        count++;
 
-        if (count === 0) {
+        if (count === 2) {
           resolve(result);
         }
       } catch (err) {

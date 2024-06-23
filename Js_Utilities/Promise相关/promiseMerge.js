@@ -1,4 +1,6 @@
 /**
+  Add Two Promise.lc2723.js变形题:
+  
   Implement a function that accepts two promises and returns a single Promise. 
   This returned promise fulfills when both input promises fulfill, 
   with a single value according to the order and types of the fulfillment values:
