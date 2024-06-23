@@ -14,7 +14,7 @@ var promisePool = async function (functions, k) {
   const executeNext = async () => {
     if (functions.length === 0) return; // Immediately returns if there are no functions to execute (the base case).
 
-    const fn = functions.shift();
+    const fn = functions.shift(); // fn就是一个promise
     await fn();
     await executeNext();
   };
