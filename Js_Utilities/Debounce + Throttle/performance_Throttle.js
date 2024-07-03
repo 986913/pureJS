@@ -1,6 +1,9 @@
 /**
  * what’s Throttle?
  *  - 每隔一段时间(wait)内，只执行一次函数, 也就是当timer存在的时候直接return不执行，不存在的时候执行setTimeout
+
+  throttle会在一定时间间隔内至少执行一次，
+  而debounce会在调用结束后的一段时间内只执行一次
  */
 
 /* --------------------- 用例测试 ----------------------- */
@@ -22,29 +25,32 @@ document.onmousemove = function () {
 /* -------------- Code solution: v1 - normal function ------------------- */
 function throttle(func, wait) {
   let timer = null;
+  let nextTimeToCallFn = 0; // 记录了下一次允许调用函数的时间
 
-  // return a normal function:
   return function (...args) {
     const context = this;
-    if (timer) return; // difference on debounce
+    const delay = Math.max(0, nextTimeToCallFn - Date.now()); //计算当前时间和下一次允许调用时间之间的差值。如果差值为负数，则设置为 0，表示可以立即调用。
+    if (timer) clearTimeout(timer);
 
     timer = setTimeout(() => {
       func.apply(context, args);
-      timer = null; // difference on debounce
-    }, wait);
+      nextTimeToCallFn = Date.now() + wait; // difference on debounce
+    }, delay);
   };
 }
+
 /* -------------- Code solution: v2 - arrow function ------------------- */
 function throttle(func, wait) {
   let timer = null;
+  let nextTimeToCallFn = 0;
 
-  // return the arrow function:
   return (...args) => {
-    if (timer) return; // difference on debounce
+    const delay = Math.max(0, nextTimeToCallFn - Date.now());
+    if (timer) clearTimeout(timer);
 
     timer = setTimeout(() => {
       func(args);
-      timer = null; // difference on debounce
-    }, wait);
+      nextTimeToCallFn = Date.now() + wait;
+    }, delay);
   };
 }

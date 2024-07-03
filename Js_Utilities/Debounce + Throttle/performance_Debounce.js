@@ -1,6 +1,10 @@
 /**
  * What's the debounce?
  *  触发事件后的一段时间后(wait)才执行函数，如果在这段时间(wait)内被再次触发，则会重新计时.
+
+
+ * throttle会在一定时间间隔内至少执行一次，
+ * 而debounce会在调用结束后的一段时间内只执行一次
  *
  *  Implement a debounce function which accepts a callback function and a wait duration.
  *  Calling debounce() returns a function which has debounced invocations of the callback function following the behavior described below.
