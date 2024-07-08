@@ -53,8 +53,19 @@ function deepClone(value) {
 
 /***
  * 知识点：
- * 1. 使用 for … in 进行遍历object时候，它也会遍历原型上的属性。所以在一些case处理上，要用.hasOwnProperty(key)判断key是不是原型上的属性.
- * 2. Object.entries( {foo:'bar', baz:42} )             --->  [ ['foo', 'bar'], ['baz', 42] ]
- * 3. Object.fromEntries ( [['foo','bar'],['baz',42]] ) --->  {foo:'bar', baz:42}
- *
+  1. 使用 for … in 进行遍历object时候，它也会遍历原型上的属性。所以在一些case处理上，要用.hasOwnProperty(key)判断key是不是原型上的属性.
+  2. 
+    Object.entries({foo:'bar', baz:42} )              --->  [ ['foo', 'bar'], ['baz', 42] ]
+    Object.fromEntries ( [['foo','bar'],['baz',42]] ) --->  {foo:'bar', baz:42}
+
+    ------------------------------------ Examples --------------------------------------------
+    const map = new Map()
+    map.set('ming', 1)
+
+    Object.entries(map)                   // [],                    因为Object.entries()不能作用于Map实例
+    [...map.entries()]                    // 转化为数组[["ming", 1]], Map实例要使用.entries(), 注意返回的是generator!
+    Object.entries({'ming': 1})           // 转化为数组[["ming", 1]], 因为Object.entries()作用于普通object
+
+    Object.fromEntries(map);              //转为普通object: { ming: 1}, 因为Object.fromEntries()也能作用于Map实例！
+    Object.fromEntries([['ming', 1]]);    //转为普通object: { ming: 1}, 因为Object.fromEntries()能作用于数组
  */
