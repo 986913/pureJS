@@ -1,5 +1,5 @@
 /**
-  Chrome uses LRU algorithm to evict data when it has to. Watch [this Youtube video](https://youtu.be/NNuTV-gjlZQ?t=387) for detail explanation, starting from 6:25 to 7:38.
+  Chrome uses cache algorithm to evict data when it has to. Watch [this Youtube video](https://youtu.be/NNuTV-gjlZQ?t=387) for detail explanation, starting from 6:25 to 7:38.
   Now you are asked to implement similar - Implement a class `LRUStorage`.
     1. This is of course not to reflect the true implementation in Chrome.
     2. `getData` and `setData` should both be treated as data being 'used'.
@@ -27,7 +27,7 @@ class MyLRUStorage {
    * @param {() => number} getTimestamp
    */
   constructor(capacity, getTimestamp) {
-    this.LRU = new Map();
+    this.cache = new Map();
     this.persistentSet = new Set();
     this.totalSize = 0;
     this.capacity = capacity;
@@ -39,11 +39,11 @@ class MyLRUStorage {
    * @returns {OriginData | undefined}
    */
   getData(origin) {
-    if (!this.LRU.has(origin)) return undefined;
+    if (!this.cache.has(origin)) return undefined;
 
-    const size = this.LRU.get(origin);
-    this.LRU.delete(origin);
-    this.LRU.set(origin, size);
+    const size = this.cache.get(origin);
+    this.cache.delete(origin);
+    this.cache.set(origin, size);
     return size;
   }
 
@@ -55,15 +55,15 @@ class MyLRUStorage {
   setData(origin, size) {
     if (size > this.capacity) return false;
 
-    const originSize = this.LRU.get(origin);
+    const originSize = this.cache.get(origin);
     if (originSize && originSize.size >= size) {
-      this.LRU.delete(origin);
+      this.cache.delete(origin);
       this.totalSize = this.totalSize + size - originSize.size;
-      this.LRU.set(origin, { size });
+      this.cache.set(origin, { size });
       return true;
     }
 
-    const keysToRemoveItr = [...this.LRU.keys()]
+    const keysToRemoveItr = [...this.cache.keys()]
       .filter((key) => {
         return !this.persistentSet.has(key);
       })
@@ -72,7 +72,7 @@ class MyLRUStorage {
       const evicted = this.evict(keysToRemoveItr);
       if (!evicted) return false;
     }
-    this.LRU.set(origin, { size });
+    this.cache.set(origin, { size });
     this.totalSize += size;
     return true;
   }
@@ -81,8 +81,8 @@ class MyLRUStorage {
     const currentKey = keysToRemoveItr.next().value;
     if (!currentKey) return false;
 
-    this.totalSize -= this.LRU.get(currentKey).size;
-    this.LRU.delete(currentKey);
+    this.totalSize -= this.cache.get(currentKey).size;
+    this.cache.delete(currentKey);
     return true;
   }
 
@@ -92,11 +92,11 @@ class MyLRUStorage {
    */
   clearData(origin) {
     this.persistentSet.delete(origin);
-    const size = this.LRU.get(origin);
+    const size = this.cache.get(origin);
     if (size && size.size) {
       this.totalSize -= size.size;
     }
-    this.LRU.delete(origin);
+    this.cache.delete(origin);
   }
 
   /**
