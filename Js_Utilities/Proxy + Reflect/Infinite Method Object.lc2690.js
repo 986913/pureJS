@@ -10,7 +10,7 @@ var createInfiniteObject = function () {
   const obj = {};
 
   const objProxy = new Proxy(obj, {
-    get: function (obj, prop) {
+    get: function (_, prop) {
       return function () {
         return prop;
       };
