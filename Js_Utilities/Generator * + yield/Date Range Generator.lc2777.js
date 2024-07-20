@@ -5,6 +5,7 @@
  * @yields {string}
  */
 
+/******************************** Solution 1 ************************************/
 var dateRangeGenerator = function* (start, end, step) {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -18,6 +19,17 @@ var dateRangeGenerator = function* (start, end, step) {
 
     const next = startDate.getDate() + step;
     startDate.setDate(next); // <--- 主要在这， Date有个实例方法来设置日期.setDate()
+  }
+};
+
+/******************************** Solution 2 ************************************/
+var dateRangeGenerator = function* (start, end, step) {
+  let startDate = new Date(start);
+  let endDate = new Date(end);
+
+  while (startDate <= endDate) {
+    yield startDate.toISOString().split('T')[0]; // <--- 主要在这， Date有个实例方法.toISOString()
+    startDate.setDate(startDate.getDate() + step);
   }
 };
 
