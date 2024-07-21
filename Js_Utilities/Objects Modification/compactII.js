@@ -18,30 +18,23 @@ compact({ foo: true, bar: null }); // { foo: true }
  * @param {Array|Object} value
  * @return {Array|Object}
  */
-function compact(value) {
-  // Handle primitives.
-  if (typeof value !== 'object' || value === null) return value;
+var compact = function (value) {
+  if (typeof value !== 'object') return value;
 
-  // Handle arrays, or Object.prototype.toString.call(value) === '[object Array]'
-  if (Array.isArray(value)) {
-    const arr = [];
-    value.forEach((item) => {
-      if (item) arr.push(compact(item)); // recursion here
-    });
-    return arr;
-  }
+  const result = Array.isArray(value) ? [] : {};
 
-  // Handle objects.
-  if (Object.prototype.toString.call(value) === '[object Object]') {
-    const obj = {};
-    Object.entries(value).forEach(([key, val]) => {
-      if (val) {
-        obj[key] = compact(val); // recursion here
+  for (let key in value) {
+    if (Boolean(value[key]) === true) {
+      if (Array.isArray(result)) {
+        result.push(compactObject(value[key])); // 处理数组时，用push添加元素到结果数组
+      } else {
+        result[key] = compactObject(value[key]); // 处理对象时，用键值对方式添加属性到结果对象
       }
-    });
-    return obj;
+    }
   }
-}
+
+  return result;
+};
 
 /* ---------- Code Solution V2: shorter solution that adopts a more functional approach -------------- */
 /**
