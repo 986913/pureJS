@@ -29,9 +29,9 @@ function flattern(arr) {
 }
 
 /* -------------- Code:  Solution 2  -------------------------------- */
-function flat(arr) {
+function flattern(arr) {
   const result = arr.reduce((acc, cur) => {
-    return acc.concat(Array.isArray(cur) ? flat(cur) : cur);
+    return acc.concat(Array.isArray(cur) ? flattern(cur) : cur);
   }, []);
   return result;
 }

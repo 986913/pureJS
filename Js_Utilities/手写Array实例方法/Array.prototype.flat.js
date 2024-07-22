@@ -26,17 +26,17 @@ flat([5, [6, [7, [8]]], 9], Infinity); // [5,6,7,8,9]
  */
 function flat(arr, depth = 1) {
   let result = [];
-
-  const helper = (input, depthInput) => {
-    /* 关键在这: depthInput <= 0 听着recursion, 且 ...input, spread operator只展开一层 
-      比如 const arr = [1,2,3,[4,[5]]]  那么, console.log(...arr) 等于 123[4,[5]]  */
-    if (depthInput <= 0) {
-      result = [...result, ...input];
+  const helper = (input, curDepth = 1) => {
+    if (curDepth <= 0) {
+      result.push(...input);
       return;
     } else {
-      input.forEach((i) => {
-        if (!Array.isArray(i)) result.push(i);
-        else helper(i, depth - 1);
+      input.forEach((item) => {
+        if (Array.isArray(item)) {
+          helper(item, curDepth - 1);
+        } else {
+          result.push(item);
+        }
       });
     }
   };
