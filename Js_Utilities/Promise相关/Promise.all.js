@@ -43,11 +43,12 @@ function myPromiseAll(promises) {
     const results = new Array(promises.length); //用来装被解决的promise们的解决值。
     let pending = promises.length;
 
-    // edge case: when promises input is [], then should return []
-    if (pending === 0) {
-      resolve(results);
-      return;
-    }
+    /* edge case: when promises input is [], then should return []
+      if (pending === 0) {
+        resolve(results);
+        return;
+      }
+    */
 
     //main logic:
     promises.forEach(async (p, index) => {
