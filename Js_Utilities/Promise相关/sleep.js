@@ -6,10 +6,10 @@
 let t = Date.now();
 sleep(100).then(() => console.log(Date.now() - t)); // 100
 
-/*-------------------- Code solution ------------------*/
 /**
  * @param {number} millis
  */
+/*-------------------- Code solution ------------------*/
 async function sleep(millis) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

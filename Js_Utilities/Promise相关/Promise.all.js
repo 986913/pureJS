@@ -32,11 +32,11 @@ try {
   console.log(err); // 'An error occurred!'
 }
 
-/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 /**
  * @param {Array} promises
  * @return {Promise<Array>}
  */
+/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 
 function myPromiseAll(promises) {
   return new Promise((resolve, reject) => {
@@ -70,11 +70,6 @@ function myPromiseAll(promises) {
 }
 
 /* ------------------ Solution Code V2: use Promise.then() ----------------------------------------- */
-/**
- * @param {Array} promises
- * @return {Promise<Array>}
- */
-
 function myPromiseAll(promises) {
   return new Promise((resolve, reject) => {
     const results = new Array(promises.length); //用来装被解决的promise们的解决值

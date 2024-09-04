@@ -46,11 +46,10 @@ promisified2('file.txt')
   });
 /* ------------- 用例测试3,4,5见 🟡 sequence, parallel and race  --------------- */
 
-/*--------------------------Solution : return an function that take para and wrap promise ------------------------- */
 /*
   type func = (error: Error, data: any) => void
 */
-
+/*--------------------------Solution : return an function that take para and wrap promise ------------------------- */
 function promisify(func) {
   /* 这里的input就是对应上面例子的'file.txt'和true
      return function 就是为了能够传值 --> 传input */
@@ -69,7 +68,6 @@ function promisify(func) {
         fn((err, output) => (err ? rej(err) : res(output)), input);
       });
 */
-
 /**
   这个函数的作用是将一个使用回调函数的异步操作转换为使用Promise的异步操作。
   它接受一个回调函数作为参数，并返回一个新的函数，该函数接受一个输入参数input,并返回一个Promise。

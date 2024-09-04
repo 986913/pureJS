@@ -22,13 +22,13 @@ const response = await promiseTimeout(fakeFetch(1000), 2000);
 console.log(response); // Data successfully fetched!
 await promiseTimeout(fakeFetch(5000), 2000); // "Promise timeout" thrown.
 
-/* ---------------------- Solution 1: use setTimeout  ---------------------- */
 /**
  * @template T
  * @param {Promise<T>} promise
  * @param {number} duration
  * @return {Promise<T>}
  */
+/* ---------------------- Solution 1: use setTimeout  ---------------------- */
 function promiseTimeout(promise, duration) {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
@@ -45,12 +45,6 @@ function promiseTimeout(promise, duration) {
 }
 
 /* ---------------------- Solution 2: use Promise.race()  ---------------------- */
-/**
- * @template T
- * @param {Promise<T>} promise
- * @param {number} duration
- * @return {Promise<T>}
- */
 function promiseTimeout(promise, duration) {
   const timeoutPromise = new Promise((_, reject) => {
     setTimeout(() => {

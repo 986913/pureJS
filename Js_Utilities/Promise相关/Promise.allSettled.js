@@ -26,12 +26,11 @@ await myPromiseAllSettled([p0, p1, p2]);
   ];
 */
 
-/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 /**
  * @param {Array} iterable
  * @return {Promise<{status: 'fulfilled', value: *}|{status: 'rejected', reason: *}>}
  */
-
+/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 function myPromiseAllSettled(promises) {
   return new Promise((resolve) => {
     const results = new Array(promises.length);
@@ -51,22 +50,18 @@ function myPromiseAllSettled(promises) {
         results[index] = { status: 'fulfilled', value: data };
       } catch (err) {
         results[index] = { status: 'rejected', reason: err };
-      }
-
-      pending--;
-      // 所有Promise对象都被处理了, 那就resolve all Promise的解决/拒绝值们 (数组)
-      if (pending === 0) {
-        resolve(results);
+      } finally {
+        pending--;
+        // 所有Promise对象都被处理了, 那就resolve all Promise的解决/拒绝值们 (数组)
+        if (pending === 0) {
+          resolve(results);
+        }
       }
     });
   });
 }
 
 /* ------------------ Solution Code V2: use Promise.then() ----------------------------------------- */
-/**
- * @param {Array} promises
- * @return {Promise<{status: 'fulfilled', value: *}|{status: 'rejected', reason: *}>}
- */
 
 function myPromiseAllSettled(promises) {
   return new Promise((resolve) => {

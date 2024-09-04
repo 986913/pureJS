@@ -28,20 +28,16 @@ const resolvedThenable = promiseResolve({
 });
 await resolvedThenable; // 42
 
-/*  ---------------------------- Solution1: short cut answer  ---------------------------- */
 /**
  * @param {*} value
  * @returns Promise
  */
+/*  ---------------------------- Solution1: short cut answer  ---------------------------- */
 function promiseResolve(value) {
   return Promise.resolve(value);
 }
 
 /*  ---------------------------- Solution2: -------------------------------------------- */
-/**
- * @param {*} value
- * @returns Promise
- */
 function promiseResolve(value) {
   // If the value is a native Promise, return it directly without creating a new instance (用例测试2s)
   if (value instanceof Promise) return value;

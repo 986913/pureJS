@@ -48,11 +48,11 @@ try {
   console.log(err); // 'Err!'
 }
 
-/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 /**
  * @param {Array} promises
  * @return {Promise}
  */
+/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 
 function myPromiseRace(promises) {
   return new Promise((resolve, reject) => {
@@ -69,11 +69,6 @@ function myPromiseRace(promises) {
 }
 
 /* ------------------ Solution Code V2: use Promise.then() ----------------------------------------- */
-/**
- * @param {Array} promises
- * @return {Promise}
- */
-
 function myPromiseRace(promises) {
   return new Promise((resolve, reject) => {
     if (promises.length === 0) return; // edge case: when input is empty

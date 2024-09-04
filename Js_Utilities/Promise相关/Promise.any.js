@@ -56,12 +56,11 @@ try {
   console.log(e.errors); // [ 42, "Err!" ]
 }
 
-/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 /**
  * @param {Array} promises
  * @return {Promise<Array>}
  */
-
+/* ------------------ Solution Code V1:  use async/await----------------------------------------- */
 function myPromiseAny(promises) {
   return new Promise((resolve, reject) => {
     if (promises.length === 0) {
@@ -90,11 +89,6 @@ function myPromiseAny(promises) {
 }
 
 /* ------------------ Solution Code V2: use Promise.then() ----------------------------------------- */
-/**
- * @param {Array} promises
- * @return {Promise}
- */
-
 function myPromiseAny(promises) {
   return new Promise((resolve, reject) => {
     if (promises.length === 0) {

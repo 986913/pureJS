@@ -54,12 +54,12 @@ promisified(1, 2, 3, 4, 5).then((data) => {
   done()
 })
 
-/*--------------------------Solution : return an function that take multiples para and wrap promise ------------------------- */
 /**
  * @param {(...args) => void} func
  * @returns {(...args) => Promise<any}
  */
 
+/*--------------------------Solution : return an function that take multiples para and wrap promise ------------------------- */
 function promisify(func) {
   return function (...args) {  // different is here
     return new Promise((resolve, reject) => {

@@ -14,20 +14,16 @@ try {
   console.log(err); // Mayday!
 }
 
-/* --------------------------- Solution 1: short cut answer -------------------------------- */
 /**
  * @param {*} reason
  * @returns Promise
  */
+/* --------------------------- Solution 1: short cut answer -------------------------------- */
 function promiseReject(reason) {
   return Promise.reject(reason);
 }
 
 /* --------------------------- Solution 2 -------------------------------------------------- */
-/**
- * @param {*} reason
- * @returns Promise
- */
 function promiseReject(reason) {
   return new Promise((_, reject) => {
     return reject(reason);

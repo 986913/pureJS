@@ -48,7 +48,6 @@ foo[Symbol('util.promisify.custom')] = (url, options) => {
 const promisifiedFoo = foo[Symbol('util.promisify.custom')]; // true
 const data = await promisifiedFoo('example.com', { foo: 1 });
 
-/*--------------------------Solution ------------------------- */
 /**
  * @callback func
  * @returns Function
@@ -57,6 +56,7 @@ const data = await promisifiedFoo('example.com', { foo: 1 });
   similar to promisifyII,
   The only addition you need to make is to check if the func argument has the custom Symbol('util.promisify.custom') defined and return the corresponding value if so.
  */
+/*--------------------------Solution ------------------------- */
 const promisifyCustomSymbol = Symbol.for('util.promisify.custom');
 
 function promisify(func) {

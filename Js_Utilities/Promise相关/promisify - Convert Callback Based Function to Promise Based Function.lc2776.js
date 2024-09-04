@@ -1,7 +1,13 @@
 /**
+ * const asyncFunc = promisify(callback => callback(42));
+ * asyncFunc().then(console.log); // 42
+ */
+
+/**
  * @param {Function} fn
  * @return {Function<Promise<number>>}
  */
+
 var promisify = function (fn) {
   return async function (...args) {
     return new Promise((resolve, reject) => {
@@ -10,8 +16,3 @@ var promisify = function (fn) {
     });
   };
 };
-
-/**
- * const asyncFunc = promisify(callback => callback(42));
- * asyncFunc().then(console.log); // 42
- */
