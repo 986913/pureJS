@@ -58,7 +58,9 @@ function deepEqual(a, b, cache = new Map()) {
 
     // Make sure the other objects have the same properties defined.
     return kvPairsA.every(([key, value]) => {
-      return b.hasOwnProperty(key) && deepEqual(value, b[key], cache);
+      if (b.hasOwnProperty(key) === false) return false;
+      if (deepEqual(value, b[key], cache) === false) return false;
+      return true;
     });
   }
 
