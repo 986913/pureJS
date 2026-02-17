@@ -17,24 +17,30 @@
  * @param {*} [initialValue]
  * @return {Array}
  */
-
-Array.prototype.myReduce = function (callbackFn, initialValue) {
-  const len = this.length;
-  const argsLength = arguments.length;
-
-  //下面的argsLength===1 就是代表 没有initialValue
-  if (argsLength === 1 && len === 0) {
+Array.prototype.myReduce = function (callback, initialValue) {
+  if (this.length === 0 && !initialValue) {
     throw new TypeError('Reduce of empty array with no initial value');
   }
+  if (this.length === 0 && initialValue) {
+    return initialValue;
+  }
 
-  let acc = argsLength === 1 ? this[0] : initialValue;
-  let startIndex = argsLength === 1 ? 1 : 0;
+  let res;
+  let startIdx;
 
-  for (let i = startIndex; i < this.length; i++) {
+  if (initialValue) {
+    res = initialValue;
+    startIdx = 0;
+  } else {
+    res = this[0];
+    startIdx = 1;
+  }
+
+  for (let i = startIdx; i < this.length; i++) {
     if (Object.hasOwn(this, i)) {
-      acc = callbackFn(acc, this[i], i, this); // acc, element, index, self-Array
+      res = callback(res, this[i], i, this); //  acc, element, index, self-Array
     }
   }
 
-  return acc;
+  return res;
 };
