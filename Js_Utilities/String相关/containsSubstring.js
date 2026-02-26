@@ -10,7 +10,7 @@ containsSubstring('This is a test', 'is a'); // Output: true
 containsSubstring('This is a test', ' '); // Output: true
 containsSubstring('world', 'Hello, world!'); // Output: false
 
-/* ----------------------------- Solution Code: Map -------------------------------- */
+/* ----------------------------- Solution -------------------------------- */
 /**
  * 时间是 O(n)，其中 n 是输入字符串的长度， 空间是O(1)
  */
