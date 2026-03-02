@@ -34,3 +34,23 @@ function groupBy(array, iteratee) {
 
   return result;
 }
+
+/* 自己写的。。
+  export const groupBy = (array, key) => {
+    if (array.length === 0) return {};
+
+    let res = new Map();
+    for (let i = 0; i < array.length; i++) {
+      const obj = array[i];
+      const val = obj[key];
+      if (res.get(val) === undefined) {
+        res.set(val, [obj]);
+      } else {
+        res.set(val, [...res.get(val), obj]);
+      }
+    }
+    
+    const entries = res.entries();
+    return Object.fromEntries(entries);
+  };
+*/
