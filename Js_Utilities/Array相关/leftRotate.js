@@ -35,7 +35,31 @@ function rotateLeft(d, arr) {
   return arr;
 }
 
-/*********************************** Solution 2: 三次反转法 ***********************************/
+/*********************************** Solution 2: 预留空间解法 - 时间优化版，空间trade off ***********************************/
+// time : O(n), n is array length
+// space: O(times), times 是 d % len;
+function rotateLeft(d, arr) {
+  let len = arr.length;
+  let times = d % len;
+  if (times === 0) return arr;
+
+  // 1. 预留：把前面需要移动的 times 个元素暂存起来
+  let temp = arr.slice(0, times);
+
+  // 2. 一次性平移：把后面的元素直接填到它们最终的位置上
+  for (let i = times; i < len; i++) {
+    arr[i - times] = arr[i];
+  }
+
+  // 3. 补位：把暂存的元素放到数组尾部预留出的空位上
+  for (let i = 0; i < times; i++) {
+    arr[len - times + i] = temp[i];
+  }
+
+  return arr;
+}
+
+/*********************************** Solution 3: 三次反转法 ***********************************/
 // time : O(n), n is array length
 // space: O(1)
 function rotateLeft(d, arr) {
