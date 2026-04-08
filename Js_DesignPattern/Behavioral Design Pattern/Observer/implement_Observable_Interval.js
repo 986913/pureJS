@@ -17,11 +17,11 @@ interval(1000).subscribe(console.log); //code prints 0, 1, 2 .... with an interv
  * @return {Observable}
  */
 function interval(period) {
-  return new Observable((sub) => {
+  return new Observable((subscriber) => {
     let i = 0;
     // 开始定时器，并将每次的 i 发送给订阅者
-    const timerId = setInterval((sub) => {
-      sub.next(i++);
+    const timerId = setInterval(() => {
+      subscriber.next(i++);
     }, period);
 
     // 【加分项】：返回一个清理函数（Teardown）
