@@ -19,15 +19,13 @@ callbackAtMostOnceFn(3, 4); // does nothing
 
 /*---------------- Code solution -------------------*/
 const callbackAtMostOnce = (callback) => {
-  let res;
   let hasCalled = false;
 
   // 这里使用regular function 是为了 usage会有上下文
   return function (...args) {
     if (hasCalled) return;
 
-    res = callback.apply(this, args);
     hasCalled = true;
-    return res;
+    return callback.apply(this, args);
   };
 };
